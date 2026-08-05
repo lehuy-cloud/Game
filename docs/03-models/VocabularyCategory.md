@@ -11,6 +11,6 @@ struct VocabularyCategory: Identifiable, Codable, Hashable {
     let id: String          // "animals"
     let title: String       // "Animals"
     let symbolName: String  // "pawprint.fill" — icon cho ô chủ đề
-    let colorName: String   // tên màu hiển thị (có thể tái dùng Color+Hex hoặc Asset Catalog)
+    let colorHex: String    // "#FF9F43" — dùng Color+Hex, nhất quán với CharacterAvatar (không dùng Asset Catalog)
 }
 ```
