@@ -1,6 +1,13 @@
 .DS_Store
 build/
 DerivedData/
+
+# XcodeGen-generated (source of truth is project.yml)
+LittleLearner.xcodeproj/
+Generated-Info.plist
+
+# Raw/unprocessed source art (processed copies live in Assets.xcassets)
+Sources/Image/
 *.xcuserstate
 xcuserdata/
 *.moved-aside

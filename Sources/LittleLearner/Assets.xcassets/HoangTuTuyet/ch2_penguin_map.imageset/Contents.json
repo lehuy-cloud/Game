@@ -1,0 +1,13 @@
+{
+  "images" : [
+    {
+      "filename" : "ch2_penguin_map.jpg",
+      "idiom" : "universal",
+      "scale" : "1x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

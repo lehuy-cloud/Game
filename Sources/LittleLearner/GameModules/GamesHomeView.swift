@@ -8,11 +8,19 @@ struct GamesHomeView: View {
             LazyVGrid(columns: columns, spacing: DesignTokens.spacing) {
                 ForEach(VocabularyContent.categories) { category in
                     NavigationLink {
-                        MatchingGameView(categoryId: category.id)
+                        LevelPickerView(categoryId: category.id)
                     } label: {
                         VStack(spacing: 8) {
-                            Image(systemName: "square.grid.2x2.fill")
-                                .font(.system(size: 40))
+                            if let imageName = category.imageName {
+                                Image(imageName)
+                                    .resizable()
+                                    .scaledToFill()
+                                    .frame(width: 56, height: 56)
+                                    .clipShape(Circle())
+                            } else {
+                                Image(systemName: "square.grid.2x2.fill")
+                                    .font(.system(size: 40))
+                            }
                             Text("Matching: \(category.title)")
                                 .font(.title3.bold())
                                 .multilineTextAlignment(.center)

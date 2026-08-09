@@ -17,6 +17,7 @@ struct LittleLearnerApp: App {
             }
             .environment(progressStore)
             .environment(profileStore)
+            .environment(\.theme, Theme.named(profileStore.themeId))
             .preferredColorScheme(.light)
             .onAppear { SpeechService.shared.configureAudioSession() }
         }

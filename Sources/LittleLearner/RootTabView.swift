@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct RootTabView: View {
+    @State private var storyPath = NavigationPath()
+
     var body: some View {
         TabView {
             NavigationStack {
@@ -17,6 +19,11 @@ struct RootTabView: View {
                 StarsSummaryView()
             }
             .tabItem { Label("Stars", systemImage: "star.fill") }
+
+            NavigationStack(path: $storyPath) {
+                StoryListView(path: $storyPath)
+            }
+            .tabItem { Label("Truyện", systemImage: "book.fill") }
         }
     }
 }

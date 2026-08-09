@@ -21,6 +21,27 @@ struct CharacterSelectionView: View {
                     }
                 }
                 .padding()
+
+                Text("Màu chủ đạo")
+                    .font(.headline)
+                HStack(spacing: 12) {
+                    ForEach(Theme.all) { theme in
+                        Button {
+                            profileStore.themeId = theme.id
+                        } label: {
+                            Circle()
+                                .fill(theme.base)
+                                .frame(width: 44, height: 44)
+                                .overlay(
+                                    Circle()
+                                        .strokeBorder(Palette.ink.opacity(profileStore.themeId == theme.id ? 0.5 : 0), lineWidth: 3)
+                                )
+                                .padding(3)
+                        }
+                        .accessibilityLabel(theme.name)
+                    }
+                }
+                .padding(.bottom, DesignTokens.spacing * 2)
             }
         }
     }
