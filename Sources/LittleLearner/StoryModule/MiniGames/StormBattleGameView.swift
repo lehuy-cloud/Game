@@ -17,28 +17,40 @@ struct StormBattleGameView: View {
 
     private let targetDefeats = 8
     private let fallDuration: Double = 4
+    private let cloudSize: CGFloat = 72
 
     var body: some View {
         GeometryReader { proxy in
             ZStack {
-                LinearGradient(colors: [Color(hex: chapter.secondaryHex), .white], startPoint: .top, endPoint: .bottom)
-                    .ignoresSafeArea()
-
-                VStack {
+                VStack(spacing: 0) {
+                    header
+                        .padding(.horizontal)
+                        .padding(.top, 8)
                     Text("Chạm vào các đám mây bão trước khi chúng rơi xuống!")
-                        .font(.title3.bold())
+                        .font(.body(17, weight: .semibold))
+                        .foregroundStyle(Palette.ink)
                         .multilineTextAlignment(.center)
-                    Text("Đã đánh bại: \(defeatedCount)/\(targetDefeats)")
-                        .font(.headline)
-                    Spacer()
+                        .padding()
+                    Spacer(minLength: 0)
                 }
-                .padding()
 
                 ForEach(clouds) { cloud in
-                    Text("🌪️")
-                        .font(.system(size: 44))
-                        .position(x: cloud.x, y: cloud.y)
-                        .onTapGesture { defeat(cloud) }
+                    Group {
+                        if let imageName = chapter.imageName {
+                            Image(imageName)
+                                .resizable()
+                                .scaledToFill()
+                                .frame(width: cloudSize, height: cloudSize)
+                                .clipShape(Circle())
+                                .overlay(Circle().strokeBorder(Color.white.opacity(0.85), lineWidth: 2.5))
+                                .shadow(color: Color(hex: chapter.accentHex).opacity(0.5), radius: 8, y: 4)
+                        } else {
+                            Text("🌪️")
+                                .font(.system(size: 44))
+                        }
+                    }
+                    .position(x: cloud.x, y: cloud.y)
+                    .onTapGesture { defeat(cloud) }
                 }
 
                 if showCompletion {
@@ -47,9 +59,34 @@ struct StormBattleGameView: View {
                     }
                 }
             }
+            .organicBackground()
+            .gameContentWidth()
             .task { await runStorm(in: proxy.size) }
         }
-        .navigationTitle("Đại chiến bão tuyết")
+        .navigationBarBackButtonHidden()
+        .toolbar(.hidden, for: .navigationBar)
+    }
+
+    private var header: some View {
+        HStack(spacing: 12) {
+            Button { path.removeLast() } label: {
+                Image(systemName: "chevron.left").font(.system(size: 17, weight: .bold))
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(Palette.surface))
+                    .foregroundStyle(Palette.ink)
+            }
+            Text("Đại chiến bão tuyết")
+                .font(.display(17))
+                .foregroundStyle(Palette.ink)
+                .lineLimit(1)
+            Spacer(minLength: 0)
+            Text("\(defeatedCount) / \(targetDefeats)")
+                .font(.body(12, weight: .bold))
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(Palette.surface, in: Capsule())
+                .foregroundStyle(Palette.ink.opacity(0.7))
+        }
     }
 
     private func defeat(_ cloud: FallingCloud) {
@@ -61,7 +98,8 @@ struct StormBattleGameView: View {
     }
 
     private func spawnCloud(in size: CGSize) {
-        let cloud = FallingCloud(x: .random(in: 40...(size.width - 40)), y: 80)
+        let margin = cloudSize / 2 + 10
+        let cloud = FallingCloud(x: .random(in: margin...(size.width - margin)), y: 150)
         clouds.append(cloud)
 
         withAnimation(.linear(duration: fallDuration)) {

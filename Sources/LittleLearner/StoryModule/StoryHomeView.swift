@@ -15,48 +15,66 @@ struct StoryHomeView: View {
                     NavigationLink(value: StoryRoute.chapter(chapter)) {
                         chapterCard(chapter, unlocked: unlocked)
                     }
+                    .buttonStyle(.plain)
                     .disabled(!unlocked)
                 }
             }
             .padding()
         }
         .navigationTitle(story.title)
-        .themedBackground()
+        .organicBackground()
+        .toolbar(.visible, for: .navigationBar)
     }
 
     private func chapterCard(_ chapter: StoryChapter, unlocked: Bool) -> some View {
         let hasImage = unlocked && chapter.imageName != nil
         let cardHeight = DesignTokens.minTapTarget * 1.8
+        let isCompleted = progressStore.completedStoryChapterIds.contains(chapter.id)
 
-        return ZStack(alignment: .bottom) {
-            if hasImage, let imageName = chapter.imageName {
-                GeometryReader { proxy in
-                    Image(imageName)
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: proxy.size.width, height: proxy.size.height)
-                        .clipped()
-                }
-            } else {
-                Color(hex: chapter.accentHex)
-                Text(unlocked ? chapter.icon : "🔒")
-                    .font(.system(size: 40))
-            }
-
-            Text("Chương \(chapter.index): \(chapter.title)")
-                .font(.headline)
-                .multilineTextAlignment(.center)
-                .padding(8)
-                .frame(maxWidth: .infinity)
-                .background {
-                    if hasImage {
-                        Color.black.opacity(0.35)
+        return VStack(spacing: 0) {
+            ZStack(alignment: .topTrailing) {
+                Group {
+                    if hasImage, let imageName = chapter.imageName {
+                        Image(imageName)
+                            .resizable()
+                            .scaledToFill()
+                            .washed()
+                    } else {
+                        ZStack {
+                            Color(hex: chapter.accentHex).opacity(0.18)
+                            Text(unlocked ? chapter.icon : "🔒")
+                                .font(.system(size: 40))
+                        }
                     }
                 }
+                .frame(height: cardHeight)
+                .frame(maxWidth: .infinity)
+                .clipped()
+
+                if unlocked {
+                    Text(isCompleted ? "⭐ Xong" : "Đang đọc")
+                        .font(.body(11, weight: .bold))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(Palette.surface, in: Capsule())
+                        .foregroundStyle(Palette.ink.opacity(0.75))
+                        .padding(8)
+                }
+            }
+
+            HStack(spacing: 8) {
+                Circle()
+                    .fill(Color(hex: chapter.accentHex))
+                    .frame(width: 9, height: 9)
+                Text("Chương \(chapter.index): \(chapter.title)")
+                    .font(.display(15))
+                    .foregroundStyle(Palette.ink)
+                    .lineLimit(2)
+                Spacer(minLength: 0)
+            }
+            .padding(12)
         }
-        .frame(maxWidth: .infinity, minHeight: cardHeight, maxHeight: cardHeight)
-        .foregroundStyle(.white)
-        .clipShape(RoundedRectangle(cornerRadius: DesignTokens.cornerRadius))
+        .organicCard()
         .opacity(unlocked ? 1 : 0.5)
     }
 

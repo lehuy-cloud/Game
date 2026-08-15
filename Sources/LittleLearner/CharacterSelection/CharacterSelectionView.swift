@@ -9,8 +9,10 @@ struct CharacterSelectionView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: DesignTokens.spacing) {
-                Text("Who are you today?")
-                    .font(.largeTitle.bold())
+                Text("Bé là ai hôm nay?")
+                    .font(.display(30))
+                    .foregroundStyle(Palette.ink)
+                    .multilineTextAlignment(.center)
                     .padding(.top, DesignTokens.spacing * 2)
 
                 LazyVGrid(columns: columns, spacing: DesignTokens.spacing) {
@@ -22,8 +24,10 @@ struct CharacterSelectionView: View {
                 }
                 .padding()
 
-                Text("Màu chủ đạo")
-                    .font(.headline)
+                Text("MÀU CHỦ ĐẠO")
+                    .font(.body(11, weight: .bold))
+                    .foregroundStyle(Palette.ink.opacity(0.45))
+                    .tracking(0.8)
                 HStack(spacing: 12) {
                     ForEach(Theme.all) { theme in
                         Button {
@@ -44,6 +48,7 @@ struct CharacterSelectionView: View {
                 .padding(.bottom, DesignTokens.spacing * 2)
             }
         }
+        .organicBackground()
     }
 
     private func select(_ character: CharacterAvatar) {

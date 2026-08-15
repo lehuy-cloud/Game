@@ -49,7 +49,20 @@ struct MatchTileView: View {
                         .strokeBorder(Palette.sage, lineWidth: 3)
                 }
                 VStack(spacing: 2) {
-                    Text(tile.card.emoji).font(.system(size: 38))
+                    if let imageName = tile.card.imageName {
+                        Image(imageName)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 44, height: 44)
+                    } else if let value = tile.card.value {
+                        Text("\(value)").font(.display(30)).foregroundStyle(theme.deep)
+                    } else if let colorHex = tile.card.colorHex {
+                        RoundedRectangle(cornerRadius: 12, style: .continuous)
+                            .fill(Color(hex: colorHex))
+                            .frame(width: 40, height: 40)
+                    } else {
+                        Text(tile.card.emoji).font(.system(size: 38))
+                    }
                     if showWord {
                         Text(tile.card.word)
                             .font(.body(11, weight: .bold))
@@ -62,7 +75,7 @@ struct MatchTileView: View {
 }
 
 #Preview {
-    let card = VocabularyCard(id: "animal_rabbit", word: "Rabbit", emoji: "🐰",
+    let card = VocabularyCard(id: "animal_rabbit", word: "Rabbit", translation: "Con thỏ", emoji: "🐰",
                               symbolName: nil, imageName: nil, categoryId: "animals")
     return LazyVGrid(columns: [GridItem(.adaptive(minimum: 90))], spacing: 10) {
         MatchTileView(tile: MatchTile(card: card), showWord: true) {}

@@ -7,17 +7,23 @@ struct StoryListView: View {
 
     var body: some View {
         ScrollView {
-            LazyVGrid(columns: columns, spacing: DesignTokens.spacing) {
-                ForEach(StoryContent.stories) { story in
-                    NavigationLink(value: StoryRoute.story(story)) {
-                        storyCard(story)
+            VStack(spacing: DesignTokens.spacing) {
+                AppHeaderView(title: "Truyện")
+
+                LazyVGrid(columns: columns, spacing: DesignTokens.spacing) {
+                    ForEach(StoryContent.stories) { story in
+                        NavigationLink(value: StoryRoute.story(story)) {
+                            storyCard(story)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
+                .padding(.horizontal, DesignTokens.spacing)
             }
-            .padding()
+            .padding(.bottom, DesignTokens.spacing)
         }
-        .navigationTitle("Truyện")
-        .themedBackground()
+        .organicBackground()
+        .toolbar(.hidden, for: .navigationBar)
         .navigationDestination(for: StoryRoute.self) { route in
             switch route {
             case .story(let story):
@@ -31,35 +37,38 @@ struct StoryListView: View {
     }
 
     private func storyCard(_ story: Story) -> some View {
-        ZStack(alignment: .bottom) {
-            if let coverImageName = story.coverImageName {
-                GeometryReader { proxy in
+        VStack(spacing: 0) {
+            Group {
+                if let coverImageName = story.coverImageName {
                     Image(coverImageName)
                         .resizable()
                         .scaledToFill()
-                        .frame(width: proxy.size.width, height: proxy.size.height)
-                        .clipped()
-                }
-            } else {
-                Color(hex: story.accentHex)
-                Text("📖")
-                    .font(.system(size: 40))
-            }
-
-            Text(story.title)
-                .font(.headline)
-                .multilineTextAlignment(.center)
-                .padding(8)
-                .frame(maxWidth: .infinity)
-                .background {
-                    if story.coverImageName != nil {
-                        Color.black.opacity(0.35)
+                        .washed()
+                } else {
+                    ZStack {
+                        Color(hex: story.accentHex).opacity(0.18)
+                        Text("📖")
+                            .font(.system(size: 40))
                     }
                 }
+            }
+            .frame(height: DesignTokens.minTapTarget * 1.6)
+            .frame(maxWidth: .infinity)
+            .clipped()
+
+            HStack(spacing: 8) {
+                Circle()
+                    .fill(Color(hex: story.accentHex))
+                    .frame(width: 9, height: 9)
+                Text(story.title)
+                    .font(.display(16))
+                    .foregroundStyle(Palette.ink)
+                    .lineLimit(2)
+                Spacer(minLength: 0)
+            }
+            .padding(12)
         }
-        .frame(maxWidth: .infinity, minHeight: DesignTokens.minTapTarget * 2, maxHeight: DesignTokens.minTapTarget * 2)
-        .foregroundStyle(.white)
-        .clipShape(RoundedRectangle(cornerRadius: DesignTokens.cornerRadius))
+        .organicCard()
     }
 
     @ViewBuilder

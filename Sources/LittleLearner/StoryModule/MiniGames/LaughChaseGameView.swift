@@ -14,17 +14,16 @@ struct LaughChaseGameView: View {
     var body: some View {
         GeometryReader { proxy in
             ZStack {
-                LinearGradient(colors: [Color(hex: chapter.secondaryHex), .white], startPoint: .top, endPoint: .bottom)
-                    .ignoresSafeArea()
-
-                VStack {
+                VStack(spacing: 0) {
+                    header
+                        .padding(.horizontal)
+                        .padding(.top, 8)
                     Text("Chạm vào chú chim cánh cụt trước khi bạn ấy chạy mất!")
-                        .font(.title3.bold())
+                        .font(.body(17, weight: .semibold))
+                        .foregroundStyle(Palette.ink)
                         .multilineTextAlignment(.center)
                         .padding()
-                    Text("Đã chạm: \(tapCount)/\(targetTaps)")
-                        .font(.headline)
-                    Spacer()
+                    Spacer(minLength: 0)
                 }
 
                 Image("chim_canh_cut_portrait")
@@ -47,6 +46,8 @@ struct LaughChaseGameView: View {
                     }
                 }
             }
+            .organicBackground()
+            .gameContentWidth()
             .onAppear { relocate(in: proxy.size) }
             .task {
                 while !Task.isCancelled && tapCount < targetTaps {
@@ -55,7 +56,29 @@ struct LaughChaseGameView: View {
                 }
             }
         }
-        .navigationTitle("Thử thách: Tiếng cười")
+        .navigationBarBackButtonHidden()
+        .toolbar(.hidden, for: .navigationBar)
+    }
+
+    private var header: some View {
+        HStack(spacing: 12) {
+            Button { path.removeLast() } label: {
+                Image(systemName: "chevron.left").font(.system(size: 17, weight: .bold))
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(Palette.surface))
+                    .foregroundStyle(Palette.ink)
+            }
+            Text("Tiếng cười")
+                .font(.display(17))
+                .foregroundStyle(Palette.ink)
+            Spacer(minLength: 0)
+            Text("\(tapCount) / \(targetTaps)")
+                .font(.body(12, weight: .bold))
+                .padding(.horizontal, 12)
+                .padding(.vertical, 6)
+                .background(Palette.surface, in: Capsule())
+                .foregroundStyle(Palette.ink.opacity(0.7))
+        }
     }
 
     private func relocate(in size: CGSize) {
@@ -63,7 +86,7 @@ struct LaughChaseGameView: View {
         withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
             bubblePosition = CGPoint(
                 x: .random(in: 60...(size.width - 60)),
-                y: .random(in: 180...(size.height - 100))
+                y: .random(in: 230...(size.height - 100))
             )
         }
     }

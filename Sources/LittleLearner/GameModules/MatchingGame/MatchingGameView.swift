@@ -45,6 +45,7 @@ struct MatchingGameView: View {
         .padding(.horizontal, 18)
         .padding(.bottom, 26)
         .organicBackground()
+        .gameContentWidth()
         .navigationBarBackButtonHidden()
         .onAppear(perform: buildBoard)
         .overlay {

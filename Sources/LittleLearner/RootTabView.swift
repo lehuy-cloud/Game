@@ -8,22 +8,17 @@ struct RootTabView: View {
             NavigationStack {
                 VocabularyHomeView()
             }
-            .tabItem { Label("Vocabulary", systemImage: "textformat.abc") }
+            .tabItem { Label("Học", systemImage: "book.fill") }
 
             NavigationStack {
                 GamesHomeView()
             }
-            .tabItem { Label("Games", systemImage: "puzzlepiece.fill") }
-
-            NavigationStack {
-                StarsSummaryView()
-            }
-            .tabItem { Label("Stars", systemImage: "star.fill") }
+            .tabItem { Label("Chơi", systemImage: "gamecontroller.fill") }
 
             NavigationStack(path: $storyPath) {
                 StoryListView(path: $storyPath)
             }
-            .tabItem { Label("Truyện", systemImage: "book.fill") }
+            .tabItem { Label("Truyện", systemImage: "book.closed.fill") }
         }
     }
 }

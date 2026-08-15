@@ -47,11 +47,17 @@ extension EnvironmentValues {
 // MARK: - Type
 
 extension Font {
-    /// Caprasimo — giọng tiêu đề duy nhất của hệ thống.
-    static func display(_ size: CGFloat) -> Font { .custom("Caprasimo", size: size) }
-    /// Figtree — chữ thường.
+    /// Baloo 2 — giọng tiêu đề, tròn và đủ dấu tiếng Việt.
+    static func display(_ size: CGFloat) -> Font { .custom("Baloo2-ExtraBold", size: size) }
+    /// Be Vietnam Pro — chữ thường, bảng dấu tiếng Việt đầy đủ.
     static func body(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
-        .custom("Figtree", size: size).weight(weight)
+        let name: String
+        switch weight {
+        case .bold: name = "BeVietnamPro-Bold"
+        case .semibold: name = "BeVietnamPro-SemiBold"
+        default: name = "BeVietnamPro-Regular"
+        }
+        return .custom(name, size: size)
     }
 }
 
@@ -78,22 +84,89 @@ extension View {
     func organicBackground() -> some View { modifier(OrganicBackground()) }
 }
 
+// MARK: - Giới hạn chiều rộng cho màn chơi game (tránh giãn quá rộng trên iPad)
+
+extension View {
+    /// Ép nội dung game không rộng quá bề ngang thiết kế gốc trên iPhone, căn
+    /// giữa màn hình. Chỉ dùng cho các màn chơi (icon/ô nhỏ dễ trông lạc lõng
+    /// trên iPad) — không dùng cho màn danh sách/menu vốn nên tận dụng hết
+    /// chiều rộng iPad.
+    func gameContentWidth() -> some View {
+        self.frame(maxWidth: 420).frame(maxWidth: .infinity)
+    }
+}
+
 // MARK: - Nút viên thuốc
 
 struct PillButtonStyle: ButtonStyle {
     let theme: Theme
     var filled = true
+    var compact = false
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.display(21))
+            .font(compact ? .body(13, weight: .bold) : .display(21))
             .foregroundStyle(filled ? Palette.onAccent : Palette.ink)
-            .frame(maxWidth: .infinity, minHeight: 58)
+            .frame(maxWidth: compact ? nil : .infinity, minHeight: compact ? 38 : 58)
+            .padding(.horizontal, compact ? 16 : 0)
             .background {
                 Capsule().fill(filled ? (configuration.isPressed ? theme.dark : theme.base) : .clear)
                 if !filled { Capsule().strokeBorder(Palette.ink.opacity(0.2), lineWidth: 1.5) }
             }
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
             .animation(.spring(response: 0.25, dampingFraction: 0.7), value: configuration.isPressed)
+    }
+}
+
+// MARK: - Ảnh "washed" hoà với nền kem
+
+extension View {
+    func washed() -> some View {
+        self.saturation(0.6).contrast(0.85).brightness(0.06).opacity(0.94)
+    }
+}
+
+// MARK: - Thẻ Organic dùng chung
+
+extension View {
+    func organicCard() -> some View {
+        self
+            .background(Palette.surface, in: RoundedRectangle(cornerRadius: DesignTokens.radiusLg))
+            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.radiusLg))
+            .shadow(color: Palette.ink.opacity(0.08), radius: 8, y: 3)
+    }
+}
+
+// MARK: - Thanh tiến độ đọc (thẻ từ / trang truyện)
+
+/// Vạch tiến độ dùng chung cho màn đọc thẻ từ và đọc truyện.
+/// Khi `total` nhỏ (vd. số trang 1 chương), mỗi mục 1 vạch bằng nhau.
+/// Khi `total` lớn (vd. 86 thẻ từ), chỉ vẽ tối đa `maxTicks` vạch đã qua
+/// cộng 1 vạch co giãn đại diện phần còn lại, tránh vẽ hàng chục vạch nhỏ xíu.
+struct ReadingProgressBar: View {
+    let current: Int
+    let total: Int
+    let theme: Theme
+    var maxTicks: Int = 6
+
+    var body: some View {
+        HStack(spacing: 5) {
+            if total <= maxTicks {
+                ForEach(0..<total, id: \.self) { i in
+                    Capsule().fill(i < current ? theme.base : Palette.ink.opacity(0.12))
+                        .frame(height: 7)
+                }
+            } else {
+                let filled = min(current, maxTicks - 1)
+                ForEach(0..<filled, id: \.self) { _ in
+                    Capsule().fill(theme.base).frame(width: 22, height: 7)
+                }
+                Capsule().fill(Palette.ink.opacity(0.12))
+                    .frame(height: 7)
+                    .frame(maxWidth: .infinity)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .animation(.easeOut(duration: 0.25), value: current)
     }
 }

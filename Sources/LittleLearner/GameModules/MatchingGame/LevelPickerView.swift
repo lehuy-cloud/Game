@@ -61,6 +61,7 @@ struct LevelPickerView: View {
         .padding(22)
         .navigationTitle(category?.title ?? "Bộ thẻ")
         .organicBackground()
+        .toolbar(.visible, for: .navigationBar)
     }
 
     private func row(for level: GameLevel) -> some View {

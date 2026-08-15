@@ -13,10 +13,10 @@ targets:
       path: Generated-Info.plist
       properties:
         UIAppFonts:
-          - Caprasimo-Regular.ttf
-          - Figtree-Regular.ttf
-          - Figtree-SemiBold.ttf
-          - Figtree-Bold.ttf
+          - Baloo2-ExtraBold.ttf
+          - BeVietnamPro-Regular.ttf
+          - BeVietnamPro-SemiBold.ttf
+          - BeVietnamPro-Bold.ttf
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.antonlehuy.littlelearner
@@ -28,5 +28,4 @@ targets:
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         CODE_SIGN_STYLE: Automatic
-        CODE_SIGNING_REQUIRED: NO
-        CODE_SIGNING_ALLOWED: NO
+        DEVELOPMENT_TEAM: YDD4626MUX
