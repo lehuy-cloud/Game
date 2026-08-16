@@ -35,7 +35,6 @@ struct Theme: Identifiable, Hashable {
     static func named(_ id: String) -> Theme { all.first { $0.id == id } ?? .terracotta }
 }
 
-// Đọc theme hiện tại ở bất kỳ view nào: @Environment(\.theme) private var theme
 private struct ThemeKey: EnvironmentKey { static let defaultValue: Theme = .terracotta }
 extension EnvironmentValues {
     var theme: Theme {
@@ -47,9 +46,7 @@ extension EnvironmentValues {
 // MARK: - Type
 
 extension Font {
-    /// Baloo 2 — giọng tiêu đề, tròn và đủ dấu tiếng Việt.
     static func display(_ size: CGFloat) -> Font { .custom("Baloo2-ExtraBold", size: size) }
-    /// Be Vietnam Pro — chữ thường, bảng dấu tiếng Việt đầy đủ.
     static func body(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
         let name: String
         switch weight {
@@ -68,6 +65,15 @@ extension DesignTokens {
     static let radiusTile: CGFloat = 20
 }
 
+/// SỐ ĐO THEO THIẾT KẾ. `DesignTokens.spacing` (16) là số của iPhone; dùng nó
+/// làm padding lề trên iPad là nguyên nhân các màn iPad trông chật và lệch
+/// mockup. Mọi màn iPad phải lấy lề/khoảng cách từ đây.
+enum Layout {
+    static func side(_ isRegular: Bool) -> CGFloat { isRegular ? 44 : 16 }
+    static func gap(_ isRegular: Bool) -> CGFloat { isRegular ? 24 : 13 }
+    static func titleSize(_ isRegular: Bool) -> CGFloat { isRegular ? 44 : 26 }
+}
+
 // MARK: - Nền ấm dùng chung
 
 struct OrganicBackground: ViewModifier {
@@ -84,13 +90,9 @@ extension View {
     func organicBackground() -> some View { modifier(OrganicBackground()) }
 }
 
-// MARK: - Giới hạn chiều rộng cho màn chơi game (tránh giãn quá rộng trên iPad)
-
 extension View {
-    /// Ép nội dung game không rộng quá bề ngang thiết kế gốc trên iPhone, căn
-    /// giữa màn hình. Chỉ dùng cho các màn chơi (icon/ô nhỏ dễ trông lạc lõng
-    /// trên iPad) — không dùng cho màn danh sách/menu vốn nên tận dụng hết
-    /// chiều rộng iPad.
+    /// Chỉ dùng cho màn CHƠI game (ô nhỏ dễ lạc lõng khi giãn quá rộng).
+    /// Không dùng cho màn danh sách/menu — chúng phải tận dụng hết bề ngang iPad.
     func gameContentWidth() -> some View {
         self.frame(maxWidth: 420).frame(maxWidth: .infinity)
     }
@@ -137,19 +139,30 @@ extension View {
     }
 }
 
+// MARK: - Lớp phủ tối trên ảnh (để chữ trắng đọc được)
+
+/// Thiếu lớp này là lý do header chương "dính" vào tranh trên bản chạy thật.
+struct TopScrim: View {
+    var height: CGFloat = 300
+    var body: some View {
+        LinearGradient(colors: [Palette.ink.opacity(0.62), Palette.ink.opacity(0.28), Palette.ink.opacity(0)],
+                       startPoint: .top, endPoint: .bottom)
+            .frame(height: height)
+            .frame(maxHeight: .infinity, alignment: .top)
+            .allowsHitTesting(false)
+            .ignoresSafeArea()
+    }
+}
+
 // MARK: - Thanh tiến độ đọc (thẻ từ / trang truyện)
 
-/// Vạch tiến độ dùng chung cho màn đọc thẻ từ và đọc truyện.
-/// Khi `total` nhỏ (vd. số trang 1 chương), mỗi mục 1 vạch bằng nhau.
-/// Khi `total` lớn (vd. 86 thẻ từ), chỉ vẽ tối đa `maxTicks` vạch đã qua
-/// cộng 1 vạch co giãn đại diện phần còn lại, tránh vẽ hàng chục vạch nhỏ xíu.
 struct ReadingProgressBar: View {
     let current: Int
     let total: Int
     let theme: Theme
     var maxTicks: Int = 6
-    /// Ghi đè màu khi thanh nằm đè lên ảnh (mặc định dùng theme.base/ink mờ,
-    /// không đủ tương phản trên nền ảnh).
+    /// 7pt cho iPhone, 9pt cho iPad theo thiết kế.
+    var thickness: CGFloat = 7
     var filledColor: Color? = nil
     var trackColor: Color? = nil
 
@@ -159,17 +172,18 @@ struct ReadingProgressBar: View {
     var body: some View {
         HStack(spacing: 5) {
             if total <= maxTicks {
-                ForEach(0..<total, id: \.self) { i in
+                ForEach(0..<max(total, 1), id: \.self) { i in
                     Capsule().fill(i < current ? filled : track)
-                        .frame(height: 7)
+                        .frame(height: thickness)
+                        .frame(maxWidth: .infinity)   // chia đều, tràn hết bề ngang
                 }
             } else {
                 let filledCount = min(current, maxTicks - 1)
                 ForEach(0..<filledCount, id: \.self) { _ in
-                    Capsule().fill(filled).frame(width: 22, height: 7)
+                    Capsule().fill(filled).frame(width: 22, height: thickness)
                 }
                 Capsule().fill(track)
-                    .frame(height: 7)
+                    .frame(height: thickness)
                     .frame(maxWidth: .infinity)
             }
         }

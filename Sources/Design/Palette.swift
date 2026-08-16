@@ -35,7 +35,6 @@ struct Theme: Identifiable, Hashable {
     static func named(_ id: String) -> Theme { all.first { $0.id == id } ?? .terracotta }
 }
 
-// Đọc theme hiện tại ở bất kỳ view nào: @Environment(\.theme) private var theme
 private struct ThemeKey: EnvironmentKey { static let defaultValue: Theme = .terracotta }
 extension EnvironmentValues {
     var theme: Theme {
@@ -47,12 +46,15 @@ extension EnvironmentValues {
 // MARK: - Type
 
 extension Font {
-    /// Baloo 2 — giọng tiêu đề, tròn và đủ dấu tiếng Việt.
     static func display(_ size: CGFloat) -> Font { .custom("Baloo2-ExtraBold", size: size) }
-    /// Be Vietnam Pro — chữ thường, bảng dấu tiếng Việt đầy đủ.
     static func body(_ size: CGFloat, weight: Font.Weight = .regular) -> Font {
-        .custom(weight >= .bold ? "BeVietnamPro-Bold"
-              : weight >= .semibold ? "BeVietnamPro-SemiBold" : "BeVietnamPro-Regular", size: size)
+        let name: String
+        switch weight {
+        case .bold: name = "BeVietnamPro-Bold"
+        case .semibold: name = "BeVietnamPro-SemiBold"
+        default: name = "BeVietnamPro-Regular"
+        }
+        return .custom(name, size: size)
     }
 }
 
@@ -61,6 +63,15 @@ extension Font {
 extension DesignTokens {
     static let radiusLg: CGFloat = 28
     static let radiusTile: CGFloat = 20
+}
+
+/// SỐ ĐO THEO THIẾT KẾ. `DesignTokens.spacing` (16) là số của iPhone; dùng nó
+/// làm padding lề trên iPad là nguyên nhân các màn iPad trông chật và lệch
+/// mockup. Mọi màn iPad phải lấy lề/khoảng cách từ đây.
+enum Layout {
+    static func side(_ isRegular: Bool) -> CGFloat { isRegular ? 44 : 16 }
+    static func gap(_ isRegular: Bool) -> CGFloat { isRegular ? 24 : 13 }
+    static func titleSize(_ isRegular: Bool) -> CGFloat { isRegular ? 44 : 26 }
 }
 
 // MARK: - Nền ấm dùng chung
@@ -79,22 +90,104 @@ extension View {
     func organicBackground() -> some View { modifier(OrganicBackground()) }
 }
 
+extension View {
+    /// Chỉ dùng cho màn CHƠI game (ô nhỏ dễ lạc lõng khi giãn quá rộng).
+    /// Không dùng cho màn danh sách/menu — chúng phải tận dụng hết bề ngang iPad.
+    func gameContentWidth() -> some View {
+        self.frame(maxWidth: 420).frame(maxWidth: .infinity)
+    }
+}
+
 // MARK: - Nút viên thuốc
 
 struct PillButtonStyle: ButtonStyle {
     let theme: Theme
     var filled = true
+    var compact = false
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(.display(21))
+            .font(compact ? .body(13, weight: .bold) : .display(21))
             .foregroundStyle(filled ? Palette.onAccent : Palette.ink)
-            .frame(maxWidth: .infinity, minHeight: 58)
+            .frame(maxWidth: compact ? nil : .infinity, minHeight: compact ? 38 : 58)
+            .padding(.horizontal, compact ? 16 : 0)
             .background {
                 Capsule().fill(filled ? (configuration.isPressed ? theme.dark : theme.base) : .clear)
                 if !filled { Capsule().strokeBorder(Palette.ink.opacity(0.2), lineWidth: 1.5) }
             }
             .scaleEffect(configuration.isPressed ? 0.97 : 1)
             .animation(.spring(response: 0.25, dampingFraction: 0.7), value: configuration.isPressed)
+    }
+}
+
+// MARK: - Ảnh "washed" hoà với nền kem
+
+extension View {
+    func washed() -> some View {
+        self.saturation(0.6).contrast(0.85).brightness(0.06).opacity(0.94)
+    }
+}
+
+// MARK: - Thẻ Organic dùng chung
+
+extension View {
+    func organicCard() -> some View {
+        self
+            .background(Palette.surface, in: RoundedRectangle(cornerRadius: DesignTokens.radiusLg))
+            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.radiusLg))
+            .shadow(color: Palette.ink.opacity(0.08), radius: 8, y: 3)
+    }
+}
+
+// MARK: - Lớp phủ tối trên ảnh (để chữ trắng đọc được)
+
+/// Thiếu lớp này là lý do header chương "dính" vào tranh trên bản chạy thật.
+struct TopScrim: View {
+    var height: CGFloat = 300
+    var body: some View {
+        LinearGradient(colors: [Palette.ink.opacity(0.62), Palette.ink.opacity(0.28), Palette.ink.opacity(0)],
+                       startPoint: .top, endPoint: .bottom)
+            .frame(height: height)
+            .frame(maxHeight: .infinity, alignment: .top)
+            .allowsHitTesting(false)
+            .ignoresSafeArea()
+    }
+}
+
+// MARK: - Thanh tiến độ đọc (thẻ từ / trang truyện)
+
+struct ReadingProgressBar: View {
+    let current: Int
+    let total: Int
+    let theme: Theme
+    var maxTicks: Int = 6
+    /// 7pt cho iPhone, 9pt cho iPad theo thiết kế.
+    var thickness: CGFloat = 7
+    var filledColor: Color? = nil
+    var trackColor: Color? = nil
+
+    private var filled: Color { filledColor ?? theme.base }
+    private var track: Color { trackColor ?? Palette.ink.opacity(0.12) }
+
+    var body: some View {
+        HStack(spacing: 5) {
+            if total <= maxTicks {
+                ForEach(0..<max(total, 1), id: \.self) { i in
+                    Capsule().fill(i < current ? filled : track)
+                        .frame(height: thickness)
+                        .frame(maxWidth: .infinity)   // chia đều, tràn hết bề ngang
+                }
+            } else {
+                let filledCount = min(current, maxTicks - 1)
+                ForEach(0..<filledCount, id: \.self) { _ in
+                    Capsule().fill(filled).frame(width: 22, height: thickness)
+                }
+                Capsule().fill(track)
+                    .frame(height: thickness)
+                    .frame(maxWidth: .infinity)
+            }
+        }
+        .frame(maxWidth: .infinity)
+        .animation(.easeOut(duration: 0.25), value: current)
     }
 }

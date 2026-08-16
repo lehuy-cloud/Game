@@ -1,66 +1,50 @@
-# Chuyển design Lật Hình vào LittleLearner (SwiftUI)
+# File SwiftUI đã sửa — thả vào repo lehuy-cloud/Game@main
 
-5 file trong thư mục này dán thẳng vào Xcode được. Font phải cài trước, nếu không mọi `Font.display(_:)` sẽ rơi về font hệ thống.
+Copy đè theo đúng đường dẫn dưới đây rồi build. Không cần sửa gì thêm.
 
-## 1. Cài font
-
-1. Tải **Baloo 2** và **Be Vietnam Pro** (Google Fonts) — cả hai có bảng dấu tiếng Việt đầy đủ, khác với Caprasimo/Figtree. Kéo `.ttf` vào `LittleLearner/Resources/Fonts/`, tick *Add to target*.
-2. Info.plist → `UIAppFonts`: `Baloo2-ExtraBold.ttf`, `BeVietnamPro-Regular.ttf`, `BeVietnamPro-SemiBold.ttf`, `BeVietnamPro-Bold.ttf`.
-
-## 2. Chép file vào project
-
-| File | Đặt vào |
+| File ở đây | Đè lên |
 | --- | --- |
-| `Palette.swift` | `Sources/LittleLearner/Shared/` |
-| `MatchTileView.swift` | `Sources/LittleLearner/GameModules/MatchingGame/` |
-| `LevelPickerView.swift` | `Sources/LittleLearner/GameModules/MatchingGame/` |
-| `MatchingGameView.swift` | `Sources/LittleLearner/GameModules/MatchingGame/` — **thay file cũ** |
-| `WinSheetView.swift` | `Sources/LittleLearner/GameModules/MatchingGame/` |
+| `Palette.swift` | `Sources/LittleLearner/Shared/Palette.swift` |
+| `RootTabView.swift` | `Sources/LittleLearner/RootTabView.swift` |
+| `AppHeaderView.swift` | `Sources/LittleLearner/Profile/AppHeaderView.swift` |
+| `VocabularyHomeView.swift` | `Sources/LittleLearner/VocabularyModule/VocabularyHomeView.swift` |
+| `GamesHomeView.swift` | `Sources/LittleLearner/GameModules/GamesHomeView.swift` |
+| `StoryListView.swift` | `Sources/LittleLearner/StoryModule/StoryListView.swift` |
+| `StoryHomeView.swift` | `Sources/LittleLearner/StoryModule/StoryHomeView.swift` |
+| `StoryChapterView.swift` | `Sources/LittleLearner/StoryModule/StoryChapterView.swift` |
 
-`MatchTile.swift`, `RewardStarsView.swift`, `SpeechService.swift`, `Color+Hex.swift`, `ProgressStore.swift` giữ nguyên.
+(Các file `GameScreenScaffold.swift`, `MatchTileView.swift`, `MatchingGameView.swift`,
+`NumberCardView.swift`, `LevelPickerView.swift`, `WinSheetView.swift` là bản mẫu cũ,
+không liên quan lần sửa này.)
 
-## 3. Sửa 3 chỗ ở code cũ
+## 7 lỗi giao diện đã sửa
 
-**`DesignTokens.swift`** — `Palette.swift` mở rộng enum này nên chỉ cần giữ nguyên `spacing`, `cornerRadius`, `minTapTarget`.
+1. **Thanh Học·Chơi·Truyện hiện trên mọi màn.** `RootTabView` đặt `MainTabBar` trong
+   VStack bao ngoài `TabView` → nó nổi cả khi đang đọc truyện/chơi game.
+   Nay thanh thuộc 3 màn gốc qua `.mainTabBar(router)`; màn push lên phủ kín nó.
+   → cần `TabRouter` trong environment (đã có trong `RootTabView.swift`).
+2. **Nửa dưới màn Học trống trơn.** `ScrollView` + `LazyVGrid` cho chiều cao bằng
+   nội dung; thiết kế là `flex:1` + `rows: 1fr 1fr`. Nay đo bằng `GeometryReader`
+   và chia `(H - gap)/2`.
+3. **Ảnh trong thẻ cao cố định 240pt** → `maxHeight: .infinity`, thẻ tự cân.
+4. **Lề iPad 16pt** (`DesignTokens.spacing` là số của iPhone). Thêm `Layout.side/gap`
+   = 44/24 cho iPad, dùng ở cả 3 màn gốc.
+5. **Cỡ chữ khoá cứng cỡ iPhone.** Tiêu đề màn 26→44, tên chủ đề 17→26, số thẻ
+   12→16, tên chương 17→30, nút back 44→56, ô game 170pt→chia đều chiều cao.
+6. **Header chương dính vào tranh** — thiếu lớp phủ tối. Thêm `TopScrim`.
+7. **Danh sách truyện dùng `.adaptive(minimum: 160)`** → 4-5 cột tí hon trên iPad.
+   Nay 2 cột, thẻ cao bằng nhau. Thanh tiến độ đọc dày 9pt trên iPad và chia đều
+   hết bề ngang (`ReadingProgressBar.thickness`, `frame(maxWidth: .infinity)`).
 
-**`GamesHomeView.swift`** — điều hướng sang màn chọn độ khó thay vì vào thẳng game:
-```swift
-NavigationLink { LevelPickerView(categoryId: category.id) } label: { … }
-```
+8. **Danh sách chương xếp thành một hàng thẻ tí hon**, tên chương bị cắt
+   ("Người bạn đ…"), nửa dưới màn trống — cũng do `.adaptive(minimum: 150)`.
+   Nay lưới 3 cột chia hết chiều cao, tên chương tách "Chương N" ra dòng nhãn
+   riêng nên còn 2 dòng đầy đủ cho tên. Tiêu đề truyện dùng header tự vẽ
+   (back 56 + tên 40pt) thay cho `navigationTitle` mặc định căn giữa.
 
-**`LittleLearnerApp.swift`** — bơm theme xuống toàn app:
-```swift
-WindowGroup {
-    RootTabView()
-        .environment(profileStore)
-        .environment(progressStore)
-        .environment(\.theme, Theme.named(profileStore.themeId))
-}
-```
+## Kiểm tra sau khi build
 
-## 4. Bộ màu hồng / xanh
-
-Thêm vào `ProfileStore`:
-```swift
-var themeId: String = "terracotta" { didSet { persist() } }
-```
-(lưu cùng chỗ với `selectedCharacter` trong `UserDefaults`).
-
-Ô chọn màu — đặt trong `CharacterSelectionView` hoặc màn Cài đặt:
-```swift
-HStack(spacing: 12) {
-    ForEach(Theme.all) { t in
-        Button { profileStore.themeId = t.id } label: {
-            Circle().fill(t.base).frame(width: 44, height: 44)
-                .overlay(Circle().strokeBorder(Palette.ink.opacity(profileStore.themeId == t.id ? 0.5 : 0), lineWidth: 3))
-                .padding(3)
-        }
-    }
-}
-```
-
-## 5. Lưu ý
-
-- `ThemedBackground` cũ (gradient theo `secondaryHex` của nhân vật) đã được `organicBackground()` thay thế — màu nhân vật giờ chỉ dùng làm viền avatar, giữ nền kem của Organic.
-- `speakOnFlip` dùng `@AppStorage` nên công tắc ở màn chọn độ khó và trong game tự đồng bộ.
-- Emoji vẫn là asset tạm như v1 của repo; khi có ảnh riêng thì đổi `Text(tile.card.emoji)` trong `MatchTileView` sang `Image(card.imageName)`, phần còn lại không phải sửa.
+- Font: nếu chữ vẫn mảnh/nhỏ hơn thiết kế, `UIAppFonts` trong Info.plist chưa khai
+  Baloo 2 + Be Vietnam Pro (tên PostScript `Baloo2-ExtraBold`, `BeVietnamPro-Regular/SemiBold/Bold`).
+- `gameContentWidth()` (maxWidth 420) chỉ dùng cho màn chơi game, không dùng cho
+  màn danh sách — nếu thấy màn nào kẹt cột hẹp giữa iPad, kiểm tra chỗ này.
