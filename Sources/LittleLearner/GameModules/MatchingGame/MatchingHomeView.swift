@@ -144,6 +144,8 @@ struct MatchingHomeView: View {
             Palette.onAccent.opacity(0.92)
             if let imageName = card.imageName {
                 Image(imageName).resizable().scaledToFit().washed().padding(7)
+            } else if let value = card.value {
+                Text("\(value)").font(.display(22)).foregroundStyle(theme.deep)
             } else {
                 Text(card.emoji).font(.system(size: 22))
             }

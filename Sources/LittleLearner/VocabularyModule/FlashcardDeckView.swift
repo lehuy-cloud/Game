@@ -143,6 +143,10 @@ struct FlashcardDeckView: View {
                 .scaledToFit()
                 .padding(18)
                 .washed()
+        } else if let value = card.value {
+            Text("\(value)")
+                .font(.display(44))
+                .foregroundStyle(theme.deep)
         } else if let colorHex = card.colorHex {
             RoundedRectangle(cornerRadius: DesignTokens.radiusTile, style: .continuous)
                 .fill(Color(hex: colorHex))

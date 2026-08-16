@@ -171,6 +171,8 @@ struct GamesHomeView: View {
                 Palette.surface
                 if let imageName = card?.imageName {
                     Image(imageName).resizable().scaledToFit().washed().padding(14)
+                } else if let value = card?.value {
+                    Text("\(value)").font(.display(34)).foregroundStyle(theme.deep)
                 } else if let card {
                     Text(card.emoji).font(.system(size: 34))
                 }
