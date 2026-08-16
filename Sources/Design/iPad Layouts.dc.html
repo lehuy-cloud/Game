@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/organic-2e45ea2b-5b23-4c53-89cc-c03868a30ec3/styles.css">
+<script src="_ds/organic-2e45ea2b-5b23-4c53-89cc-c03868a30ec3/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--font-heading:'Baloo 2',system-ui,sans-serif;--font-heading-weight:800;--font-body:'Be Vietnam Pro',system-ui,sans-serif;
+--color-accent:#c77d99;--color-accent-100:#fdf2f5;--color-accent-200:#f8e3ea;--color-accent-300:#f0cbd8;--color-accent-400:#e0a5ba;--color-accent-500:#c77d99;--color-accent-600:#95506c;--color-accent-700:#6f3a50;--color-accent-800:#613448;--color-accent-900:#3d202d}
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:var(--font-body);-webkit-font-smoothing:antialiased}
+a{color:var(--color-accent-700);text-decoration:none}a:hover{color:var(--color-accent-800)}
+</style></helmet>
+
+<section style="padding:48px 56px 24px;box-sizing:border-box;max-width:1100px">
+  <div style="font:700 10px/1 ui-monospace,Menlo,monospace;letter-spacing:.12em;padding:5px 9px;border-radius:999px;background:var(--color-text);color:var(--color-bg);display:inline-block;margin-bottom:14px">IPAD</div>
+  <h1 style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:46px;line-height:1.05;margin:0 0 14px">13 màn cho iPad 11" dọc</h1>
+  <p style="font-size:14.5px;line-height:1.7;color:color-mix(in srgb,var(--color-text) 68%,transparent);margin:0 0 18px;max-width:720px;text-wrap:pretty">File này chỉ chứa bố cục iPad (820×1180). Bản iPhone giữ nguyên trong <em>Lat Hinh - Memory Game</em>, không đụng tới. Nguyên tắc chung: bỏ cột hẹp 402px, dùng hết bề rộng với lề 44px, chia lưới 2 cột hoặc 2 vùng (câu hỏi | đáp án) để không còn dải trống nửa dưới; ảnh 120–260px, nút chạm ≥ 56px, chữ thân ≥ 16px.</p>
+  <div style="display:flex;gap:26px;flex-wrap:wrap;font-size:13px;color:color-mix(in srgb,var(--color-text) 62%,transparent)">
+    <div><strong style="color:var(--color-text)">Duyệt</strong> · P1 Học · P2 Chơi · P3 Truyện</div>
+    <div><strong style="color:var(--color-text)">Đọc</strong> · P4 Thẻ từ · P5 Truyện · P6 Màu sắc</div>
+    <div><strong style="color:var(--color-text)">Game</strong> · P7 Lật hình · P8 Bóng · P9 Số đếm · P10 Nghe rồi chọn · P11 Chọn độ khó · P12 Ô cửa bí mật · P13 Tìm bạn khác loài</div>
+  </div>
+</section>
+
+<section style="padding:24px 56px 80px;display:flex;gap:40px;flex-wrap:wrap;box-sizing:border-box">
+
+  <div id="p1" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P1</span>Học — 4 chủ đề, lưới 2×2</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,var(--color-neutral-100) 0%,var(--color-bg) 55%,#efe0c6 100%);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;padding:14px 30px 0;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--color-text) 60%,transparent)"><div style="flex:1">9:41 AM  Sat Aug 15</div><div>100% ▮</div></div>
+        <div style="display:flex;justify-content:center;padding:16px 0 0">
+          <div style="display:flex;gap:8px;padding:8px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-md)">
+            <div style="padding:16px 46px;border-radius:999px;background:var(--color-accent);font-size:25px;font-weight:700">Học</div>
+            <div style="padding:16px 46px;border-radius:999px;font-size:25px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Chơi</div>
+            <div style="padding:16px 46px;border-radius:999px;font-size:25px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Truyện</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:16px;padding:30px 44px 0">
+          <div style="flex:1;min-width:0">
+            <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:44px;line-height:1.05">Học</div>
+            <div style="font-size:17px;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-top:6px">Chọn một chủ đề để đọc thẻ từ</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:9px;padding:12px 20px;border-radius:999px;background:var(--color-accent-200);font-size:19px;font-weight:700;flex:none">⭐ 20</div>
+        </div>
+        <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:24px;padding:24px 44px 44px;box-sizing:border-box;min-height:0">
+          <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);overflow:hidden;display:flex;flex-direction:column">
+            <div style="flex:1;background:var(--color-accent-200);display:flex;align-items:center;justify-content:center;gap:10px;padding:20px;box-sizing:border-box;min-height:0">
+              <img class="washed" src="assets/animal_fox.png" alt="" style="width:120px;height:120px;object-fit:contain;display:block">
+              <img class="washed" src="assets/animal_tiger.png" alt="" style="width:120px;height:120px;object-fit:contain;display:block">
+            </div>
+            <div style="padding:20px 24px;display:flex;align-items:center;gap:11px"><div style="width:11px;height:11px;border-radius:999px;background:#E08A2E;flex:none"></div><div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:26px;flex:1">Con vật</div><div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 50%,transparent)">86 thẻ</div></div>
+          </div>
+          <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);overflow:hidden;display:flex;flex-direction:column">
+            <div style="flex:1;min-height:0;overflow:hidden"><img src="assets/ch1_hero.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block"></div>
+            <div style="padding:20px 24px;display:flex;align-items:center;gap:11px"><div style="width:11px;height:11px;border-radius:999px;background:#3E6FB0;flex:none"></div><div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:26px;flex:1">Từ trong truyện</div><div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 50%,transparent)">8 thẻ</div></div>
+          </div>
+          <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);overflow:hidden;display:flex;flex-direction:column">
+            <div style="flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr"><div style="background:#D9483B"></div><div style="background:#3E6FB0"></div><div style="background:#E8B22B"></div><div style="background:#4E9A5A"></div></div>
+            <div style="padding:20px 24px;display:flex;align-items:center;gap:11px"><div style="width:11px;height:11px;border-radius:999px;background:#7A5CA8;flex:none"></div><div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:26px;flex:1">Màu sắc</div><div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 50%,transparent)">8 thẻ</div></div>
+          </div>
+          <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);overflow:hidden;display:flex;flex-direction:column">
+            <div style="flex:1;min-height:0;background:var(--color-accent-2-200);display:flex;align-items:center;justify-content:center;gap:14px">
+              <div style="font-family:var(--font-heading);font-weight:800;font-size:96px;line-height:1;color:var(--color-accent-600)">1</div>
+              <div style="font-family:var(--font-heading);font-weight:800;font-size:96px;line-height:1;color:color-mix(in srgb,var(--color-text) 30%,transparent)">2</div>
+              <div style="font-family:var(--font-heading);font-weight:800;font-size:96px;line-height:1;color:color-mix(in srgb,var(--color-text) 18%,transparent)">3</div>
+            </div>
+            <div style="padding:20px 24px;display:flex;align-items:center;gap:11px"><div style="width:11px;height:11px;border-radius:999px;background:#4E9A5A;flex:none"></div><div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:26px;flex:1">Số đếm</div><div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 50%,transparent)">10 thẻ</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p2" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P2</span>Chơi — 5 game, thẻ lớn + thẻ đôi</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,var(--color-neutral-100) 0%,var(--color-bg) 55%,#efe0c6 100%);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;padding:14px 30px 0;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--color-text) 60%,transparent)"><div style="flex:1">9:41 AM  Sat Aug 15</div><div>100% ▮</div></div>
+        <div style="display:flex;justify-content:center;padding:16px 0 0">
+          <div style="display:flex;gap:8px;padding:8px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-md)">
+            <div style="padding:16px 46px;border-radius:999px;font-size:25px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Học</div>
+            <div style="padding:16px 46px;border-radius:999px;background:var(--color-accent);font-size:25px;font-weight:700">Chơi</div>
+            <div style="padding:16px 46px;border-radius:999px;font-size:25px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Truyện</div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:flex-end;gap:16px;padding:30px 44px 0">
+          <div style="flex:1;min-width:0">
+            <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:44px;line-height:1.05">Chơi</div>
+            <div style="font-size:17px;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-top:6px">5 trò · mỗi ván 8 câu</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:9px;padding:12px 20px;border-radius:999px;background:var(--color-accent-200);font-size:19px;font-weight:700;flex:none">⭐ 20</div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:24px;padding:24px 44px 44px;box-sizing:border-box;min-height:0">
+          <div style="flex:none;height:300px;border-radius:var(--radius-lg);background:var(--color-accent-200);box-shadow:var(--shadow-md);padding:32px 36px;box-sizing:border-box;display:flex;align-items:center;gap:28px">
+            <div style="flex:1;min-width:0">
+              <div style="display:inline-flex;padding:7px 14px;border-radius:999px;background:var(--color-neutral-100);font-size:14px;font-weight:700;margin-bottom:14px">Chơi tiếp</div>
+              <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:38px;line-height:1.1">Lật hình</div>
+              <div style="font-size:17px;line-height:1.55;color:color-mix(in srgb,var(--color-text) 62%,transparent);margin-top:8px;max-width:330px;text-wrap:pretty">Tìm cặp giống nhau. Cấp 3 · 6 cặp, còn 2 cặp là xong.</div>
+              <div style="display:flex;gap:6px;margin-top:20px;max-width:300px"><div style="flex:4;height:10px;border-radius:999px;background:var(--color-accent-600)"></div><div style="flex:2;height:10px;border-radius:999px;background:rgba(32,30,29,.14)"></div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:none">
+              <div style="width:104px;height:104px;border-radius:26px;background:var(--color-neutral-100);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm)"><img class="washed" src="assets/animal_owl.png" alt="" style="width:76px;height:76px;object-fit:contain"></div>
+              <div style="width:104px;height:104px;border-radius:26px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+              <div style="width:104px;height:104px;border-radius:26px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+              <div style="width:104px;height:104px;border-radius:26px;background:var(--color-neutral-100);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-sm)"><img class="washed" src="assets/animal_owl.png" alt="" style="width:76px;height:76px;object-fit:contain"></div>
+            </div>
+          </div>
+          <div style="flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:24px">
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);padding:22px 26px;box-sizing:border-box;display:flex;flex-direction:column;min-height:0;overflow:hidden">
+              <div style="width:54px;height:54px;border-radius:18px;background:var(--color-accent-2-200);display:flex;align-items:center;justify-content:center;font-size:26px;flex:none">🌓</div>
+              <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:25px;margin-top:12px">Bóng con vật</div>
+              <div style="font-size:15px;line-height:1.45;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-top:5px">Nhìn bóng, đoán con gì</div>
+              <div style="margin-top:auto;font-size:15px;font-weight:700;color:var(--color-accent-600)">8 câu · ⭐ 3</div>
+            </div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);padding:22px 26px;box-sizing:border-box;display:flex;flex-direction:column;min-height:0;overflow:hidden">
+              <div style="width:54px;height:54px;border-radius:18px;background:var(--color-accent-2-200);display:flex;align-items:center;justify-content:center;font-size:26px;flex:none">🔎</div>
+              <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:25px;margin-top:12px">Tìm cái khác</div>
+              <div style="font-size:15px;line-height:1.45;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-top:5px">Ba giống nhau, một khác</div>
+              <div style="margin-top:auto;font-size:15px;font-weight:700;color:var(--color-accent-600)">8 câu · ⭐ 2</div>
+            </div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);padding:22px 26px;box-sizing:border-box;display:flex;flex-direction:column;min-height:0;overflow:hidden">
+              <div style="width:54px;height:54px;border-radius:18px;background:var(--color-accent-2-200);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:800;font-size:24px;flex:none">123</div>
+              <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:25px;margin-top:12px">Đếm cùng nhau</div>
+              <div style="font-size:15px;line-height:1.45;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-top:5px">Đếm rồi chọn số đúng</div>
+              <div style="margin-top:auto;font-size:15px;font-weight:700;color:var(--color-accent-600)">10 câu · ⭐ 4</div>
+            </div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);padding:22px 26px;box-sizing:border-box;display:flex;flex-direction:column;min-height:0;overflow:hidden">
+              <div style="width:54px;height:54px;border-radius:18px;background:var(--color-accent-2-200);display:flex;align-items:center;justify-content:center;font-size:26px;flex:none">🔊</div>
+              <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:25px;margin-top:12px">Nghe rồi chọn</div>
+              <div style="font-size:15px;line-height:1.45;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-top:5px">Nghe từ, chạm đúng ảnh</div>
+              <div style="margin-top:auto;font-size:15px;font-weight:700;color:var(--color-accent-600)">8 câu · ⭐ 1</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p3" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P3</span>Truyện — bìa lớn + chương</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,var(--color-neutral-100) 0%,var(--color-bg) 55%,#efe0c6 100%);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;padding:14px 30px 0;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--color-text) 60%,transparent)"><div style="flex:1">9:41 AM  Sat Aug 15</div><div>100% ▮</div></div>
+        <div style="display:flex;justify-content:center;padding:16px 0 0">
+          <div style="display:flex;gap:8px;padding:8px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-md)">
+            <div style="padding:16px 46px;border-radius:999px;font-size:25px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Học</div>
+            <div style="padding:16px 46px;border-radius:999px;font-size:25px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Chơi</div>
+            <div style="padding:16px 46px;border-radius:999px;background:var(--color-accent);font-size:25px;font-weight:700">Truyện</div>
+          </div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:26px;padding:28px 44px 44px;box-sizing:border-box;min-height:0">
+          <div style="flex:1.25;min-height:0;border-radius:var(--radius-lg);overflow:hidden;position:relative;box-shadow:var(--shadow-md)">
+            <img src="assets/story_cover.jpg" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(32,30,29,.82) 0%,rgba(32,30,29,.25) 48%,rgba(32,30,29,0) 100%)"></div>
+            <div style="position:absolute;left:0;right:0;bottom:0;padding:36px 40px;display:flex;align-items:flex-end;gap:24px">
+              <div style="flex:1;min-width:0">
+                <div style="display:inline-flex;padding:7px 14px;border-radius:999px;background:rgba(249,244,237,.94);font-size:14px;font-weight:700;margin-bottom:12px">Đang đọc · Chương 2</div>
+                <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:42px;line-height:1.08;color:#fff">Hoàng tử và con cáo</div>
+                <div style="font-size:17px;color:rgba(255,255,255,.82);margin-top:8px">3 chương · 8 từ mới · giọng đọc tiếng Anh</div>
+              </div>
+              <div style="width:76px;height:76px;border-radius:999px;background:var(--color-accent);display:flex;align-items:center;justify-content:center;font-size:30px;flex:none;box-shadow:var(--shadow-md)">▸</div>
+            </div>
+          </div>
+          <div style="flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px">
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);overflow:hidden;display:flex;flex-direction:column">
+              <div style="flex:1;min-height:0"><img src="assets/ch1_hero.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+              <div style="padding:18px 20px">
+                <div style="font-size:14px;font-weight:700;color:var(--color-accent-600)">Chương 1 · xong ⭐</div>
+                <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:23px;margin-top:4px">Băng giá</div>
+              </div>
+            </div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);overflow:hidden;display:flex;flex-direction:column;outline:3px solid var(--color-accent);outline-offset:-3px">
+              <div style="flex:1;min-height:0"><img src="assets/ch2_penguin_map.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+              <div style="padding:18px 20px">
+                <div style="font-size:14px;font-weight:700;color:var(--color-accent-600)">Chương 2 · 2/3 trang</div>
+                <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:23px;margin-top:4px">Bản đồ</div>
+              </div>
+            </div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);overflow:hidden;display:flex;flex-direction:column;opacity:.55">
+              <div style="flex:1;min-height:0"><img src="assets/hoang_tu_va_cao.jpg" alt="" style="width:100%;height:100%;object-fit:cover;display:block"></div>
+              <div style="padding:18px 20px">
+                <div style="font-size:14px;font-weight:700;color:color-mix(in srgb,var(--color-text) 50%,transparent)">Chương 3 · chưa mở</div>
+                <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:23px;margin-top:4px">Gặp lại</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p4" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P4</span>Đọc thẻ từ — ảnh lớn + dải thẻ</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,var(--color-neutral-100) 0%,var(--color-bg) 55%,#efe0c6 100%);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;padding:14px 30px 0;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--color-text) 60%,transparent)"><div style="flex:1">9:41 AM  Sat Aug 15</div><div>100% ▮</div></div>
+        <div style="display:flex;align-items:center;gap:18px;padding:22px 44px 0">
+          <div style="width:56px;height:56px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none">◂</div>
+          <div style="flex:1;min-width:0"><div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:34px;line-height:1.05">Con vật</div><div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 58%,transparent);margin-top:4px">Thẻ 4 / 86</div></div>
+          <div style="display:flex;gap:6px;flex:none;width:300px"><div style="flex:4;height:9px;border-radius:999px;background:var(--color-accent-600)"></div><div style="flex:82;height:9px;border-radius:999px;background:color-mix(in srgb,var(--color-text) 12%,transparent)"></div></div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:26px;padding:26px 44px 44px;box-sizing:border-box;min-height:0">
+          <div style="flex:1;min-height:0;display:flex;gap:26px">
+            <div style="flex:1.35;min-width:0;border-radius:var(--radius-lg);background:var(--color-accent-200);box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;padding:36px;box-sizing:border-box">
+              <img class="washed" src="assets/animal_fox.png" alt="Fox" style="max-width:100%;max-height:100%;object-fit:contain;display:block">
+            </div>
+            <div style="flex:1;min-width:0;border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);padding:36px 34px;box-sizing:border-box;display:flex;flex-direction:column">
+              <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:64px;line-height:1.02">Fox</div>
+              <div style="font-size:26px;font-weight:600;color:color-mix(in srgb,var(--color-text) 62%,transparent);margin-top:6px">Con cáo</div>
+              <div style="font-size:18px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 58%,transparent);margin-top:20px;text-wrap:pretty">Cáo có bộ lông màu cam và cái đuôi rất to.</div>
+              <div style="display:flex;align-items:center;gap:16px;margin-top:28px">
+                <div style="width:84px;height:84px;border-radius:999px;background:var(--color-accent);display:flex;align-items:center;justify-content:center;font-size:34px;flex:none;box-shadow:var(--shadow-md)">🔊</div>
+                <div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Chạm để nghe<br>“fox”</div>
+              </div>
+              <div style="margin-top:auto;display:flex;gap:14px">
+                <div style="flex:1;height:64px;border-radius:999px;background:var(--color-bg);display:flex;align-items:center;justify-content:center;font-size:22px;color:color-mix(in srgb,var(--color-text) 40%,transparent)">◂</div>
+                <div style="flex:1;height:64px;border-radius:999px;background:var(--color-accent-600);color:var(--color-neutral-100);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:var(--shadow-md)">▸</div>
+              </div>
+            </div>
+          </div>
+          <div style="flex:none;display:flex;gap:18px;align-items:center">
+            <div style="width:124px;height:124px;border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;opacity:.5"><img class="washed" src="assets/animal_owl.png" alt="" style="width:88px;height:88px;object-fit:contain"></div>
+            <div style="width:124px;height:124px;border-radius:var(--radius-lg);background:var(--color-accent-200);box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;outline:3px solid var(--color-accent);outline-offset:-3px"><img class="washed" src="assets/animal_fox.png" alt="" style="width:88px;height:88px;object-fit:contain"></div>
+            <div style="width:124px;height:124px;border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;opacity:.5"><img class="washed" src="assets/animal_panda.png" alt="" style="width:88px;height:88px;object-fit:contain"></div>
+            <div style="width:124px;height:124px;border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;opacity:.5"><img class="washed" src="assets/animal_tiger.png" alt="" style="width:88px;height:88px;object-fit:contain"></div>
+            <div style="width:124px;height:124px;border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;opacity:.5"><img class="washed" src="assets/animal_whale.png" alt="" style="width:88px;height:88px;object-fit:contain"></div>
+            <div style="flex:1;text-align:center;font-size:16px;color:color-mix(in srgb,var(--color-text) 45%,transparent)">vuốt ngang<br>để đổi thẻ</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p5" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P5</span>Đọc truyện — tranh trên, chữ dưới</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;position:relative;background:var(--color-text);font-family:var(--font-body);color:var(--color-text);box-sizing:border-box">
+        <img src="assets/ch2_penguin_map.jpg" alt="" style="position:absolute;top:0;left:0;width:100%;height:720px;object-fit:cover;object-position:center 32%;display:block">
+        <div style="position:absolute;top:0;left:0;right:0;height:300px;background:linear-gradient(180deg,rgba(32,30,29,.62) 0%,rgba(32,30,29,.28) 50%,rgba(32,30,29,0) 100%)"></div>
+        <div style="position:absolute;top:0;left:0;right:0;padding:14px 30px 0;font-size:13px;font-weight:600;color:rgba(255,255,255,.85);display:flex"><div style="flex:1">9:41 AM  Sat Aug 15</div><div>100% ▮</div></div>
+        <div style="position:absolute;top:52px;left:0;right:0;padding:0 44px;box-sizing:border-box">
+          <div style="display:flex;align-items:center;gap:18px">
+            <div style="width:56px;height:56px;border-radius:999px;background:rgba(249,244,237,.94);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none;box-shadow:var(--shadow-md)">◂</div>
+            <div style="flex:1;min-width:0;font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:30px;color:#fff;text-shadow:0 2px 10px rgba(32,30,29,.45)">Chương 2 · Bản đồ</div>
+            <div style="padding:10px 18px;border-radius:999px;background:rgba(249,244,237,.94);font-size:16px;font-weight:700;flex:none">Trang 2 / 3</div>
+          </div>
+          <div style="display:flex;gap:6px;margin-top:16px"><div style="flex:1;height:9px;border-radius:999px;background:#fff"></div><div style="flex:1;height:9px;border-radius:999px;background:#fff"></div><div style="flex:1;height:9px;border-radius:999px;background:rgba(255,255,255,.35)"></div></div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;height:520px;background:linear-gradient(180deg,rgba(249,244,237,0) 0%,rgba(249,244,237,.9) 90px,var(--color-neutral-100) 190px);padding:200px 56px 44px;box-sizing:border-box;display:flex;flex-direction:column">
+          <div style="font-size:30px;line-height:1.62;text-wrap:pretty">The little penguin opened the old map. “The fox lives past the frozen river,” he said, and the prince smiled for the first time in many days.</div>
+          <div style="font-size:20px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 58%,transparent);margin-top:14px">Chú chim cánh cụt mở tấm bản đồ cũ ra.</div>
+          <div style="margin-top:auto;display:flex;align-items:center;gap:18px">
+            <div style="width:72px;height:72px;border-radius:999px;background:var(--color-bg);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;color:color-mix(in srgb,var(--color-text) 40%,transparent)">◂</div>
+            <div style="width:84px;height:84px;border-radius:999px;background:var(--color-accent);display:flex;align-items:center;justify-content:center;font-size:34px;flex:none;box-shadow:var(--shadow-md)">🔊</div>
+            <div style="flex:1;font-size:16px;color:color-mix(in srgb,var(--color-text) 48%,transparent)">Chạm loa để nghe cả trang</div>
+            <div style="padding:0 34px;height:72px;border-radius:999px;background:var(--color-accent-600);color:var(--color-neutral-100);display:flex;align-items:center;gap:12px;font-size:20px;font-weight:700;flex:none;box-shadow:var(--shadow-md)">Trang sau ▸</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p6" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P6</span>Màu sắc — màu tràn nửa màn</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:var(--color-neutral-100);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="flex:1;min-height:0;background:#D9483B;padding:14px 30px 40px;box-sizing:border-box;display:flex;flex-direction:column">
+          <div style="display:flex;font-size:13px;font-weight:600;color:rgba(255,255,255,.85)"><div style="flex:1">9:41 AM  Sat Aug 15</div><div>100% ▮</div></div>
+          <div style="display:flex;align-items:center;gap:18px;padding:22px 14px 0">
+            <div style="width:56px;height:56px;border-radius:999px;background:rgba(249,244,237,.94);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none">◂</div>
+            <div style="flex:1;min-width:0;font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:30px;color:#fff">Màu sắc</div>
+            <div style="padding:10px 18px;border-radius:999px;background:rgba(249,244,237,.94);font-size:16px;font-weight:700;flex:none">1 / 8</div>
+          </div>
+          <div style="display:flex;gap:6px;margin:16px 14px 0"><div style="flex:1;height:9px;border-radius:999px;background:#fff"></div><div style="flex:7;height:9px;border-radius:999px;background:rgba(255,255,255,.32)"></div></div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;gap:30px;min-height:0">
+            <div>
+              <div style="font-family:var(--font-heading);font-weight:800;font-size:132px;line-height:1;color:#fff;letter-spacing:-.01em">Red</div>
+              <div style="font-size:38px;font-weight:600;color:rgba(255,255,255,.85);margin-top:6px">Màu đỏ</div>
+            </div>
+            <div style="width:110px;height:110px;border-radius:999px;background:rgba(249,244,237,.95);display:flex;align-items:center;justify-content:center;font-size:44px;flex:none;box-shadow:var(--shadow-md)">🔊</div>
+          </div>
+        </div>
+        <div style="flex:none;padding:30px 44px 44px;box-sizing:border-box;display:flex;flex-direction:column;gap:24px">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:14px">
+            <div style="width:74px;height:74px;border-radius:999px;background:#D9483B;box-shadow:0 0 0 5px var(--color-neutral-100),0 0 0 8px #D9483B"></div>
+            <div style="width:62px;height:62px;border-radius:999px;background:#3E6FB0"></div>
+            <div style="width:62px;height:62px;border-radius:999px;background:#E8B22B"></div>
+            <div style="width:62px;height:62px;border-radius:999px;background:#4E9A5A"></div>
+            <div style="width:62px;height:62px;border-radius:999px;background:#E08A2E"></div>
+            <div style="width:62px;height:62px;border-radius:999px;background:#7A5CA8"></div>
+            <div style="width:62px;height:62px;border-radius:999px;background:#D9799C"></div>
+            <div style="width:62px;height:62px;border-radius:999px;background:#2B2A28"></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:16px">
+            <div style="width:72px;height:72px;border-radius:999px;background:var(--color-bg);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;color:color-mix(in srgb,var(--color-text) 40%,transparent)">◂</div>
+            <div style="flex:1;font-size:16px;color:color-mix(in srgb,var(--color-text) 50%,transparent)">Chạm chấm màu để đổi thẻ</div>
+            <div style="width:72px;height:72px;border-radius:999px;background:var(--color-accent-600);color:var(--color-neutral-100);display:flex;align-items:center;justify-content:center;font-size:24px;flex:none;box-shadow:var(--shadow-md)">▸</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p7" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P7</span>Lật hình — lưới 4×5, bảng điểm bên trên</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,var(--color-neutral-100) 0%,var(--color-bg) 55%,#efe0c6 100%);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;padding:14px 30px 0;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--color-text) 60%,transparent)"><div style="flex:1">9:41 AM  Sat Aug 15</div><div>100% ▮</div></div>
+        <div style="display:flex;align-items:center;gap:18px;padding:22px 44px 0">
+          <div style="width:56px;height:56px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none">◂</div>
+          <div style="flex:1;min-width:0"><div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:34px;line-height:1.05">Lật hình · Cấp 3</div><div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 58%,transparent);margin-top:4px">10 cặp · 4 cặp đã tìm · 12 lượt lật</div></div>
+          <div style="display:flex;gap:12px;flex:none">
+            <div style="padding:12px 20px;border-radius:999px;background:var(--color-accent-200);font-size:18px;font-weight:700">⭐ 4</div>
+            <div style="padding:12px 20px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);font-size:18px;font-weight:700">💡 Gợi ý</div>
+          </div>
+        </div>
+        <div style="padding:18px 44px 0"><div style="display:flex;gap:6px"><div style="flex:4;height:10px;border-radius:999px;background:var(--color-accent-600)"></div><div style="flex:6;height:10px;border-radius:999px;background:color-mix(in srgb,var(--color-text) 12%,transparent)"></div></div></div>
+        <div style="flex:1;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:repeat(4,1fr);gap:20px;padding:26px 44px 44px;box-sizing:border-box;min-height:0">
+          <div style="border-radius:28px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box"><img class="washed" src="assets/animal_fox.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain"></div>
+          <div style="border-radius:28px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+          <div style="border-radius:28px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+          <div style="border-radius:28px;background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box;outline:4px solid var(--color-accent);outline-offset:-4px"><img class="washed" src="assets/animal_owl.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain"></div>
+          <div style="border-radius:28px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+          <div style="border-radius:28px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+          <div style="border-radius:28px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box;opacity:.45"><img class="washed" src="assets/animal_turtle.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain"></div>
+          <div style="border-radius:28px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+          <div style="border-radius:28px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box;opacity:.45"><img class="washed" src="assets/animal_turtle.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain"></div>
+          <div style="border-radius:28px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+          <div style="border-radius:28px;background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box;outline:4px solid var(--color-accent);outline-offset:-4px"><img class="washed" src="assets/animal_owl.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain"></div>
+          <div style="border-radius:28px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+          <div style="border-radius:28px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box;opacity:.45"><img class="washed" src="assets/animal_whale.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain"></div>
+          <div style="border-radius:28px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+          <div style="border-radius:28px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+          <div style="border-radius:28px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box;opacity:.45"><img class="washed" src="assets/animal_whale.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain"></div>
+          <div style="border-radius:28px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+          <div style="border-radius:28px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box;opacity:.45"><img class="washed" src="assets/animal_panda.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain"></div>
+          <div style="border-radius:28px;background:var(--color-accent-600);box-shadow:var(--shadow-sm)"></div>
+          <div style="border-radius:28px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;padding:14px;box-sizing:border-box;opacity:.45"><img class="washed" src="assets/animal_panda.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p8" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P8</span>Bóng con vật — bóng lớn, 4 đáp án dưới</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,var(--color-neutral-100) 0%,var(--color-bg) 55%,#efe0c6 100%);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;padding:14px 30px 0;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--color-text) 60%,transparent)"><div style="flex:1">9:41 AM  Sat Aug 15</div><div>100% ▮</div></div>
+        <div style="display:flex;align-items:center;gap:18px;padding:22px 44px 0">
+          <div style="width:56px;height:56px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none">◂</div>
+          <div style="flex:1;min-width:0"><div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:34px;line-height:1.05">Bóng con vật</div><div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 58%,transparent);margin-top:4px">Câu 3 / 8 · 2 đúng</div></div>
+          <div style="display:flex;gap:6px;flex:none;width:300px"><div style="flex:3;height:9px;border-radius:999px;background:var(--color-accent-600)"></div><div style="flex:5;height:9px;border-radius:999px;background:color-mix(in srgb,var(--color-text) 12%,transparent)"></div></div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:26px;padding:26px 44px 44px;box-sizing:border-box;min-height:0">
+          <div style="flex:1;min-height:0;border-radius:var(--radius-lg);background:var(--color-accent-200);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:34px;box-sizing:border-box">
+            <img src="assets/animal_turtle.png" alt="" style="max-width:78%;max-height:340px;object-fit:contain;filter:brightness(0) saturate(0);opacity:.82;display:block">
+            <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:34px;text-align:center">Bóng này là con gì?</div>
+            <div style="font-size:18px;color:color-mix(in srgb,var(--color-text) 58%,transparent)">Chạm vào ảnh đúng ở dưới</div>
+          </div>
+          <div style="flex:none;display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:minmax(0,1fr);gap:22px;height:250px">
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;box-sizing:border-box;height:100%;min-height:0"><img class="washed" src="assets/animal_fox.png" alt="" style="max-width:100%;max-height:100%;flex:1;min-height:0;object-fit:contain"><div style="font-size:18px;font-weight:700">Fox</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;box-sizing:border-box;height:100%;min-height:0"><img class="washed" src="assets/animal_turtle.png" alt="" style="max-width:100%;max-height:100%;flex:1;min-height:0;object-fit:contain"><div style="font-size:18px;font-weight:700">Turtle</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;box-sizing:border-box;height:100%;min-height:0"><img class="washed" src="assets/animal_owl.png" alt="" style="max-width:100%;max-height:100%;flex:1;min-height:0;object-fit:contain"><div style="font-size:18px;font-weight:700">Owl</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:20px;box-sizing:border-box;height:100%;min-height:0"><img class="washed" src="assets/animal_whale.png" alt="" style="max-width:100%;max-height:100%;flex:1;min-height:0;object-fit:contain"><div style="font-size:18px;font-weight:700">Whale</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p9" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P9</span>Đếm cùng nhau — vật đếm trên, số dưới</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,var(--color-neutral-100) 0%,var(--color-bg) 55%,#efe0c6 100%);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;padding:14px 30px 0;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--color-text) 60%,transparent)"><div style="flex:1">9:41 AM  Sat Aug 15</div><div>100% ▮</div></div>
+        <div style="display:flex;align-items:center;gap:18px;padding:22px 44px 0">
+          <div style="width:56px;height:56px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none">◂</div>
+          <div style="flex:1;min-width:0"><div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:34px;line-height:1.05">Đếm cùng nhau</div><div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 58%,transparent);margin-top:4px">Câu 5 / 10 · 4 đúng</div></div>
+          <div style="display:flex;gap:6px;flex:none;width:300px"><div style="flex:5;height:9px;border-radius:999px;background:var(--color-accent-600)"></div><div style="flex:5;height:9px;border-radius:999px;background:color-mix(in srgb,var(--color-text) 12%,transparent)"></div></div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:26px;padding:26px 44px 44px;box-sizing:border-box;min-height:0">
+          <div style="flex:1;min-height:0;border-radius:var(--radius-lg);background:var(--color-accent-200);box-shadow:var(--shadow-md);padding:34px;box-sizing:border-box;display:flex;flex-direction:column;gap:22px;align-items:center;justify-content:center">
+            <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:34px">Có mấy con rùa?</div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px">
+              <img class="washed" src="assets/animal_turtle.png" alt="" style="width:150px;height:150px;object-fit:contain">
+              <img class="washed" src="assets/animal_turtle.png" alt="" style="width:150px;height:150px;object-fit:contain">
+              <img class="washed" src="assets/animal_turtle.png" alt="" style="width:150px;height:150px;object-fit:contain">
+              <img class="washed" src="assets/animal_turtle.png" alt="" style="width:150px;height:150px;object-fit:contain">
+              <img class="washed" src="assets/animal_turtle.png" alt="" style="width:150px;height:150px;object-fit:contain">
+              <div style="width:150px;height:150px"></div>
+            </div>
+          </div>
+          <div style="flex:none;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:minmax(0,1fr);gap:22px;height:170px">
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-family:var(--font-heading);font-weight:800;font-size:76px;line-height:1;color:var(--color-accent-600)">3</div><div style="font-size:16px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Three</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-family:var(--font-heading);font-weight:800;font-size:76px;line-height:1;color:var(--color-accent-600)">4</div><div style="font-size:16px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Four</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-accent);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;outline:4px solid var(--color-accent-600);outline-offset:-4px"><div style="font-family:var(--font-heading);font-weight:800;font-size:76px;line-height:1;color:var(--color-neutral-100)">5</div><div style="font-size:16px;font-weight:600;color:rgba(255,255,255,.85)">Five</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-family:var(--font-heading);font-weight:800;font-size:76px;line-height:1;color:var(--color-accent-600)">6</div><div style="font-size:16px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Six</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center"><div style="font-family:var(--font-heading);font-weight:800;font-size:76px;line-height:1;color:var(--color-accent-600)">7</div><div style="font-size:16px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Seven</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p10" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P10</span>Nghe rồi chọn — câu hỏi | đáp án 2×2</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,var(--color-neutral-100) 0%,var(--color-bg) 55%,#efe0c6 100%);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;padding:14px 30px 0;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--color-text) 60%,transparent)"><div style="flex:1">12:55 PM  Sat Aug 15</div><div>100% ▮</div></div>
+        <div style="display:flex;align-items:center;gap:18px;padding:22px 44px 0">
+          <div style="width:56px;height:56px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none">◂</div>
+          <div style="flex:1;min-width:0"><div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:34px;line-height:1.05">Nghe rồi chọn</div><div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 58%,transparent);margin-top:4px">Câu 1 / 8 · 0 đúng</div></div>
+          <div style="display:flex;gap:6px;flex:none;width:300px"><div style="flex:1;height:9px;border-radius:999px;background:var(--color-accent-600)"></div><div style="flex:7;height:9px;border-radius:999px;background:color-mix(in srgb,var(--color-text) 12%,transparent)"></div></div>
+        </div>
+        <div style="flex:1;display:flex;gap:28px;padding:28px 44px 44px;box-sizing:border-box;min-height:0">
+          <div style="width:272px;flex:none;display:flex;flex-direction:column;align-items:center;gap:26px;padding:36px 24px;box-sizing:border-box;border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md)">
+            <div style="width:172px;height:172px;border-radius:999px;background:var(--color-accent-600);color:var(--color-neutral-100);display:flex;align-items:center;justify-content:center;font-size:76px;box-shadow:var(--shadow-md)">🔊</div>
+            <div style="text-align:center">
+              <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:30px;line-height:1.2;text-wrap:pretty">Con nào là<br>Panda?</div>
+              <div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:12px">Chạm loa để nghe lại</div>
+            </div>
+            <div style="margin-top:auto;display:flex;align-items:center;gap:10px;padding:14px 20px;border-radius:999px;background:var(--color-accent-2-200);font-size:16px;font-weight:600">💡 Gợi ý</div>
+          </div>
+          <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:24px;min-height:0;min-width:0">
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;padding:26px;box-sizing:border-box"><img class="washed" src="assets/animal_owl.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain;display:block"></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;padding:26px;box-sizing:border-box"><img class="washed" src="assets/animal_turtle.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain;display:block"></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;padding:26px;box-sizing:border-box"><img class="washed" src="assets/animal_panda.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain;display:block"></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;align-items:center;justify-content:center;padding:26px;box-sizing:border-box"><img class="washed" src="assets/animal_whale.png" alt="" style="max-width:100%;max-height:100%;object-fit:contain;display:block"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p11" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P11</span>Chọn độ khó — tab lớn, 3 thẻ ngang</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,var(--color-neutral-100) 0%,var(--color-bg) 55%,#efe0c6 100%);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;padding:14px 30px 0;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--color-text) 60%,transparent)"><div style="flex:1">8:49 PM  Sat Aug 15</div><div>100% ▮</div></div>
+
+        <div style="display:flex;align-items:center;gap:18px;padding:18px 44px 0">
+          <div style="width:56px;height:56px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none">◂</div>
+          <div style="flex:1;display:flex;justify-content:center">
+            <div style="display:flex;gap:8px;padding:8px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-md)">
+              <div style="padding:16px 46px;border-radius:999px;font-size:25px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Học</div>
+              <div style="padding:16px 46px;border-radius:999px;background:var(--color-accent);font-size:25px;font-weight:700">Chơi</div>
+              <div style="padding:16px 46px;border-radius:999px;font-size:25px;font-weight:600;color:color-mix(in srgb,var(--color-text) 55%,transparent)">Truyện</div>
+            </div>
+          </div>
+          <div style="width:56px;flex:none"></div>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;padding:34px 56px 44px;box-sizing:border-box;min-height:0">
+          <div style="display:flex;align-items:center;gap:12px;font-size:19px;font-weight:600;color:color-mix(in srgb,var(--color-text) 58%,transparent)">
+            <div style="width:11px;height:11px;border-radius:999px;background:#E08A2E"></div>Con vật · Lật hình
+          </div>
+          <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:52px;line-height:1.05;margin-top:10px">Chọn độ khó</div>
+          <div style="font-size:19px;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin-top:8px">Bé nhỏ thì bắt đầu từ Dễ nhé.</div>
+
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:32px">
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-sm);padding:30px 26px 28px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:18px">
+              <div style="height:104px;display:flex;align-items:center;justify-content:center"><div style="display:grid;grid-template-columns:repeat(3,20px);grid-template-rows:repeat(2,20px);gap:7px">
+                <div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div>
+                <div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div>
+              </div></div>
+              <div style="text-align:center">
+                <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:32px">Dễ</div>
+                <div style="font-size:17px;color:color-mix(in srgb,var(--color-text) 58%,transparent);margin-top:4px">3 cặp · lưới 3 × 2</div>
+              </div>
+              <div style="width:34px;height:34px;border-radius:999px;border:2.5px solid color-mix(in srgb,var(--color-text) 18%,transparent);box-sizing:border-box"></div>
+            </div>
+
+            <div style="border-radius:var(--radius-lg);background:var(--color-accent-200);box-shadow:var(--shadow-md);padding:30px 26px 28px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:18px;outline:4px solid var(--color-accent);outline-offset:-4px">
+              <div style="height:104px;display:flex;align-items:center;justify-content:center"><div style="display:grid;grid-template-columns:repeat(4,20px);grid-template-rows:repeat(3,20px);gap:7px">
+                <div style="border-radius:6px;background:var(--color-accent-600)"></div><div style="border-radius:6px;background:var(--color-accent-600)"></div><div style="border-radius:6px;background:var(--color-accent-600)"></div><div style="border-radius:6px;background:var(--color-accent-600)"></div>
+                <div style="border-radius:6px;background:var(--color-accent-600)"></div><div style="border-radius:6px;background:var(--color-accent-600)"></div><div style="border-radius:6px;background:var(--color-accent-600)"></div><div style="border-radius:6px;background:var(--color-accent-600)"></div>
+                <div style="border-radius:6px;background:var(--color-accent-600)"></div><div style="border-radius:6px;background:var(--color-accent-600)"></div><div style="border-radius:6px;background:var(--color-accent-600)"></div><div style="border-radius:6px;background:var(--color-accent-600)"></div>
+              </div></div>
+              <div style="text-align:center">
+                <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:32px">Vừa</div>
+                <div style="font-size:17px;color:color-mix(in srgb,var(--color-text) 62%,transparent);margin-top:4px">6 cặp · lưới 4 × 3</div>
+              </div>
+              <div style="width:34px;height:34px;border-radius:999px;background:var(--color-accent-600);color:var(--color-neutral-100);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700">✓</div>
+            </div>
+
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-sm);padding:30px 26px 28px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;gap:18px">
+              <div style="height:104px;display:flex;align-items:center;justify-content:center"><div style="display:grid;grid-template-columns:repeat(4,20px);grid-template-rows:repeat(4,20px);gap:7px">
+                <div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div>
+                <div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div>
+                <div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div>
+                <div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div><div style="border-radius:6px;background:color-mix(in srgb,var(--color-text) 16%,transparent)"></div>
+              </div></div>
+              <div style="text-align:center">
+                <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:32px">Khó</div>
+                <div style="font-size:17px;color:color-mix(in srgb,var(--color-text) 58%,transparent);margin-top:4px">8 cặp · lưới 4 × 4</div>
+              </div>
+              <div style="width:34px;height:34px;border-radius:999px;border:2.5px solid color-mix(in srgb,var(--color-text) 18%,transparent);box-sizing:border-box"></div>
+            </div>
+          </div>
+
+          <div style="margin-top:34px;display:flex;flex-direction:column;gap:16px">
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-sm);padding:22px 30px;box-sizing:border-box;display:flex;align-items:center;gap:20px">
+              <div style="flex:1;min-width:0">
+                <div style="font-size:20px;font-weight:700">Đọc từ tiếng Anh khi lật</div>
+                <div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:3px">Giọng đọc chậm, rõ</div>
+              </div>
+              <div style="width:76px;height:44px;border-radius:999px;background:#4E9A5A;display:flex;align-items:center;justify-content:flex-end;padding:4px;box-sizing:border-box;flex:none"><div style="width:36px;height:36px;border-radius:999px;background:#fff;box-shadow:var(--shadow-sm)"></div></div>
+            </div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-sm);padding:22px 30px;box-sizing:border-box;display:flex;align-items:center;gap:20px">
+              <div style="flex:1;min-width:0">
+                <div style="font-size:20px;font-weight:700">Cho dùng gợi ý</div>
+                <div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-top:3px">Mỗi ván 3 lần</div>
+              </div>
+              <div style="width:76px;height:44px;border-radius:999px;background:color-mix(in srgb,var(--color-text) 14%,transparent);display:flex;align-items:center;padding:4px;box-sizing:border-box;flex:none"><div style="width:36px;height:36px;border-radius:999px;background:#fff;box-shadow:var(--shadow-sm)"></div></div>
+            </div>
+          </div>
+
+          <div style="margin-top:auto;display:flex;align-items:center;gap:22px;padding-top:34px">
+            <div style="font-size:18px;line-height:1.5;color:color-mix(in srgb,var(--color-text) 55%,transparent);flex:1;text-wrap:pretty">Ván này 6 cặp, khoảng 3 phút.<br>Xong ván được ⭐ 3.</div>
+            <div style="height:82px;padding:0 60px;border-radius:999px;background:var(--color-accent-600);color:var(--color-neutral-100);display:flex;align-items:center;gap:14px;font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:28px;flex:none;box-shadow:var(--shadow-md)">Bắt đầu ▸</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p12" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P12</span>Ô cửa bí mật — ô cửa lớn, 3 đáp án dưới</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,var(--color-neutral-100) 0%,var(--color-bg) 55%,#efe0c6 100%);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;padding:14px 30px 0;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--color-text) 60%,transparent)"><div style="flex:1">7:30 AM  Sun Aug 16</div><div>100% ▮</div></div>
+        <div style="display:flex;align-items:center;gap:18px;padding:22px 44px 0">
+          <div style="width:56px;height:56px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none">◂</div>
+          <div style="flex:1;min-width:0"><div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:34px;line-height:1.05">Ô cửa bí mật</div><div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 58%,transparent);margin-top:4px">Câu 1 / 8 · 0 đúng</div></div>
+          <div style="display:flex;gap:6px;flex:none;width:300px"><div style="flex:1;height:9px;border-radius:999px;background:var(--color-accent-600)"></div><div style="flex:7;height:9px;border-radius:999px;background:color-mix(in srgb,var(--color-text) 12%,transparent)"></div></div>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;gap:26px;padding:26px 44px 44px;box-sizing:border-box;min-height:0">
+          <div style="flex:1;min-height:0;border-radius:var(--radius-lg);background:var(--color-accent-200);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:34px;box-sizing:border-box">
+            <div style="width:340px;height:340px;border-radius:999px;background:var(--color-neutral-100);box-shadow:inset 0 0 0 10px rgba(32,30,29,.06);overflow:hidden;position:relative">
+              <img class="washed" src="assets/animal_whale.png" alt="" style="position:absolute;top:50%;left:50%;width:340px;height:340px;object-fit:contain;transform-origin:center;transform:translate(-50%,-50%) scale(2.9) translate(16px,22px)">
+            </div>
+            <div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:34px;text-align:center">Ô cửa này là con gì?</div>
+          </div>
+          <div style="flex:none;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:minmax(0,1fr);gap:24px;height:262px">
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:22px;box-sizing:border-box;height:100%;min-height:0"><img class="washed" src="assets/animal_fox.png" alt="" style="max-width:100%;max-height:100%;flex:1;min-height:0;object-fit:contain"><div style="font-size:19px;font-weight:700">Fox</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:22px;box-sizing:border-box;height:100%;min-height:0"><img class="washed" src="assets/animal_whale.png" alt="" style="max-width:100%;max-height:100%;flex:1;min-height:0;object-fit:contain"><div style="font-size:19px;font-weight:700">Whale</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:22px;box-sizing:border-box;height:100%;min-height:0"><img class="washed" src="assets/animal_owl.png" alt="" style="max-width:100%;max-height:100%;flex:1;min-height:0;object-fit:contain"><div style="font-size:19px;font-weight:700">Owl</div></div>
+          </div>
+          <div style="flex:none;display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 24px;border-radius:999px;background:var(--color-accent-2-200);font-size:19px;font-weight:600;align-self:center">💡 Nhìn kỹ ô cửa nhé</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="p13" style="display:flex;flex-direction:column;gap:11px">
+    <div style="display:flex;align-items:baseline;gap:9px;font-size:12.5px;color:color-mix(in srgb,var(--color-text) 55%,transparent)"><span style="font:700 11px/1 ui-monospace,Menlo,monospace;padding:4px 8px;background:color-mix(in srgb,var(--color-text) 8%,transparent);border-radius:6px;color:var(--color-text)">P13</span>Tìm bạn khác loài — 4 ô lớn cùng bộ ảnh</div>
+    <div style="width:856px;height:1216px;border-radius:46px;background:#201e1d;padding:18px;box-sizing:border-box;box-shadow:0 30px 60px rgba(0,0,0,.16)">
+      <div style="width:820px;height:1180px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,var(--color-neutral-100) 0%,var(--color-bg) 55%,#efe0c6 100%);font-family:var(--font-body);color:var(--color-text);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;padding:14px 30px 0;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--color-text) 60%,transparent)"><div style="flex:1">7:30 AM  Sun Aug 16</div><div>100% ▮</div></div>
+        <div style="display:flex;align-items:center;gap:18px;padding:22px 44px 0">
+          <div style="width:56px;height:56px;border-radius:999px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);display:flex;align-items:center;justify-content:center;font-size:22px;flex:none">◂</div>
+          <div style="flex:1;min-width:0"><div style="font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:34px;line-height:1.05">Tìm bạn khác loài</div><div style="font-size:16px;color:color-mix(in srgb,var(--color-text) 58%,transparent);margin-top:4px">Câu 1 / 8 · 0 đúng</div></div>
+          <div style="display:flex;gap:6px;flex:none;width:300px"><div style="flex:1;height:9px;border-radius:999px;background:var(--color-accent-600)"></div><div style="flex:7;height:9px;border-radius:999px;background:color-mix(in srgb,var(--color-text) 12%,transparent)"></div></div>
+        </div>
+
+        <div style="flex:1;display:flex;flex-direction:column;gap:26px;padding:26px 44px 44px;box-sizing:border-box;min-height:0">
+          <div style="flex:none;font-family:var(--font-heading);font-weight:var(--font-heading-weight);font-size:40px;text-align:center">Ai không cùng nhóm?</div>
+          <div style="flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,minmax(0,1fr));gap:26px">
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;box-sizing:border-box;min-height:0"><img class="washed" src="assets/animal_turtle.png" alt="" style="max-width:100%;max-height:100%;flex:1;min-height:0;object-fit:contain"><div style="font-size:20px;font-weight:700">Turtle</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;box-sizing:border-box;min-height:0"><img class="washed" src="assets/animal_whale.png" alt="" style="max-width:100%;max-height:100%;flex:1;min-height:0;object-fit:contain"><div style="font-size:20px;font-weight:700">Whale</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;box-sizing:border-box;min-height:0"><img class="washed" src="assets/animal_fox.png" alt="" style="max-width:100%;max-height:100%;flex:1;min-height:0;object-fit:contain"><div style="font-size:20px;font-weight:700">Fox</div></div>
+            <div style="border-radius:var(--radius-lg);background:var(--color-neutral-100);box-shadow:var(--shadow-md);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:28px;box-sizing:border-box;min-height:0"><img class="washed" src="assets/animal_panda.png" alt="" style="max-width:100%;max-height:100%;flex:1;min-height:0;object-fit:contain"><div style="font-size:20px;font-weight:700">Panda</div></div>
+          </div>
+          <div style="flex:none;display:flex;align-items:center;justify-content:center;gap:12px;padding:16px 24px;border-radius:999px;background:var(--color-accent-2-200);font-size:19px;font-weight:600;align-self:center">💡 Ba bạn sống dưới nước, một bạn thì không</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+</x-dc>
+</body>
+</html>

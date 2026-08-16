@@ -50,6 +50,7 @@ struct LanternPathGameView: View {
         .organicBackground()
         .gameContentWidth()
         .navigationBarBackButtonHidden()
+        .enableSwipeBack()
         .toolbar(.hidden, for: .navigationBar)
     }
 

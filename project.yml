@@ -29,3 +29,26 @@ targets:
         INFOPLIST_KEY_UISupportedInterfaceOrientations: UIInterfaceOrientationPortrait
         CODE_SIGN_STYLE: Automatic
         DEVELOPMENT_TEAM: YDD4626MUX
+  LittleLearnerSnapshotTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: Tests/LittleLearnerSnapshotTests
+    dependencies:
+      - target: LittleLearner
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.antonlehuy.littlelearner.SnapshotTests
+        SWIFT_VERSION: "5.0"
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: YDD4626MUX
+schemes:
+  LittleLearner:
+    build:
+      targets:
+        LittleLearner: all
+        LittleLearnerSnapshotTests: [test]
+    test:
+      targets:
+        - LittleLearnerSnapshotTests

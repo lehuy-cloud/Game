@@ -1,32 +1,52 @@
 import SwiftUI
 
 struct VocabularyHomeView: View {
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @Environment(\.theme) private var theme
+
     private let previewSwatches: [Color] = [
         Color(hex: "#E04A4A"), Color(hex: "#3F7FBF"), Color(hex: "#E9B83A"), Color(hex: "#7A8A5E")
     ]
-    private let previewAnimalImages = ["animal_fox", "animal_lion", "animal_elephant", "animal_tiger"]
+    private let previewAnimalImages = ["animal_fox", "animal_tiger"]
+
+    private var isRegularWidth: Bool { horizontalSizeClass == .regular }
 
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: DesignTokens.spacing) {
                 AppHeaderView(title: "Học")
 
-                Text("Ba chủ đề, đúng như VocabularyContent.")
+                Text("Chọn một chủ đề để đọc thẻ từ")
                     .font(.body(14))
                     .foregroundStyle(Palette.ink.opacity(0.58))
                     .padding(.horizontal, DesignTokens.spacing)
 
-                VStack(spacing: 13) {
-                    ForEach(VocabularyContent.categories) { category in
-                        NavigationLink {
-                            FlashcardDeckView(categoryId: category.id)
-                        } label: {
-                            categoryCard(category)
+                if isRegularWidth {
+                    LazyVGrid(columns: [GridItem(.flexible(), spacing: DesignTokens.spacing), GridItem(.flexible(), spacing: DesignTokens.spacing)],
+                              spacing: DesignTokens.spacing) {
+                        ForEach(VocabularyContent.categories) { category in
+                            NavigationLink {
+                                FlashcardDeckView(categoryId: category.id)
+                            } label: {
+                                categoryCard(category)
+                            }
+                            .buttonStyle(.plain)
                         }
-                        .buttonStyle(.plain)
                     }
+                    .padding(.horizontal, DesignTokens.spacing)
+                } else {
+                    VStack(spacing: 13) {
+                        ForEach(VocabularyContent.categories) { category in
+                            NavigationLink {
+                                FlashcardDeckView(categoryId: category.id)
+                            } label: {
+                                categoryCard(category)
+                            }
+                            .buttonStyle(.plain)
+                        }
+                    }
+                    .padding(.horizontal, DesignTokens.spacing)
                 }
-                .padding(.horizontal, DesignTokens.spacing)
             }
             .padding(.bottom, DesignTokens.spacing)
         }
@@ -37,7 +57,7 @@ struct VocabularyHomeView: View {
     private func categoryCard(_ category: VocabularyCategory) -> some View {
         VStack(spacing: 0) {
             imageArea(for: category)
-                .frame(height: 104)
+                .frame(height: isRegularWidth ? 240 : 104)
                 .contentShape(Rectangle())
                 .clipped()
 
@@ -64,32 +84,43 @@ struct VocabularyHomeView: View {
     private func imageArea(for category: VocabularyCategory) -> some View {
         switch category.id {
         case "animals":
-            HStack(spacing: 6) {
+            HStack(spacing: isRegularWidth ? 20 : 10) {
                 ForEach(previewAnimalImages, id: \.self) { name in
-                    ZStack {
-                        Circle().fill(Palette.surface)
-                        // Sticker art is cropped tight to its canvas; inset it so ears/tails
-                        // aren't cut off by the circular clip.
-                        Image(name)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 64, height: 64)
-                            .washed()
-                    }
-                    .frame(width: 80, height: 80)
+                    Image(name)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: isRegularWidth ? 120 : 56, height: isRegularWidth ? 120 : 56)
+                        .washed()
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color(hex: category.colorHex).opacity(0.18))
+            .background(theme.tint)
 
         case "colors":
-            HStack(spacing: 9) {
-                ForEach(previewSwatches.indices, id: \.self) { i in
-                    Circle().fill(previewSwatches[i]).frame(width: 30, height: 30)
+            Grid(horizontalSpacing: 0, verticalSpacing: 0) {
+                GridRow {
+                    previewSwatches[0]
+                    previewSwatches[1]
+                }
+                GridRow {
+                    previewSwatches[2]
+                    previewSwatches[3]
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Palette.surfaceAlt)
+
+        case "numbers":
+            HStack(spacing: isRegularWidth ? 14 : 6) {
+                Text("1")
+                    .foregroundStyle(theme.deep)
+                Text("2")
+                    .foregroundStyle(Palette.ink.opacity(0.3))
+                Text("3")
+                    .foregroundStyle(Palette.ink.opacity(0.18))
+            }
+            .font(.display(isRegularWidth ? 72 : 32))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Palette.sageTint)
 
         default:
             if let imageName = category.imageName {

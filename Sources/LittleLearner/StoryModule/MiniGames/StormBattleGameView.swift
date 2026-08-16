@@ -64,6 +64,7 @@ struct StormBattleGameView: View {
             .task { await runStorm(in: proxy.size) }
         }
         .navigationBarBackButtonHidden()
+        .enableSwipeBack()
         .toolbar(.hidden, for: .navigationBar)
     }
 

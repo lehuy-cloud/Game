@@ -59,6 +59,7 @@ struct IceMeltGameView: View {
         .organicBackground()
         .gameContentWidth()
         .navigationBarBackButtonHidden()
+        .enableSwipeBack()
         .toolbar(.hidden, for: .navigationBar)
         .task {
             while !Task.isCancelled && holdProgress < 1 {

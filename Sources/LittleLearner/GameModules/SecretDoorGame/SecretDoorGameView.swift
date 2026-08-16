@@ -17,6 +17,9 @@ struct SecretDoorGameView: View {
     @Environment(ProfileStore.self) private var profileStore
     @Environment(\.theme) private var theme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private var isRegularWidth: Bool { horizontalSizeClass == .regular }
 
     @State private var questions: [Question] = []
     @State private var currentIndex = 0
@@ -37,19 +40,27 @@ struct SecretDoorGameView: View {
     private var buddyEmoji: String { profileStore.selectedCharacter?.emoji ?? "🐝" }
 
     var body: some View {
-        VStack(spacing: 14) {
-            header
-            progress
+        GameScreen(title: "Ô cửa bí mật", index: currentIndex + 1, total: Self.totalQuestions,
+                   correct: correctCount, hint: selectedId == nil ? "Nhìn kỹ ô cửa nhé" : nil) {
             if let question = currentQuestion {
-                content(for: question)
+                peephole(for: question)
             }
-            Spacer(minLength: 0)
+        } answers: {
+            if let question = currentQuestion {
+                VStack(spacing: 22) {
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: isRegularWidth ? 20 : 11), count: 3),
+                              spacing: isRegularWidth ? 20 : 11) {
+                        ForEach(question.options) { option in
+                            optionTile(option, question: question)
+                        }
+                    }
+                    if selectedId != nil {
+                        Button("Câu tiếp theo ▸", action: advance)
+                            .buttonStyle(PillButtonStyle(theme: theme))
+                    }
+                }
+            }
         }
-        .padding(.horizontal, 18)
-        .padding(.bottom, 26)
-        .organicBackground()
-        .gameContentWidth()
-        .navigationBarBackButtonHidden()
         .onAppear { if questions.isEmpty { buildRound() } }
         .overlay {
             if isRoundComplete {
@@ -61,78 +72,16 @@ struct SecretDoorGameView: View {
         .animation(.spring(response: 0.4, dampingFraction: 0.85), value: isRoundComplete)
     }
 
-    // MARK: - Chrome
-
-    private var header: some View {
-        HStack(spacing: 10) {
-            Button { dismiss() } label: {
-                Image(systemName: "chevron.left").font(.system(size: 17, weight: .bold))
-                    .frame(width: 44, height: 44)
-                    .background(Circle().fill(Palette.surface))
-                    .foregroundStyle(Palette.ink)
-            }
-            VStack(alignment: .leading, spacing: 1) {
-                Text("Ô cửa bí mật").font(.display(17))
-                Text("Câu \(currentIndex + 1)/\(Self.totalQuestions) · \(correctCount) đúng")
-                    .font(.body(11.5)).foregroundStyle(Palette.ink.opacity(0.5))
-            }
-            Spacer()
-        }
-    }
-
-    private var progress: some View {
-        HStack(spacing: 6) {
-            ForEach(0..<Self.totalQuestions, id: \.self) { i in
-                Capsule()
-                    .fill(i <= currentIndex ? theme.base : Palette.ink.opacity(0.12))
-                    .frame(height: 7)
-            }
-        }
-        .animation(.easeOut(duration: 0.3), value: currentIndex)
-    }
-
-    private var coach: some View {
-        HStack(spacing: 10) {
-            Text(buddyEmoji).font(.system(size: 19))
-                .frame(width: 36, height: 36)
-                .background(Circle().fill(Palette.onAccent))
-            Text("Nhìn kỹ ô cửa nhé")
-                .font(.body(14, weight: .semibold))
-                .foregroundStyle(Palette.ink.opacity(0.62))
-        }
-    }
-
-    // MARK: - Content
-
-    private func content(for question: Question) -> some View {
-        VStack(spacing: 22) {
-            peephole(for: question)
-
-            LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 11), count: 3), spacing: 11) {
-                ForEach(question.options) { option in
-                    optionTile(option, question: question)
-                }
-            }
-
-            if selectedId != nil {
-                Button("Câu tiếp theo ▸", action: advance)
-                    .buttonStyle(PillButtonStyle(theme: theme))
-            } else {
-                coach
-            }
-        }
-    }
-
     @ViewBuilder
     private func peephole(for question: Question) -> some View {
         if selectedId != nil {
             // Đoán đúng: ô cửa mở rộng thành ảnh đầy đủ.
             VStack(spacing: 4) {
-                imageView(question.answer).frame(width: 150, height: 150)
-                Text(question.answer.word).font(.display(30))
-                Text(question.answer.translation).font(.body(13)).foregroundStyle(Palette.ink.opacity(0.55))
+                imageView(question.answer).frame(width: isRegularWidth ? 260 : 150, height: isRegularWidth ? 260 : 150)
+                Text(question.answer.word).font(.display(isRegularWidth ? 40 : 30))
+                Text(question.answer.translation).font(.body(isRegularWidth ? 17 : 13)).foregroundStyle(Palette.ink.opacity(0.55))
             }
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, 18)
             .background {
                 RoundedRectangle(cornerRadius: DesignTokens.radiusLg, style: .continuous)
@@ -155,13 +104,13 @@ struct SecretDoorGameView: View {
                         .clipShape(Circle())
                     Circle().strokeBorder(theme.tint, lineWidth: 4)
                 }
-                .frame(width: 160, height: 160)
+                .frame(width: isRegularWidth ? 300 : 160, height: isRegularWidth ? 300 : 160)
                 .modifier(ShakeEffect(animatableData: shakeToken))
                 Text("Ô cửa này là con gì?")
-                    .font(.body(14.5, weight: .semibold))
+                    .font(.body(isRegularWidth ? 20 : 14.5, weight: .semibold))
                     .foregroundStyle(Palette.ink.opacity(0.62))
             }
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding(.vertical, 18)
             .background(RoundedRectangle(cornerRadius: DesignTokens.radiusLg, style: .continuous).fill(Palette.surface))
         }

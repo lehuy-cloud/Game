@@ -1,0 +1,212 @@
+import SwiftUI
+import AVFoundation
+
+/// Thẻ từ chủ đề "Số đếm" — thay cho ảnh số nhỏ trong bản cũ.
+/// Số vẽ bằng chữ Baloo 2 nên to bao nhiêu cũng nét, kèm N chấm để bé đối chiếu số lượng.
+/// Bản 9a: 1–5 chấm một hàng. Bản 9c: 6–10 dùng khung mười ô (2×5).
+struct NumberCardView: View {
+    let value: Int              // 1...10
+    let english: String         // "One"
+    let vietnamese: String      // "Một"
+    let index: Int              // vị trí thẻ, 1-based
+    let total: Int
+    var onSpeak: () -> Void = {}
+    var onPrev: () -> Void = {}
+    var onNext: () -> Void = {}
+
+    @Environment(\.theme) private var theme
+    @Environment(\.dismiss) private var dismiss
+
+    private var usesTenFrame: Bool { value > 5 }
+
+    var body: some View {
+        VStack(spacing: 0) {
+            header
+            progress.padding(.vertical, 14)
+            hero
+            wordCard.padding(.top, 14)
+            Spacer(minLength: 18)
+            navRow
+        }
+        .padding(.horizontal, 20)
+        .padding(.bottom, 30)
+        .organicBackground()
+        .navigationBarBackButtonHidden()
+        .gesture(
+            DragGesture(minimumDistance: 40).onEnded { g in
+                if g.translation.width < 0 { onNext() } else { onPrev() }
+            }
+        )
+    }
+
+    // MARK: Header
+
+    private var header: some View {
+        HStack(spacing: 12) {
+            Button { dismiss() } label: {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 18, weight: .semibold))
+                    .frame(width: 44, height: 44)
+                    .background(Circle().fill(Palette.surface))
+                    .foregroundStyle(Palette.ink)
+            }
+            Text("Số đếm").font(.display(20))
+            Spacer()
+            Text("\(index) / \(total)")
+                .font(.body(12, weight: .bold))
+                .padding(.horizontal, 13).padding(.vertical, 7)
+                .background(Capsule().fill(Palette.surfaceAlt))
+        }
+    }
+
+    private var progress: some View {
+        GeometryReader { geo in
+            let done = CGFloat(index) / CGFloat(total)
+            HStack(spacing: 5) {
+                Capsule().fill(theme.base)
+                    .frame(width: max(7, geo.size.width * done - 2.5))
+                Capsule().fill(Palette.ink.opacity(0.12))
+            }
+        }
+        .frame(height: 7)
+    }
+
+    // MARK: Hero — số lớn + số lượng
+
+    private var hero: some View {
+        VStack(spacing: usesTenFrame ? 14 : 6) {
+            Text("\(value)")
+                .font(.display(usesTenFrame ? 150 : 210))
+                .foregroundStyle(theme.deep)
+                .minimumScaleFactor(0.6)
+                .lineLimit(1)
+            if usesTenFrame { tenFrame } else { dotRow }
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 290)
+        .background(RoundedRectangle(cornerRadius: DesignTokens.radiusLg, style: .continuous).fill(theme.tint))
+        .shadow(color: Palette.ink.opacity(0.10), radius: 14, y: 6)
+    }
+
+    private var dotRow: some View {
+        HStack(spacing: 10) {
+            ForEach(0..<value, id: \.self) { _ in
+                Circle().fill(theme.deep).frame(width: 22, height: 22)
+            }
+        }
+        .padding(.top, 6)
+    }
+
+    private var tenFrame: some View {
+        VStack(spacing: 8) {
+            ForEach(0..<2, id: \.self) { row in
+                HStack(spacing: 8) {
+                    ForEach(0..<5, id: \.self) { col in
+                        let n = row * 5 + col
+                        Circle()
+                            .fill(n < value ? theme.deep : Color.white.opacity(0.62))
+                            .frame(width: 26, height: 26)
+                    }
+                }
+            }
+        }
+    }
+
+    // MARK: Chữ
+
+    private var wordCard: some View {
+        HStack(spacing: 14) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(english).font(.display(38))
+                Text(vietnamese)
+                    .font(.body(19, weight: .semibold))
+                    .foregroundStyle(Palette.ink.opacity(0.62))
+            }
+            Spacer(minLength: 0)
+            Button(action: onSpeak) {
+                Image(systemName: "speaker.wave.2.fill")
+                    .font(.system(size: 22, weight: .semibold))
+                    .frame(width: 56, height: 56)
+                    .background(Circle().fill(theme.base))
+                    .foregroundStyle(Palette.onAccent)
+            }
+        }
+        .padding(.horizontal, 20).padding(.vertical, 18)
+        .background(RoundedRectangle(cornerRadius: DesignTokens.radiusLg, style: .continuous).fill(Palette.surface))
+        .shadow(color: Palette.ink.opacity(0.07), radius: 8, y: 3)
+    }
+
+    // MARK: Điều hướng
+
+    private var navRow: some View {
+        HStack(spacing: 12) {
+            Button(action: onPrev) {
+                Image(systemName: "chevron.left").font(.system(size: 22, weight: .semibold))
+                    .frame(width: 60, height: 60)
+                    .background(Circle().fill(Palette.surface))
+                    .foregroundStyle(Palette.ink.opacity(index > 1 ? 1 : 0.35))
+            }
+            .disabled(index <= 1)
+            Text("vuốt để đổi thẻ")
+                .font(.body(12.5)).foregroundStyle(Palette.ink.opacity(0.45))
+                .frame(maxWidth: .infinity)
+            Button(action: onNext) {
+                Image(systemName: "chevron.right").font(.system(size: 22, weight: .semibold))
+                    .frame(width: 60, height: 60)
+                    .background(Circle().fill(theme.deep))
+                    .foregroundStyle(Palette.onAccent)
+            }
+        }
+    }
+}
+
+// MARK: - Dữ liệu chủ đề số đếm
+
+struct NumberCard: Identifiable, Hashable {
+    let id: Int
+    let english: String
+    let vietnamese: String
+
+    static let all: [NumberCard] = [
+        .init(id: 1, english: "One", vietnamese: "Một"),
+        .init(id: 2, english: "Two", vietnamese: "Hai"),
+        .init(id: 3, english: "Three", vietnamese: "Ba"),
+        .init(id: 4, english: "Four", vietnamese: "Bốn"),
+        .init(id: 5, english: "Five", vietnamese: "Năm"),
+        .init(id: 6, english: "Six", vietnamese: "Sáu"),
+        .init(id: 7, english: "Seven", vietnamese: "Bảy"),
+        .init(id: 8, english: "Eight", vietnamese: "Tám"),
+        .init(id: 9, english: "Nine", vietnamese: "Chín"),
+        .init(id: 10, english: "Ten", vietnamese: "Mười")
+    ]
+}
+
+/// Bọc cả bộ 10 thẻ, giữ vị trí hiện tại.
+struct NumberDeckView: View {
+    @State private var i = 0
+    private let cards = NumberCard.all
+    private let speech = AVSpeechSynthesizer()
+
+    var body: some View {
+        let c = cards[i]
+        NumberCardView(
+            value: c.id, english: c.english, vietnamese: c.vietnamese,
+            index: i + 1, total: cards.count,
+            onSpeak: { speak(c.english) },
+            onPrev: { withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) { i = max(0, i - 1) } },
+            onNext: { withAnimation(.spring(response: 0.3, dampingFraction: 0.8)) { i = min(cards.count - 1, i + 1) } }
+        )
+        .id(c.id)
+        .transition(.opacity)
+        .onAppear { speak(c.english) }
+    }
+
+    private func speak(_ text: String) {
+        let u = AVSpeechUtterance(string: text)
+        u.voice = AVSpeechSynthesisVoice(language: "en-US")
+        u.rate = 0.38
+        speech.speak(u)
+    }
+}
+
+#Preview { NumberDeckView().environment(\.theme, .pink) }

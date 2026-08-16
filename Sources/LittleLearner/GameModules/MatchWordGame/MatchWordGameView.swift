@@ -50,6 +50,7 @@ struct MatchWordGameView: View {
         .organicBackground()
         .gameContentWidth()
         .navigationBarBackButtonHidden()
+        .enableSwipeBack()
         .onAppear { if questions.isEmpty { buildRound() } }
         .task {
             try? await Task.sleep(for: .seconds(1.5))

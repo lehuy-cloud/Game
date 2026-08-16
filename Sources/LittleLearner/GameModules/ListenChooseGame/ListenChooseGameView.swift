@@ -11,6 +11,9 @@ struct ListenChooseGameView: View {
     @Environment(ProfileStore.self) private var profileStore
     @Environment(\.theme) private var theme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private var isRegularWidth: Bool { horizontalSizeClass == .regular }
 
     @State private var questions: [Question] = []
     @State private var currentIndex = 0
@@ -30,19 +33,52 @@ struct ListenChooseGameView: View {
     private var buddyEmoji: String { profileStore.selectedCharacter?.emoji ?? "🐝" }
 
     var body: some View {
-        VStack(spacing: 14) {
-            header
-            progress
+        GameScreen(title: "Nghe rồi chọn", index: currentIndex + 1, total: Self.totalQuestions,
+                   correct: correctCount, hint: selectedId == nil ? "Nghe kỹ nhé bé" : nil) {
             if let question = currentQuestion {
-                content(for: question)
+                VStack(spacing: 14) {
+                    Button(action: speakCurrent) {
+                        ZStack {
+                            Circle().fill(theme.base)
+                            Circle().strokeBorder(theme.tint, lineWidth: 3).padding(-6)
+                            Image(systemName: "speaker.wave.3.fill")
+                                .font(.system(size: isRegularWidth ? 50 : 38))
+                                .foregroundStyle(Palette.onAccent)
+                        }
+                        .frame(width: isRegularWidth ? 150 : 112, height: isRegularWidth ? 150 : 112)
+                        .shadow(color: Palette.ink.opacity(0.15), radius: 8, y: 4)
+                    }
+                    .buttonStyle(.plain)
+
+                    if selectedId == nil {
+                        Text("Con nào là \(question.answer.word)?")
+                            .font(.body(isRegularWidth ? 19 : 15, weight: .semibold))
+                            .foregroundStyle(Palette.ink.opacity(0.62))
+                    } else {
+                        Text("Đúng rồi!").font(.display(isRegularWidth ? 36 : 26))
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
-            Spacer(minLength: 0)
+        } answers: {
+            if let question = currentQuestion {
+                VStack(spacing: isRegularWidth ? 18 : 13) {
+                    VStack(spacing: isRegularWidth ? 18 : 13) {
+                        ForEach(question.options) { option in
+                            optionRow(option, question: question)
+                        }
+                    }
+                    .frame(maxWidth: isRegularWidth ? 620 : .infinity)
+
+                    if selectedId != nil {
+                        Button("Câu tiếp theo ▸", action: advance)
+                            .buttonStyle(PillButtonStyle(theme: theme))
+                            .frame(maxWidth: isRegularWidth ? 620 : .infinity)
+                    }
+                }
+                .frame(maxWidth: .infinity)
+            }
         }
-        .padding(.horizontal, 18)
-        .padding(.bottom, 26)
-        .organicBackground()
-        .gameContentWidth()
-        .navigationBarBackButtonHidden()
         .onAppear { if questions.isEmpty { buildRound() } }
         .overlay {
             if isRoundComplete {
@@ -52,90 +88,6 @@ struct ListenChooseGameView: View {
             }
         }
         .animation(.spring(response: 0.4, dampingFraction: 0.85), value: isRoundComplete)
-    }
-
-    // MARK: - Chrome
-
-    private var header: some View {
-        HStack(spacing: 10) {
-            Button { dismiss() } label: {
-                Image(systemName: "chevron.left").font(.system(size: 17, weight: .bold))
-                    .frame(width: 44, height: 44)
-                    .background(Circle().fill(Palette.surface))
-                    .foregroundStyle(Palette.ink)
-            }
-            VStack(alignment: .leading, spacing: 1) {
-                Text("Nghe rồi chọn").font(.display(17))
-                Text("Câu \(currentIndex + 1)/\(Self.totalQuestions) · \(correctCount) đúng")
-                    .font(.body(11.5)).foregroundStyle(Palette.ink.opacity(0.5))
-            }
-            Spacer()
-        }
-    }
-
-    private var progress: some View {
-        HStack(spacing: 6) {
-            ForEach(0..<Self.totalQuestions, id: \.self) { i in
-                Capsule()
-                    .fill(i <= currentIndex ? theme.base : Palette.ink.opacity(0.12))
-                    .frame(height: 7)
-            }
-        }
-        .animation(.easeOut(duration: 0.3), value: currentIndex)
-    }
-
-    private var coach: some View {
-        HStack(spacing: 10) {
-            Text(buddyEmoji).font(.system(size: 19))
-                .frame(width: 36, height: 36)
-                .background(Circle().fill(Palette.onAccent))
-            Text("Nghe kỹ nhé bé")
-                .font(.body(14, weight: .semibold))
-                .foregroundStyle(Palette.ink.opacity(0.62))
-        }
-    }
-
-    // MARK: - Content
-
-    private func content(for question: Question) -> some View {
-        VStack(spacing: 22) {
-            VStack(spacing: 14) {
-                Button(action: speakCurrent) {
-                    ZStack {
-                        Circle().fill(theme.base)
-                        Circle().strokeBorder(theme.tint, lineWidth: 3).padding(-6)
-                        Image(systemName: "speaker.wave.3.fill")
-                            .font(.system(size: 38))
-                            .foregroundStyle(Palette.onAccent)
-                    }
-                    .frame(width: 112, height: 112)
-                    .shadow(color: Palette.ink.opacity(0.15), radius: 8, y: 4)
-                }
-                .buttonStyle(.plain)
-
-                if selectedId == nil {
-                    Text("Con nào là \(question.answer.word)?")
-                        .font(.body(15, weight: .semibold))
-                        .foregroundStyle(Palette.ink.opacity(0.62))
-                } else {
-                    Text("Đúng rồi!").font(.display(26))
-                }
-            }
-            .padding(.top, 10)
-
-            VStack(spacing: 13) {
-                ForEach(question.options) { option in
-                    optionRow(option, question: question)
-                }
-            }
-
-            if selectedId != nil {
-                Button("Câu tiếp theo ▸", action: advance)
-                    .buttonStyle(PillButtonStyle(theme: theme))
-            } else {
-                coach
-            }
-        }
     }
 
     @ViewBuilder
@@ -150,12 +102,13 @@ struct ListenChooseGameView: View {
     private func optionRow(_ option: VocabularyCard, question: Question) -> some View {
         let isSelected = selectedId == option.id
         let isDimmed = selectedId != nil && !isSelected
+        let imageSize: CGFloat = isRegularWidth ? 78 : 62
         return HStack(spacing: 16) {
             if isSelected {
-                imageView(option).frame(width: 62, height: 62)
+                imageView(option).frame(width: imageSize, height: imageSize)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(option.word).font(.display(20))
-                    Text(option.translation).font(.body(12)).foregroundStyle(Palette.ink.opacity(0.55))
+                    Text(option.word).font(.display(isRegularWidth ? 25 : 20))
+                    Text(option.translation).font(.body(isRegularWidth ? 15 : 12)).foregroundStyle(Palette.ink.opacity(0.55))
                 }
                 Spacer(minLength: 0)
                 Image(systemName: "star.fill")
@@ -163,12 +116,12 @@ struct ListenChooseGameView: View {
                     .font(.system(size: 22))
             } else {
                 Spacer(minLength: 0)
-                imageView(option).frame(width: 62, height: 62)
+                imageView(option).frame(width: imageSize, height: imageSize)
                 Spacer(minLength: 0)
             }
         }
         .padding(.horizontal, 18)
-        .frame(minHeight: DesignTokens.minTapTarget)
+        .frame(minHeight: isRegularWidth ? 110 : DesignTokens.minTapTarget)
         .background {
             RoundedRectangle(cornerRadius: DesignTokens.radiusLg, style: .continuous)
                 .fill(isSelected ? Palette.sageTint : Palette.surface)

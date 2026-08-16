@@ -10,8 +10,9 @@ struct VocabularyCard: Identifiable, Codable, Hashable {
     let categoryId: String
     let value: Int?
     let colorHex: String?
+    let description: String?
 
-    init(id: String, word: String, translation: String, emoji: String, symbolName: String?, imageName: String?, categoryId: String, value: Int? = nil, colorHex: String? = nil) {
+    init(id: String, word: String, translation: String, emoji: String, symbolName: String?, imageName: String?, categoryId: String, value: Int? = nil, colorHex: String? = nil, description: String? = nil) {
         self.id = id
         self.word = word
         self.translation = translation
@@ -21,5 +22,6 @@ struct VocabularyCard: Identifiable, Codable, Hashable {
         self.categoryId = categoryId
         self.value = value
         self.colorHex = colorHex
+        self.description = description
     }
 }

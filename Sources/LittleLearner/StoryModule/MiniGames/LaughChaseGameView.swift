@@ -57,6 +57,7 @@ struct LaughChaseGameView: View {
             }
         }
         .navigationBarBackButtonHidden()
+        .enableSwipeBack()
         .toolbar(.hidden, for: .navigationBar)
     }
 

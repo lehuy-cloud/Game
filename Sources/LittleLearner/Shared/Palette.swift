@@ -148,20 +148,27 @@ struct ReadingProgressBar: View {
     let total: Int
     let theme: Theme
     var maxTicks: Int = 6
+    /// Ghi đè màu khi thanh nằm đè lên ảnh (mặc định dùng theme.base/ink mờ,
+    /// không đủ tương phản trên nền ảnh).
+    var filledColor: Color? = nil
+    var trackColor: Color? = nil
+
+    private var filled: Color { filledColor ?? theme.base }
+    private var track: Color { trackColor ?? Palette.ink.opacity(0.12) }
 
     var body: some View {
         HStack(spacing: 5) {
             if total <= maxTicks {
                 ForEach(0..<total, id: \.self) { i in
-                    Capsule().fill(i < current ? theme.base : Palette.ink.opacity(0.12))
+                    Capsule().fill(i < current ? filled : track)
                         .frame(height: 7)
                 }
             } else {
-                let filled = min(current, maxTicks - 1)
-                ForEach(0..<filled, id: \.self) { _ in
-                    Capsule().fill(theme.base).frame(width: 22, height: 7)
+                let filledCount = min(current, maxTicks - 1)
+                ForEach(0..<filledCount, id: \.self) { _ in
+                    Capsule().fill(filled).frame(width: 22, height: 7)
                 }
-                Capsule().fill(Palette.ink.opacity(0.12))
+                Capsule().fill(track)
                     .frame(height: 7)
                     .frame(maxWidth: .infinity)
             }

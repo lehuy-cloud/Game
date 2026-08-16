@@ -23,6 +23,21 @@ final class SpeechService: NSObject {
 
     func speak(_ text: String, language: String = "en-US") {
         synthesizer.stopSpeaking(at: .immediate)
+        enqueue(text, language: language)
+    }
+
+    /// Đọc từ tiếng Anh rồi nối tiếp chú thích tiếng Việt (và mô tả nếu có) —
+    /// dùng cho thẻ từ vựng để bé nghe được cả hai thứ tiếng chỉ với một lần chạm.
+    func speak(word: String, caption: String, description: String? = nil) {
+        synthesizer.stopSpeaking(at: .immediate)
+        enqueue(word, language: "en-US")
+        enqueue(caption, language: "vi-VN")
+        if let description {
+            enqueue(description, language: "vi-VN")
+        }
+    }
+
+    private func enqueue(_ text: String, language: String) {
         let utterance = AVSpeechUtterance(string: text)
         utterance.voice = AVSpeechSynthesisVoice(language: language)
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate * 0.85

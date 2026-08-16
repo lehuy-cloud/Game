@@ -12,6 +12,9 @@ struct CountingGameView: View {
     @Environment(ProfileStore.self) private var profileStore
     @Environment(\.theme) private var theme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private var isRegularWidth: Bool { horizontalSizeClass == .regular }
 
     @State private var questions: [Question] = []
     @State private var currentIndex = 0
@@ -39,19 +42,33 @@ struct CountingGameView: View {
     private var buddyEmoji: String { profileStore.selectedCharacter?.emoji ?? "🐝" }
 
     var body: some View {
-        VStack(spacing: 14) {
-            header
-            progress
+        GameScreen(title: "Đếm cùng bé", index: currentIndex + 1, total: Self.totalQuestions,
+                   correct: correctCount, hint: selectedAnswer == nil ? "Đếm từng bạn một nhé" : nil) {
             if let question = currentQuestion {
-                content(for: question)
+                if selectedAnswer != nil {
+                    resultCard(for: question)
+                } else {
+                    VStack(spacing: 18) {
+                        Text("Có mấy bạn ở đây?").font(.display(isRegularWidth ? 36 : 26))
+                        countingCard(for: question)
+                    }
+                }
             }
-            Spacer(minLength: 0)
+        } answers: {
+            if let question = currentQuestion {
+                VStack(spacing: 18) {
+                    HStack(spacing: isRegularWidth ? 18 : 12) {
+                        ForEach(question.choices, id: \.self) { number in
+                            numberTile(number, question: question)
+                        }
+                    }
+                    if selectedAnswer != nil {
+                        Button("Câu tiếp theo ▸", action: advance)
+                            .buttonStyle(PillButtonStyle(theme: theme))
+                    }
+                }
+            }
         }
-        .padding(.horizontal, 18)
-        .padding(.bottom, 26)
-        .organicBackground()
-        .gameContentWidth()
-        .navigationBarBackButtonHidden()
         .onAppear { if questions.isEmpty { buildRound() } }
         .overlay {
             if isRoundComplete {
@@ -61,75 +78,6 @@ struct CountingGameView: View {
             }
         }
         .animation(.spring(response: 0.4, dampingFraction: 0.85), value: isRoundComplete)
-    }
-
-    // MARK: - Chrome
-
-    private var header: some View {
-        HStack(spacing: 10) {
-            Button { dismiss() } label: {
-                Image(systemName: "chevron.left").font(.system(size: 17, weight: .bold))
-                    .frame(width: 44, height: 44)
-                    .background(Circle().fill(Palette.surface))
-                    .foregroundStyle(Palette.ink)
-            }
-            VStack(alignment: .leading, spacing: 1) {
-                Text("Đếm cùng bé").font(.display(17))
-                Text("Câu \(currentIndex + 1)/\(Self.totalQuestions) · \(correctCount) đúng")
-                    .font(.body(11.5)).foregroundStyle(Palette.ink.opacity(0.5))
-            }
-            Spacer()
-        }
-    }
-
-    private var progress: some View {
-        HStack(spacing: 6) {
-            ForEach(0..<Self.totalQuestions, id: \.self) { i in
-                Capsule()
-                    .fill(i <= currentIndex ? theme.base : Palette.ink.opacity(0.12))
-                    .frame(height: 7)
-            }
-        }
-        .animation(.easeOut(duration: 0.3), value: currentIndex)
-    }
-
-    private var coach: some View {
-        HStack(spacing: 10) {
-            Text(buddyEmoji).font(.system(size: 19))
-                .frame(width: 36, height: 36)
-                .background(Circle().fill(Palette.onAccent))
-            Text("Đếm từng bạn một nhé")
-                .font(.body(14, weight: .semibold))
-                .foregroundStyle(Palette.ink.opacity(0.62))
-        }
-    }
-
-    // MARK: - Content
-
-    private func content(for question: Question) -> some View {
-        VStack(spacing: 22) {
-            if selectedAnswer != nil {
-                resultCard(for: question)
-            } else {
-                Text("Có mấy bạn ở đây?")
-                    .font(.display(26))
-                    .padding(.top, 6)
-                countingCard(for: question)
-            }
-
-            HStack(spacing: 12) {
-                ForEach(question.choices, id: \.self) { number in
-                    numberTile(number, question: question)
-                }
-            }
-
-            if selectedAnswer != nil {
-                Button("Câu tiếp theo ▸", action: advance)
-                    .buttonStyle(PillButtonStyle(theme: theme))
-            } else {
-                coach
-            }
-        }
     }
 
     @ViewBuilder
@@ -153,10 +101,11 @@ struct CountingGameView: View {
     }
 
     private func countingCard(for question: Question) -> some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 14) {
             HStack(spacing: 0) {
                 Spacer(minLength: 0)
-                LazyVGrid(columns: Array(repeating: GridItem(.fixed(90), spacing: 10), count: columnCount(for: question.count)), spacing: 10) {
+                LazyVGrid(columns: Array(repeating: GridItem(.fixed(isRegularWidth ? 130 : 90), spacing: isRegularWidth ? 16 : 10), count: columnCount(for: question.count)),
+                          spacing: isRegularWidth ? 16 : 10) {
                     ForEach(items) { item in
                         itemTile(item, question: question)
                     }
@@ -164,15 +113,15 @@ struct CountingGameView: View {
                 Spacer(minLength: 0)
             }
             HStack(spacing: 8) {
-                Image(systemName: "hand.tap.fill").font(.system(size: 14))
-                Text("Chạm để đếm").font(.body(12.5, weight: .bold))
+                Image(systemName: "hand.tap.fill").font(.system(size: isRegularWidth ? 17 : 14))
+                Text("Chạm để đếm").font(.body(isRegularWidth ? 15 : 12.5, weight: .bold))
             }
             .foregroundStyle(theme.deep)
             .padding(.horizontal, 14)
             .padding(.vertical, 8)
             .background(theme.tint, in: Capsule())
         }
-        .padding(18)
+        .padding(isRegularWidth ? 26 : 18)
         .frame(maxWidth: .infinity)
         .background(RoundedRectangle(cornerRadius: DesignTokens.radiusLg, style: .continuous).fill(Palette.surface))
         .shadow(color: Color(hex: "#2E2B25").opacity(0.1), radius: 8, y: 3)
@@ -180,7 +129,7 @@ struct CountingGameView: View {
 
     private func itemTile(_ item: DisplayItem, question: Question) -> some View {
         ZStack(alignment: .topTrailing) {
-            imageView(question.animal).frame(width: 68, height: 68)
+            imageView(question.animal).frame(width: isRegularWidth ? 96 : 68, height: isRegularWidth ? 96 : 68)
             if item.isCounted {
                 Image(systemName: "checkmark.circle.fill")
                     .font(.system(size: 18))
@@ -203,15 +152,15 @@ struct CountingGameView: View {
         return VStack(spacing: 16) {
             HStack(spacing: 8) {
                 ForEach(items) { _ in
-                    imageView(question.animal).frame(width: 54, height: 54)
+                    imageView(question.animal).frame(width: isRegularWidth ? 72 : 54, height: isRegularWidth ? 72 : 54)
                 }
             }
             HStack(alignment: .lastTextBaseline, spacing: 14) {
-                Text("\(question.count)").font(.display(64))
+                Text("\(question.count)").font(.display(isRegularWidth ? 84 : 64))
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(numberCard.word).font(.display(26))
+                    Text(numberCard.word).font(.display(isRegularWidth ? 34 : 26))
                     Text("\(numberCard.translation) \(question.animal.translation.lowercased())")
-                        .font(.body(13)).foregroundStyle(Palette.ink.opacity(0.55))
+                        .font(.body(isRegularWidth ? 16 : 13)).foregroundStyle(Palette.ink.opacity(0.55))
                 }
             }
             Button {
@@ -228,8 +177,8 @@ struct CountingGameView: View {
             }
             .buttonStyle(.plain)
         }
-        .padding(18)
-        .frame(maxWidth: .infinity)
+        .padding(isRegularWidth ? 26 : 18)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {
             RoundedRectangle(cornerRadius: DesignTokens.radiusLg, style: .continuous).fill(Palette.sageTint)
             RoundedRectangle(cornerRadius: DesignTokens.radiusLg, style: .continuous).strokeBorder(Palette.sage, lineWidth: 3)
@@ -240,8 +189,8 @@ struct CountingGameView: View {
         let isSelected = selectedAnswer == number
         let isWrong = wrongChoices.contains(number)
         return Text("\(number)")
-            .font(.display(34))
-            .frame(maxWidth: .infinity, minHeight: DesignTokens.minTapTarget)
+            .font(.display(isRegularWidth ? 44 : 34))
+            .frame(maxWidth: .infinity, minHeight: isRegularWidth ? 130 : DesignTokens.minTapTarget)
             .background {
                 RoundedRectangle(cornerRadius: DesignTokens.radiusLg, style: .continuous)
                     .fill(isSelected ? Palette.sageTint : Palette.surface)

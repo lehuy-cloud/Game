@@ -5,8 +5,11 @@ struct FlashcardDeckView: View {
 
     @Environment(\.theme) private var theme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var currentIndex = 0
     @State private var cards: [VocabularyCard] = []
+
+    private var isRegularWidth: Bool { horizontalSizeClass == .regular }
 
     private var categoryTitle: String {
         VocabularyContent.categories.first { $0.id == categoryId }?.title ?? "Từ vựng"
@@ -39,6 +42,8 @@ struct FlashcardDeckView: View {
 
             if categoryId == "colors" {
                 colorPickerStrip
+            } else if isRegularWidth {
+                filmstrip
             }
 
             Spacer(minLength: 0)
@@ -50,6 +55,7 @@ struct FlashcardDeckView: View {
         .organicBackground()
         .gesture(swipeGesture)
         .navigationBarBackButtonHidden()
+        .enableSwipeBack()
         .toolbar(.hidden, for: .navigationBar)
         .onAppear {
             let base = VocabularyContent.cards(for: categoryId)
@@ -98,6 +104,53 @@ struct FlashcardDeckView: View {
         .padding(.vertical, 12)
         .background(Palette.surface, in: Capsule())
         .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentIndex)
+    }
+
+    private var filmstrip: some View {
+        let windowSize = 5
+        let start = max(0, min(currentIndex - windowSize / 2, cards.count - windowSize))
+        let end = min(cards.count, start + windowSize)
+        return HStack(spacing: 18) {
+            ForEach(start..<end, id: \.self) { index in
+                let isSelected = index == currentIndex
+                thumbnail(for: cards[index])
+                    .frame(width: 124, height: 124)
+                    .background(isSelected ? theme.tint : Palette.surface, in: RoundedRectangle(cornerRadius: DesignTokens.radiusLg))
+                    .overlay {
+                        if isSelected {
+                            RoundedRectangle(cornerRadius: DesignTokens.radiusLg)
+                                .strokeBorder(theme.base, lineWidth: 3)
+                        }
+                    }
+                    .opacity(isSelected ? 1 : 0.5)
+                    .onTapGesture { withAnimation { currentIndex = index } }
+            }
+
+            Text("vuốt ngang\nđể đổi thẻ")
+                .font(.body(14))
+                .multilineTextAlignment(.center)
+                .foregroundStyle(Palette.ink.opacity(0.45))
+                .frame(maxWidth: .infinity)
+        }
+        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: currentIndex)
+    }
+
+    @ViewBuilder
+    private func thumbnail(for card: VocabularyCard) -> some View {
+        if let imageName = card.imageName {
+            Image(imageName)
+                .resizable()
+                .scaledToFit()
+                .padding(18)
+                .washed()
+        } else if let colorHex = card.colorHex {
+            RoundedRectangle(cornerRadius: DesignTokens.radiusTile, style: .continuous)
+                .fill(Color(hex: colorHex))
+                .padding(18)
+        } else {
+            Text(card.emoji)
+                .font(.system(size: 44))
+        }
     }
 
     private var bottomNav: some View {

@@ -6,8 +6,11 @@ struct StoryChapterView: View {
 
     @Environment(ProgressStore.self) private var progressStore
     @Environment(\.theme) private var theme
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @State private var pageIndex = 0
     @State private var showCompletion = false
+
+    private var isRegularWidth: Bool { horizontalSizeClass == .regular }
 
     /// One extra step past the last narrative page, where the challenge-start button lives.
     private var maxPageIndex: Int {
@@ -56,24 +59,26 @@ struct StoryChapterView: View {
             if !hasHeroImage {
                 VStack {
                     Spacer()
-                    Text(currentPage.emoji).font(.system(size: 100))
+                    Text(currentPage.emoji).font(.system(size: isRegularWidth ? 160 : 100))
                     Spacer()
                 }
             }
 
             VStack(spacing: 0) {
                 header
-                    .padding(.horizontal)
-                    .padding(.top, 8)
-                ReadingProgressBar(current: pageIndex + 1, total: chapter.pages.count, theme: theme, maxTicks: 8)
-                    .padding(.horizontal)
-                    .padding(.top, 12)
+                    .padding(.horizontal, isRegularWidth ? 44 : 16)
+                    .padding(.top, isRegularWidth ? 14 : 8)
+                ReadingProgressBar(current: pageIndex + 1, total: chapter.pages.count, theme: theme, maxTicks: 8,
+                                    filledColor: hasHeroImage ? .white : nil,
+                                    trackColor: hasHeroImage ? Color.white.opacity(0.35) : nil)
+                    .padding(.horizontal, isRegularWidth ? 44 : 16)
+                    .padding(.top, isRegularWidth ? 16 : 12)
                 Spacer(minLength: 0)
             }
 
             VStack {
                 Spacer(minLength: 0)
-                sheet
+                if isRegularWidth { regularSheet } else { sheet }
             }
 
             if showCompletion {
@@ -84,6 +89,7 @@ struct StoryChapterView: View {
         }
         .gesture(swipeGesture)
         .navigationBarBackButtonHidden()
+        .enableSwipeBack()
         .toolbar(.hidden, for: .navigationBar)
     }
 
@@ -101,10 +107,10 @@ struct StoryChapterView: View {
                 .shadow(color: .black.opacity(hasHeroImage ? 0.4 : 0), radius: 4, y: 1)
                 .lineLimit(1)
             Spacer(minLength: 0)
-            Text("\(min(pageIndex + 1, chapter.pages.count)) / \(chapter.pages.count)")
-                .font(.body(12, weight: .bold))
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
+            Text(isRegularWidth ? "Trang \(min(pageIndex + 1, chapter.pages.count)) / \(chapter.pages.count)" : "\(min(pageIndex + 1, chapter.pages.count)) / \(chapter.pages.count)")
+                .font(.body(isRegularWidth ? 16 : 12, weight: .bold))
+                .padding(.horizontal, isRegularWidth ? 18 : 12)
+                .padding(.vertical, isRegularWidth ? 10 : 6)
                 .background(hasHeroImage ? Color.white.opacity(0.92) : Palette.surface, in: Capsule())
                 .foregroundStyle(Palette.ink.opacity(0.7))
         }
@@ -183,6 +189,121 @@ struct StoryChapterView: View {
             .fill(Palette.surface)
         )
         .shadow(color: Palette.ink.opacity(0.14), radius: 20, y: -6)
+    }
+
+    /// P5 design: ảnh không bị che bởi thẻ trắng bo góc — chữ nổi dần lên từ
+    /// vùng gradient mờ ở đáy ảnh, không viền/không đổ bóng như bản iPhone.
+    private var regularSheet: some View {
+        VStack(alignment: .leading, spacing: 20) {
+            if isChallengeStep {
+                Text("Sẵn sàng thử thách chưa?")
+                    .font(.display(28))
+                    .foregroundStyle(Palette.ink)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: .infinity)
+                continueButton
+            } else {
+                Text(narrationText(currentPage))
+                    .font(.body(27, weight: .semibold))
+                    .foregroundStyle(Palette.ink)
+
+                if !pageVocabCards.isEmpty {
+                    HStack(spacing: 10) {
+                        ForEach(pageVocabCards) { card in
+                            Button {
+                                SpeechService.shared.speak(card.word)
+                            } label: {
+                                HStack(spacing: 8) {
+                                    Text(card.emoji)
+                                    Text(card.word).font(.body(16, weight: .bold))
+                                }
+                                .padding(.horizontal, 18)
+                                .padding(.vertical, 11)
+                                .background(Palette.bg, in: Capsule())
+                                .foregroundStyle(Palette.ink)
+                            }
+                        }
+                    }
+                }
+
+                bottomActionRow
+            }
+        }
+        .padding(.horizontal, 44)
+        .padding(.top, hasHeroImage ? 110 : 28)
+        .padding(.bottom, 44)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(alignment: .top) {
+            if hasHeroImage {
+                VStack(spacing: 0) {
+                    LinearGradient(colors: [Palette.surface.opacity(0), Palette.surface], startPoint: .top, endPoint: .bottom)
+                        .frame(height: 90)
+                    Palette.surface
+                }
+            } else {
+                Palette.surface
+            }
+        }
+    }
+
+    /// Hàng nút dưới cùng của `regularSheet`: lùi trang · nghe cả trang · sang trang.
+    private var bottomActionRow: some View {
+        HStack(spacing: 18) {
+            Button {
+                withAnimation { pageIndex = max(pageIndex - 1, 0) }
+            } label: {
+                Image(systemName: "chevron.left")
+                    .font(.system(size: 20, weight: .semibold))
+                    .frame(width: 72, height: 72)
+                    .background(Circle().fill(Palette.bg))
+                    .foregroundStyle(Palette.ink.opacity(0.4))
+            }
+            .disabled(pageIndex == 0)
+            .opacity(pageIndex == 0 ? 0.35 : 1)
+
+            Button {
+                SpeechService.shared.speak(currentPage.text, language: "vi-VN")
+            } label: {
+                Image(systemName: "speaker.wave.2.fill")
+                    .font(.system(size: 28))
+                    .frame(width: 84, height: 84)
+                    .background(Circle().fill(theme.base))
+                    .foregroundStyle(Palette.onAccent)
+            }
+
+            Text("Chạm loa để nghe cả trang")
+                .font(.body(16))
+                .foregroundStyle(Palette.ink.opacity(0.5))
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            if isLastNarrativePage && !chapter.hasMiniGame {
+                Button {
+                    progressStore.completeChapter(chapter.id)
+                    progressStore.addStar(for: "story")
+                    showCompletion = true
+                } label: {
+                    Text("Hoàn thành ▸")
+                        .font(.body(18, weight: .bold))
+                        .foregroundStyle(Palette.onAccent)
+                        .padding(.horizontal, 28)
+                        .frame(height: 64)
+                        .background(Capsule().fill(theme.base))
+                }
+                .buttonStyle(.plain)
+            } else {
+                Button {
+                    withAnimation { pageIndex = min(pageIndex + 1, maxPageIndex) }
+                } label: {
+                    Text("Trang sau ▸")
+                        .font(.body(18, weight: .bold))
+                        .foregroundStyle(Palette.onAccent)
+                        .padding(.horizontal, 28)
+                        .frame(height: 64)
+                        .background(Capsule().fill(theme.base))
+                }
+                .buttonStyle(.plain)
+            }
+        }
     }
 
     private var speakerButton: some View {

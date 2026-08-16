@@ -12,6 +12,9 @@ struct OddOneOutGameView: View {
     @Environment(ProfileStore.self) private var profileStore
     @Environment(\.theme) private var theme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+
+    private var isRegularWidth: Bool { horizontalSizeClass == .regular }
 
     @State private var questions: [Question] = []
     @State private var currentIndex = 0
@@ -33,19 +36,33 @@ struct OddOneOutGameView: View {
     private var buddyEmoji: String { profileStore.selectedCharacter?.emoji ?? "🐝" }
 
     var body: some View {
-        VStack(spacing: 14) {
-            header
-            progress
+        GameScreen(title: "Tìm bạn khác loài", index: currentIndex + 1, total: Self.totalQuestions,
+                   correct: correctCount,
+                   hint: (currentQuestion != nil && selectedId == nil) ? "Chạm vào bạn không cùng nhóm nhé" : nil) {
             if let question = currentQuestion {
-                content(for: question)
+                if selectedId != nil {
+                    resultSection(for: question)
+                } else {
+                    Text("Ai không cùng nhóm?")
+                        .font(.display(isRegularWidth ? 36 : 26))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
             }
-            Spacer(minLength: 0)
+        } answers: {
+            if let question = currentQuestion {
+                if selectedId != nil {
+                    Button("Câu tiếp theo ▸", action: advance)
+                        .buttonStyle(PillButtonStyle(theme: theme))
+                } else {
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: isRegularWidth ? 20 : 14), count: 2),
+                              spacing: isRegularWidth ? 20 : 14) {
+                        ForEach(question.allCards) { card in
+                            optionTile(card, question: question)
+                        }
+                    }
+                }
+            }
         }
-        .padding(.horizontal, 18)
-        .padding(.bottom, 26)
-        .organicBackground()
-        .gameContentWidth()
-        .navigationBarBackButtonHidden()
         .onAppear { if questions.isEmpty { buildRound() } }
         .overlay {
             if isRoundComplete {
@@ -55,71 +72,6 @@ struct OddOneOutGameView: View {
             }
         }
         .animation(.spring(response: 0.4, dampingFraction: 0.85), value: isRoundComplete)
-    }
-
-    // MARK: - Chrome
-
-    private var header: some View {
-        HStack(spacing: 10) {
-            Button { dismiss() } label: {
-                Image(systemName: "chevron.left").font(.system(size: 17, weight: .bold))
-                    .frame(width: 44, height: 44)
-                    .background(Circle().fill(Palette.surface))
-                    .foregroundStyle(Palette.ink)
-            }
-            VStack(alignment: .leading, spacing: 1) {
-                Text("Tìm bạn khác loài").font(.display(17))
-                Text("Câu \(currentIndex + 1)/\(Self.totalQuestions) · \(correctCount) đúng")
-                    .font(.body(11.5)).foregroundStyle(Palette.ink.opacity(0.5))
-            }
-            Spacer()
-        }
-    }
-
-    private var progress: some View {
-        HStack(spacing: 6) {
-            ForEach(0..<Self.totalQuestions, id: \.self) { i in
-                Capsule()
-                    .fill(i <= currentIndex ? theme.base : Palette.ink.opacity(0.12))
-                    .frame(height: 7)
-            }
-        }
-        .animation(.easeOut(duration: 0.3), value: currentIndex)
-    }
-
-    private var coach: some View {
-        HStack(spacing: 10) {
-            Text(buddyEmoji).font(.system(size: 19))
-                .frame(width: 36, height: 36)
-                .background(Circle().fill(Palette.onAccent))
-            Text("Chạm vào bạn không cùng nhóm nhé")
-                .font(.body(14, weight: .semibold))
-                .foregroundStyle(Palette.ink.opacity(0.62))
-        }
-    }
-
-    // MARK: - Content
-
-    private func content(for question: Question) -> some View {
-        VStack(spacing: 22) {
-            if selectedId != nil {
-                resultSection(for: question)
-                Button("Câu tiếp theo ▸", action: advance)
-                    .buttonStyle(PillButtonStyle(theme: theme))
-            } else {
-                Text("Ai không cùng nhóm?")
-                    .font(.display(26))
-                    .padding(.top, 6)
-
-                LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 14), count: 2), spacing: 14) {
-                    ForEach(question.allCards) { card in
-                        optionTile(card, question: question)
-                    }
-                }
-
-                coach
-            }
-        }
     }
 
     @ViewBuilder
@@ -138,7 +90,7 @@ struct OddOneOutGameView: View {
     private func optionTile(_ card: VocabularyCard, question: Question) -> some View {
         HStack {
             Spacer(minLength: 0)
-            imageView(card).frame(width: 84, height: 84)
+            imageView(card).frame(width: isRegularWidth ? 140 : 84, height: isRegularWidth ? 140 : 84)
             Spacer(minLength: 0)
         }
         .aspectRatio(1, contentMode: .fit)
