@@ -12,6 +12,12 @@ Copy đè theo đúng đường dẫn dưới đây rồi build. Không cần s�
 | `StoryListView.swift` | `Sources/LittleLearner/StoryModule/StoryListView.swift` |
 | `StoryHomeView.swift` | `Sources/LittleLearner/StoryModule/StoryHomeView.swift` |
 | `StoryChapterView.swift` | `Sources/LittleLearner/StoryModule/StoryChapterView.swift` |
+| `StoryCompletionOverlay.swift` | `Sources/LittleLearner/StoryModule/StoryCompletionOverlay.swift` |
+| `MiniGameScaffold.swift` | **file mới** → `Sources/LittleLearner/StoryModule/MiniGames/MiniGameScaffold.swift` |
+| `IceMeltGameView.swift` | `Sources/LittleLearner/StoryModule/MiniGames/IceMeltGameView.swift` |
+| `LaughChaseGameView.swift` | `Sources/LittleLearner/StoryModule/MiniGames/LaughChaseGameView.swift` |
+| `LanternPathGameView.swift` | `Sources/LittleLearner/StoryModule/MiniGames/LanternPathGameView.swift` |
+| `StormBattleGameView.swift` | `Sources/LittleLearner/StoryModule/MiniGames/StormBattleGameView.swift` |
 
 (Các file `GameScreenScaffold.swift`, `MatchTileView.swift`, `MatchingGameView.swift`,
 `NumberCardView.swift`, `LevelPickerView.swift`, `WinSheetView.swift` là bản mẫu cũ,
@@ -41,6 +47,18 @@ không liên quan lần sửa này.)
    Nay lưới 3 cột chia hết chiều cao, tên chương tách "Chương N" ra dòng nhãn
    riêng nên còn 2 dòng đầy đủ cho tên. Tiêu đề truyện dùng header tự vẽ
    (back 56 + tên 40pt) thay cho `navigationTitle` mặc định căn giữa.
+
+9. **4 mini-game của truyện bị nhốt trong cột 420pt, hai bên màn trắng bốc.**
+   Hai lỗi cùng lúc: `.organicBackground()` đặt TRƯỚC `.gameContentWidth()` nên
+   nền chỉ vẽ trong cột hẹp, và `gameContentWidth()` bọc cả màn thay vì chỉ vùng
+   chơi. Nay dùng `MiniGameShell` — nền là modifier ngoài cùng, header/câu hỏi
+   full bề ngang, vùng chơi mới giới hạn 560pt (game toạ độ tự do thì lấy hết).
+   Toạ độ mục tiêu bay/mây rơi cũng tính trong vùng chơi, không còn nhảy ra
+   ngoài phần thấy được.
+10. **Thẻ chúc mừng "Về danh sách chương"** nổi trần không có lớp làm mờ phía sau,
+   chữ cỡ iPhone. Nay có scrim, rộng tối đa 620pt, chữ 30pt trên iPad.
+11. **Danh sách truyện chỉ có 1 hàng vẫn chừa nửa màn trống** — bỏ trần 420pt để
+   hàng thẻ ăn hết chiều cao; chấm màu căn theo dòng chữ đầu thay vì giữa thẻ.
 
 ## Kiểm tra sau khi build
 

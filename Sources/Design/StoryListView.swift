@@ -33,7 +33,7 @@ struct StoryListView: View {
                     let rows = stride(from: 0, to: StoryContent.stories.count, by: 2).map {
                         Array(StoryContent.stories[$0 ..< min($0 + 2, StoryContent.stories.count)])
                     }
-                    let rowH = min((proxy.size.height - CGFloat(max(rows.count - 1, 0)) * gap) / CGFloat(max(rows.count, 1)), 420)
+                    let rowH = (proxy.size.height - CGFloat(max(rows.count - 1, 0)) * gap) / CGFloat(max(rows.count, 1))
                     VStack(spacing: gap) {
                         ForEach(rows.indices, id: \.self) { r in
                             HStack(spacing: gap) {
@@ -46,7 +46,6 @@ struct StoryListView: View {
                             }
                             .frame(height: rowH)
                         }
-                        Spacer(minLength: 0)
                     }
                 }
                 .padding(.horizontal, side)
@@ -85,10 +84,11 @@ struct StoryListView: View {
             .frame(maxWidth: .infinity, maxHeight: isRegularWidth ? .infinity : DesignTokens.minTapTarget * 1.6)
             .clipped()
 
-            HStack(spacing: isRegularWidth ? 11 : 8) {
+            HStack(alignment: .firstTextBaseline, spacing: isRegularWidth ? 11 : 8) {
                 Circle()
                     .fill(Color(hex: story.accentHex))
                     .frame(width: isRegularWidth ? 11 : 9, height: isRegularWidth ? 11 : 9)
+                    .alignmentGuide(.firstTextBaseline) { d in d.height * 0.9 }
                 Text(story.title)
                     .font(.display(isRegularWidth ? 26 : 16))
                     .foregroundStyle(Palette.ink)
