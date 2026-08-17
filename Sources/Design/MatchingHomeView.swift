@@ -155,10 +155,6 @@ struct MatchingHomeView: View {
             } else if let colorHex = card.colorHex {
                 // Bộ "Màu sắc": ô màu tràn viền, không phải chấm emoji trên nền trắng.
                 Color(hex: colorHex)
-                    .overlay {
-                        RoundedRectangle(cornerRadius: isRegularWidth ? 20 : 16, style: .continuous)
-                            .strokeBorder(Palette.ink.opacity(0.18), lineWidth: 1.5)
-                    }
             } else if let value = card.value {
                 Text("\(value)").font(.display(isRegularWidth ? 28 : 22)).foregroundStyle(theme.deep)
             } else {

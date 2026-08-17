@@ -18,24 +18,27 @@ struct LanternPathGameView: View {
                           counter: "\(revealedCount) / \(pathSequence.count)",
                           prompt: "Chạm đúng thứ tự để soi sáng lối đi trong bóng tối!",
                           onBack: { path.removeLast() }) {
-                VStack {
-                    Spacer(minLength: 0)
-                    // Lưới 3×3 vuông, ô giãn theo bề rộng thật thay vì
-                    // `minWidth: 100` cố định.
-                    Grid(horizontalSpacing: isRegularWidth ? 18 : 12,
-                         verticalSpacing: isRegularWidth ? 18 : 12) {
+                // LỖI ĐÃ SỬA: `Grid` + `.aspectRatio(1, .fill)` trên từng ô cho
+                // ra ba cột rộng khác nhau, vài ô bị kéo thành thanh xám mảnh.
+                // Nay đo bảng bằng `GeometryReader` rồi chia ô vuông cố định.
+                GeometryReader { proxy in
+                    let gap: CGFloat = isRegularWidth ? 18 : 12
+                    let pad: CGFloat = isRegularWidth ? 26 : 20
+                    let board = min(proxy.size.width, proxy.size.height)
+                    let cell = (board - pad * 2 - gap * 2) / 3
+                    VStack(spacing: gap) {
                         ForEach(0..<3, id: \.self) { row in
-                            GridRow {
+                            HStack(spacing: gap) {
                                 ForEach(0..<3, id: \.self) { col in
-                                    tileView(row * 3 + col)
+                                    tileView(row * 3 + col).frame(width: cell, height: cell)
                                 }
                             }
                         }
                     }
-                    .padding(isRegularWidth ? 26 : 20)
+                    .padding(pad)
                     .background(Palette.ink, in: RoundedRectangle(cornerRadius: DesignTokens.radiusLg))
-                    .aspectRatio(1, contentMode: .fit)
-                    Spacer(minLength: 0)
+                    .frame(width: board, height: board)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
 
@@ -52,19 +55,24 @@ struct LanternPathGameView: View {
         return Button {
             tap(tileIndex)
         } label: {
-            Group {
+            ZStack {
+                RoundedRectangle(cornerRadius: DesignTokens.cornerRadius, style: .continuous)
+                    .fill(isLit ? Color(hex: chapter.accentHex) : Color.white.opacity(0.08))
                 if isLit, let imageName = chapter.imageName {
-                    Image(imageName).resizable().scaledToFill()
-                } else {
-                    Text(isLit ? "🔦" : "⬛")
+                    CoverFill(imageName: imageName, washedStyle: false)
+                } else if isLit {
+                    Image(systemName: "lightbulb.fill")
                         .font(.system(size: isRegularWidth ? 46 : 32))
+                        .foregroundStyle(.white)
+                } else {
+                    // Ô chưa sáng: chấm mờ, KHÔNG dùng emoji "⬛" (hiện ra
+                    // đúng một ô vuông đen xấu như trên ảnh chụp).
+                    Circle()
+                        .fill(Color.white.opacity(0.14))
+                        .frame(width: isRegularWidth ? 18 : 13, height: isRegularWidth ? 18 : 13)
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .aspectRatio(1, contentMode: .fill)
-            .background(isLit ? Color(hex: chapter.accentHex) : Color.white.opacity(0.1),
-                        in: RoundedRectangle(cornerRadius: DesignTokens.cornerRadius))
-            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.cornerRadius))
+            .clipShape(RoundedRectangle(cornerRadius: DesignTokens.cornerRadius, style: .continuous))
         }
         .buttonStyle(.plain)
         .disabled(isLit)

@@ -5,6 +5,10 @@ Copy đè theo đúng đường dẫn dưới đây rồi build. Không cần s�
 | File ở đây | Đè lên |
 | --- | --- |
 | `Palette.swift` | `Sources/LittleLearner/Shared/Palette.swift` |
+| `OddOneOutGameView.swift` | `Sources/LittleLearner/GameModules/OddOneOutGame/OddOneOutGameView.swift` |
+| `ListenChooseGameView.swift` | `Sources/LittleLearner/GameModules/ListenChooseGame/ListenChooseGameView.swift` |
+| `CountingGameView.swift` | `Sources/LittleLearner/GameModules/CountingGame/CountingGameView.swift` |
+| `MatchingHomeView.swift` | `Sources/LittleLearner/GameModules/MatchingGame/MatchingHomeView.swift` |
 | `RootTabView.swift` | `Sources/LittleLearner/RootTabView.swift` |
 | `AppHeaderView.swift` | `Sources/LittleLearner/Profile/AppHeaderView.swift` |
 | `VocabularyHomeView.swift` | `Sources/LittleLearner/VocabularyModule/VocabularyHomeView.swift` |
@@ -70,6 +74,39 @@ không liên quan lần sửa này.)
 13. **Truyện chỉ có 1 truyện, thẻ cao bằng cả màn** — trần chiều cao hàng 560pt,
    hàng căn lên đỉnh.
 14. **Header truyện tên 2 dòng đẩy nút back lệch** — `HStack(alignment: .top)`.
+
+15. **Tìm bạn khác loài: 4 ô bé xíu dồn đáy, giữa màn trống.** `optionTile` bọc
+   `.aspectRatio(1, .fit)` quanh HStack nên ô co đúng bằng cỡ ảnh 140pt, còn
+   dòng "Ai không cùng nhóm?" chiếm hết chỗ trống. Nay câu hỏi + lưới 2×2 cùng
+   nằm trong vùng chơi, lưới đo `GeometryReader` chia đều, ô có tên thẻ dưới
+   ảnh (thiết kế P13).
+16. **Ba ô hiện SỐ 4·5·6 cạnh một ảnh koala** — nhóm bốc trúng category
+   "numbers"/"colors". Nay nhóm 3 thẻ luôn lấy từ category CÓ ẢNH, số/màu chỉ
+   làm ô lạc → "4 ô lớn cùng bộ ảnh" đúng thiết kế.
+17. **Nghe rồi chọn trên iPad xếp dọc như iPhone** — loa nhỏ giữa màn, 3 thanh
+   ngang mỏng, trống nửa màn. Nay đúng P10: cột trái 272pt (loa 172pt, câu hỏi
+   30pt, gợi ý) + lưới đáp án 2×2 ảnh lớn bên phải, iPad chơi 4 ảnh.
+18. **Icon loa hai kiểu** — màn đọc truyện dùng `speaker.wave.2.fill`, game dùng
+   `speaker.wave.3.fill`. Nay thống nhất `speaker.wave.3.fill`.
+
+19. **Đếm cùng bé: khung đếm co bằng nội dung, trống nửa màn dưới.** Thiết kế P9
+   cho khung đếm `flex:1` (nền accent, câu hỏi nằm TRONG khung). Nay khung ăn
+   hết vùng chơi, ảnh con vật 150pt (trước 96pt) và bỏ ô nền thừa quanh mỗi con.
+20. **Ô số thiếu tên tiếng Anh** — thiết kế là số 76pt + "Three/Four/Five", ô cao
+   170pt. Nay đúng vậy (iPhone 40pt/88pt).
+
+21. **Thẻ "BỘ THẺ ĐANG CHỌN" là một mảng xanh gắt.** Nó tô nguyên khối
+   `theme.base`; với buddy màu lam thành mảng xanh chọi nền kem, khác hẳn thẻ
+   "Chơi tiếp" ở màn Chơi (dùng `theme.tint`). Nay nền tint nhạt + chữ ink, chỉ
+   nút "Chơi ngay" dùng màu đậm.
+22. **Ô xem trước bộ "Màu sắc"** là chấm emoji trên nền trắng → nay ô màu tràn
+   viền (`colorHex`). Màn này cũng lên cỡ chữ/lề iPad như các màn khác.
+
+23. **Ngọn đèn: bảng 3×3 méo, có thanh xám mảnh xen giữa, mỗi ô là một hình
+   vuông đen xấu.** `Grid` + `.aspectRatio(1, .fill)` trên từng ô cho ba cột
+   rộng khác nhau và kéo vài ô thành thanh; ô chưa sáng vẽ bằng emoji "⬛".
+   Nay bảng đo bằng `GeometryReader`, ô vuông cố định chia đều; ô chưa sáng là
+   chấm mờ, ô sáng là ảnh chương (`CoverFill`) hoặc biểu tượng đèn.
 
 ## Kiểm tra sau khi build
 
