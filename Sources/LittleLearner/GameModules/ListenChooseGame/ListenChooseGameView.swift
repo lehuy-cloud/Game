@@ -276,6 +276,7 @@ struct ListenChooseGameView: View {
             SpeechService.shared.speak(question.answer.word)
         } else {
             withAnimation(.default) { shakeTokens[option.id, default: 0] += 1 }
+            SpeechService.shared.speak(word: option.word, caption: "Chưa đúng, thử lại nhé")
         }
     }
 

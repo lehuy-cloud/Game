@@ -265,6 +265,9 @@ struct MatchWordGameView: View {
         } else {
             shakingCardId = targetId
             withAnimation(.default) { shakeToken += 1 }
+            if let wrongCard = question.cards.first(where: { $0.id == targetId }) {
+                SpeechService.shared.speak(word: wrongCard.word, caption: "Chưa đúng, thử lại nhé")
+            }
         }
     }
 

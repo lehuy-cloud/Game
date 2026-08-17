@@ -273,6 +273,7 @@ struct CountingGameView: View {
             SpeechService.shared.speak(Self.numberCards[number - 1].word)
         } else {
             wrongChoices.insert(number)
+            SpeechService.shared.speak(word: Self.numberCards[number - 1].word, caption: "Chưa đúng, thử lại nhé")
         }
     }
 

@@ -246,6 +246,7 @@ struct OddOneOutGameView: View {
             SpeechService.shared.speak(question.oddCard.word)
         } else {
             bounceId = card.id
+            SpeechService.shared.speak(word: card.word, caption: "Chưa đúng, thử lại nhé")
             Task {
                 try? await Task.sleep(for: .seconds(0.35))
                 bounceId = nil

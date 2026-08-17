@@ -172,6 +172,7 @@ struct SecretDoorGameView: View {
         } else {
             wrongIds.insert(option.id)
             withAnimation(.default) { shakeToken += 1 }
+            SpeechService.shared.speak(word: option.word, caption: "Chưa đúng, thử lại nhé")
         }
     }
 
