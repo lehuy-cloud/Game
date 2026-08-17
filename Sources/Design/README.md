@@ -60,6 +60,17 @@ không liên quan lần sửa này.)
 11. **Danh sách truyện chỉ có 1 hàng vẫn chừa nửa màn trống** — bỏ trần 420pt để
    hàng thẻ ăn hết chiều cao; chấm màu căn theo dòng chữ đầu thay vì giữa thẻ.
 
+12. **Ảnh bìa làm phình thẻ (lỗi thấy trong 4 ảnh chụp iPad).** Trên màn Học,
+   thẻ chủ đề có ảnh (Story Words) rộng/cao hơn ba thẻ kia, đè lên tiêu đề và
+   che huy hiệu sao; màn Truyện thẻ ăn hết màn, chữ dồn xuống đáy; danh sách
+   chương ba cột rộng khác nhau, hàng 2 lệch. Nguyên nhân chung: 
+   `Image().resizable().scaledToFill()` vẫn khai kích thước gốc với layout —
+   `.clipped()` chỉ cắt lúc VẼ, không sửa layout. Nay dùng `CoverFill`
+   (ảnh nằm trong `overlay` của `Color.clear`) ở cả 3 màn → ô lưới bằng nhau.
+13. **Truyện chỉ có 1 truyện, thẻ cao bằng cả màn** — trần chiều cao hàng 560pt,
+   hàng căn lên đỉnh.
+14. **Header truyện tên 2 dòng đẩy nút back lệch** — `HStack(alignment: .top)`.
+
 ## Kiểm tra sau khi build
 
 - Font: nếu chữ vẫn mảnh/nhỏ hơn thiết kế, `UIAppFonts` trong Info.plist chưa khai

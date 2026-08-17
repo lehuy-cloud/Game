@@ -159,12 +159,7 @@ struct VocabularyHomeView: View {
 
         default:
             if let imageName = category.imageName {
-                Image(imageName)
-                    .resizable()
-                    .scaledToFill()
-                    .washed()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .clipped()
+                CoverFill(imageName: imageName)
             } else {
                 ZStack {
                     Color(hex: category.colorHex).opacity(0.18)

@@ -128,6 +128,34 @@ extension View {
     }
 }
 
+
+// MARK: - Ảnh phủ kín ô (không được làm phình thẻ)
+
+/// LỖI ĐÃ SỬA: `Image().resizable().scaledToFill()` đặt thẳng trong thẻ vẫn
+/// khai báo kích thước gốc rất lớn với hệ thống layout, nên ô lưới phình ra:
+/// thẻ có ảnh rộng/cao hơn thẻ bên cạnh, đè lên header, tràn khỏi hàng.
+/// `.clipped()` chỉ cắt lúc vẽ, không sửa layout. Ảnh phải nằm trong
+/// `overlay` của một hình trong suốt — overlay không tham gia tính layout.
+struct CoverFill: View {
+    let imageName: String
+    var washedStyle: Bool = true
+
+    var body: some View {
+        Color.clear
+            .overlay {
+                Group {
+                    if washedStyle {
+                        Image(imageName).resizable().scaledToFill().washed()
+                    } else {
+                        Image(imageName).resizable().scaledToFill()
+                    }
+                }
+            }
+            .clipped()
+            .contentShape(Rectangle())
+    }
+}
+
 // MARK: - Thẻ Organic dùng chung
 
 extension View {

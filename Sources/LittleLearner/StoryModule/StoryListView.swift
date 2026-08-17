@@ -33,7 +33,8 @@ struct StoryListView: View {
                     let rows = stride(from: 0, to: StoryContent.stories.count, by: 2).map {
                         Array(StoryContent.stories[$0 ..< min($0 + 2, StoryContent.stories.count)])
                     }
-                    let rowH = (proxy.size.height - CGFloat(max(rows.count - 1, 0)) * gap) / CGFloat(max(rows.count, 1))
+                    // Một truyện không được kéo thẻ cao hết màn (ảnh bìa to như poster).
+                    let rowH = min((proxy.size.height - CGFloat(max(rows.count - 1, 0)) * gap) / CGFloat(max(rows.count, 1)), 560)
                     VStack(spacing: gap) {
                         ForEach(rows.indices, id: \.self) { r in
                             HStack(spacing: gap) {
@@ -47,6 +48,7 @@ struct StoryListView: View {
                             .frame(height: rowH)
                         }
                     }
+                    .frame(maxHeight: .infinity, alignment: .top)
                 }
                 .padding(.horizontal, side)
                 .padding(.top, gap)
@@ -73,7 +75,7 @@ struct StoryListView: View {
         VStack(spacing: 0) {
             Group {
                 if let coverImageName = story.coverImageName {
-                    Image(coverImageName).resizable().scaledToFill().washed()
+                    CoverFill(imageName: coverImageName)
                 } else {
                     ZStack {
                         Color(hex: story.accentHex).opacity(0.18)

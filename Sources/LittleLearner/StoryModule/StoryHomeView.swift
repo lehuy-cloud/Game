@@ -74,7 +74,7 @@ struct StoryHomeView: View {
     }
 
     private var header: some View {
-        HStack(spacing: isRegularWidth ? 18 : 12) {
+        HStack(alignment: .top, spacing: isRegularWidth ? 18 : 12) {
             Button { path.removeLast() } label: {
                 Image(systemName: "chevron.left")
                     .font(.system(size: isRegularWidth ? 22 : 17, weight: .bold))
@@ -118,7 +118,7 @@ struct StoryHomeView: View {
             ZStack(alignment: .topTrailing) {
                 Group {
                     if hasImage, let imageName = chapter.imageName {
-                        Image(imageName).resizable().scaledToFill().washed()
+                        CoverFill(imageName: imageName)
                     } else {
                         ZStack {
                             Color(hex: chapter.accentHex).opacity(0.18)
