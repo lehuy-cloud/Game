@@ -80,8 +80,6 @@ struct MatchWordGameView: View {
                     }
                     .frame(maxHeight: .infinity)
                 }
-                .coordinateSpace(name: Self.dragSpace)
-                .onPreferenceChange(DropZoneFrameKey.self) { dropZoneFrames = $0 }
                 .animation(.easeOut(duration: 0.25), value: matchedIds)
             }
         } answers: {
@@ -94,6 +92,14 @@ struct MatchWordGameView: View {
                 }
             }
         }
+        // Phải bọc CẢ hai slot question+answers, không chỉ vùng ảnh — thẻ chữ
+        // kéo được nằm ở slot answers, DragGesture của nó dùng cùng tên
+        // coordinate space này để so khớp toạ độ với các ô nhận (dropZoneFrames).
+        // Trước đây chỉ bọc quanh vùng ảnh nên hai bên không cùng hệ quy chiếu,
+        // kéo thả không bao giờ khớp — chỉ chạm-chọn (không phụ thuộc
+        // coordinate space) mới ăn.
+        .coordinateSpace(name: Self.dragSpace)
+        .onPreferenceChange(DropZoneFrameKey.self) { dropZoneFrames = $0 }
         .onAppear { if questions.isEmpty { buildRound() } }
         .overlay {
             if isRoundComplete {
@@ -235,11 +241,15 @@ struct MatchWordGameView: View {
 
     private func handleWordTap(_ card: VocabularyCard) {
         guard !matchedIds.contains(card.id) else { return }
+        SpeechService.shared.speak(card.word)
         selectedWordId = (selectedWordId == card.id) ? nil : card.id
     }
 
     private func handleImageTap(_ card: VocabularyCard, question: Question) {
-        guard let selectedId = selectedWordId, !matchedIds.contains(card.id) else { return }
+        guard let selectedId = selectedWordId, !matchedIds.contains(card.id) else {
+            SpeechService.shared.speak(card.word)
+            return
+        }
         resolveDrop(cardId: selectedId, targetId: card.id, question: question)
     }
 

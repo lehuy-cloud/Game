@@ -35,40 +35,36 @@ struct GamesHomeView: View {
                 .padding(.horizontal, side)
                 .padding(.top, 6)
 
-            GeometryReader { proxy in
-                // LỖI ĐÃ SỬA: chiều cao hàng cuối được đoán là 96pt nhưng thẻ
-                // "Ghép chữ với hình" cao hơn thế (lề 20 + nội dung 58), nên
-                // tổng vượt chiều cao thật → VStack ép khoảng cách về 0 và thẻ
-                // "Lật Hình" dính vào hàng "Ô cửa bí mật / Tìm bạn khác loài".
-                // Nay chia ngân sách theo đúng thứ tự: hàng cuối cố định navH,
-                // ba khoảng cách, phần còn lại mới chia cho thẻ chơi tiếp + 2 hàng.
-                let navH: CGFloat = 104
-                let available = proxy.size.height - navH - gap * 3
-                let continueH = min(max(available * 0.34, 200), 320)
-                let rowH = max((available - continueH) / 2, 150)
+            // NGUYÊN NHÂN THẬT (lần 3): chia ngân sách bằng GeometryReader vẫn hỏng
+            // vì các khối có chiều cao TỐI THIỂU riêng lớn hơn phần được chia —
+            // thẻ "Chơi tiếp" chứa 4 ô xem trước cố định 104pt (tối thiểu ~278pt)
+            // và hàng "Ghép chữ với hình" tối thiểu ~98pt. Khi tổng tối thiểu vượt
+            // chiều cao màn, SwiftUI thu KHOẢNG CÁCH trước, nên hai khối dính nhau.
+            // Nay bỏ hẳn số đo tay: mọi khối đàn hồi (`maxHeight`), ô xem trước
+            // co theo thẻ. Khối đàn hồi nhường chỗ trước khi `gap` bị thu.
+            VStack(spacing: gap) {
+                continueCard
+                    .frame(maxHeight: 320)
+
                 VStack(spacing: gap) {
-                    continueCard.frame(height: continueH)
-
-                    VStack(spacing: gap) {
-                        HStack(spacing: gap) {
-                            tile("magnifyingglass", "Ô cửa bí mật", "Nhìn ô cửa, đoán con vật", "game_secretdoor") { SecretDoorGameView() }
-                            tile("sparkles", "Tìm bạn khác loài", "Chỉ ra đứa lạc đàn", "game_oddoneout") { OddOneOutGameView() }
-                        }
-                        .frame(height: rowH)
-                        HStack(spacing: gap) {
-                            tile("textformat.123", "Đếm cùng bé", "Đếm rồi chọn đúng số", "game_counting") { CountingGameView() }
-                            tile("speaker.wave.3.fill", "Nghe rồi chọn", "Nghe từ, chỉ đúng ảnh", "game_listen") { ListenChooseGameView() }
-                        }
-                        .frame(height: rowH)
+                    HStack(spacing: gap) {
+                        tile("magnifyingglass", "Ô cửa bí mật", "Nhìn ô cửa, đoán con vật", "game_secretdoor") { SecretDoorGameView() }
+                        tile("sparkles", "Tìm bạn khác loài", "Chỉ ra đứa lạc đàn", "game_oddoneout") { OddOneOutGameView() }
                     }
-
-                    NavigationLink { MatchWordGameView() } label: {
-                        gameRow(icon: "textformat.abc", title: "Ghép chữ với hình",
-                                subtitle: "Kéo từ vào đúng ảnh", tint: theme.base)
+                    .frame(maxHeight: .infinity)
+                    HStack(spacing: gap) {
+                        tile("textformat.123", "Đếm cùng bé", "Đếm rồi chọn đúng số", "game_counting") { CountingGameView() }
+                        tile("speaker.wave.3.fill", "Nghe rồi chọn", "Nghe từ, chỉ đúng ảnh", "game_listen") { ListenChooseGameView() }
                     }
-                    .buttonStyle(.plain)
-                    .frame(height: navH)
+                    .frame(maxHeight: .infinity)
                 }
+
+                NavigationLink { MatchWordGameView() } label: {
+                    gameRow(icon: "textformat.abc", title: "Ghép chữ với hình",
+                            subtitle: "Kéo từ vào đúng ảnh", tint: theme.base)
+                }
+                .buttonStyle(.plain)
+                .frame(maxHeight: 112)
             }
             .padding(.horizontal, side)
             .padding(.top, gap)
@@ -196,7 +192,8 @@ struct GamesHomeView: View {
                 theme.base
             }
         }
-        .frame(width: 104, height: 104)
+        .aspectRatio(1, contentMode: .fit)
+        .frame(maxWidth: 104, maxHeight: 104)
         .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
         .shadow(color: Palette.ink.opacity(0.08), radius: 4, y: 2)
     }
