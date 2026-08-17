@@ -64,7 +64,7 @@ struct MatchTileView: View {
                         contentView
                         if showWord {
                             Text(tile.card.word)
-                                .font(.body(11, weight: .bold))
+                                .font(AppFont.label(isRegularWidth))
                                 .foregroundStyle(tile.isMatched ? Palette.sageDeep : Palette.ink.opacity(0.55))
                         }
                     }

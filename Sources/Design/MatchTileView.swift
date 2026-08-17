@@ -8,6 +8,8 @@ struct MatchTileView: View {
     let action: () -> Void
 
     @Environment(\.theme) private var theme
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    private var isRegularWidth: Bool { horizontalSizeClass == .regular }
 
     private var isShown: Bool { tile.isFaceUp || tile.isMatched }
 
@@ -48,11 +50,11 @@ struct MatchTileView: View {
                     RoundedRectangle(cornerRadius: DesignTokens.radiusTile, style: .continuous)
                         .strokeBorder(Palette.sage, lineWidth: 3)
                 }
-                VStack(spacing: 2) {
-                    Text(tile.card.emoji).font(.system(size: 38))
+                VStack(spacing: isRegularWidth ? 6 : 2) {
+                    Text(tile.card.emoji).font(.system(size: isRegularWidth ? 60 : 38))
                     if showWord {
                         Text(tile.card.word)
-                            .font(.body(11, weight: .bold))
+                            .font(AppFont.label(isRegularWidth))
                             .foregroundStyle(tile.isMatched ? Palette.sageDeep : Palette.ink.opacity(0.55))
                     }
                 }

@@ -16,20 +16,24 @@ struct NumberCardView: View {
 
     @Environment(\.theme) private var theme
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
 
+    // LỖI ĐÃ SỬA: màn này khoá cứng cỡ iPhone (tiêu đề 20, chữ 38/19, nút 44/60)
+    // và còn dùng SF Symbol `speaker.wave.2.fill` thay vì glyph 🔊 dùng chung.
+    private var isRegularWidth: Bool { horizontalSizeClass == .regular }
     private var usesTenFrame: Bool { value > 5 }
 
     var body: some View {
         VStack(spacing: 0) {
             header
-            progress.padding(.vertical, 14)
+            progress.padding(.vertical, isRegularWidth ? 20 : 14)
             hero
-            wordCard.padding(.top, 14)
+            wordCard.padding(.top, isRegularWidth ? 22 : 14)
             Spacer(minLength: 18)
             navRow
         }
-        .padding(.horizontal, 20)
-        .padding(.bottom, 30)
+        .padding(.horizontal, Layout.side(isRegularWidth))
+        .padding(.bottom, isRegularWidth ? 44 : 30)
         .organicBackground()
         .navigationBarBackButtonHidden()
         .gesture(
@@ -42,19 +46,20 @@ struct NumberCardView: View {
     // MARK: Header
 
     private var header: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: isRegularWidth ? 18 : 12) {
             Button { dismiss() } label: {
                 Image(systemName: "chevron.left")
-                    .font(.system(size: 18, weight: .semibold))
-                    .frame(width: 44, height: 44)
+                    .font(.system(size: Layout.backGlyph(isRegularWidth), weight: .semibold))
+                    .frame(width: Layout.backCircle(isRegularWidth), height: Layout.backCircle(isRegularWidth))
                     .background(Circle().fill(Palette.surface))
                     .foregroundStyle(Palette.ink)
             }
-            Text("Số đếm").font(.display(20))
+            Text("Số đếm").font(AppFont.navTitle(isRegularWidth))
             Spacer()
             Text("\(index) / \(total)")
-                .font(.body(12, weight: .bold))
-                .padding(.horizontal, 13).padding(.vertical, 7)
+                .font(AppFont.badge(isRegularWidth))
+                .padding(.horizontal, isRegularWidth ? 18 : 13)
+                .padding(.vertical, isRegularWidth ? 10 : 7)
                 .background(Capsule().fill(Palette.surfaceAlt))
         }
     }
@@ -68,7 +73,7 @@ struct NumberCardView: View {
                 Capsule().fill(Palette.ink.opacity(0.12))
             }
         }
-        .frame(height: 7)
+        .frame(height: Layout.progressThickness(isRegularWidth))
     }
 
     // MARK: Hero — số lớn + số lượng
@@ -76,14 +81,14 @@ struct NumberCardView: View {
     private var hero: some View {
         VStack(spacing: usesTenFrame ? 14 : 6) {
             Text("\(value)")
-                .font(.display(usesTenFrame ? 150 : 210))
+                .font(.display(isRegularWidth ? (usesTenFrame ? 210 : 280) : (usesTenFrame ? 150 : 210)))
                 .foregroundStyle(theme.deep)
                 .minimumScaleFactor(0.6)
                 .lineLimit(1)
             if usesTenFrame { tenFrame } else { dotRow }
         }
         .frame(maxWidth: .infinity)
-        .frame(height: 290)
+        .frame(height: isRegularWidth ? 420 : 290)
         .background(RoundedRectangle(cornerRadius: DesignTokens.radiusLg, style: .continuous).fill(theme.tint))
         .shadow(color: Palette.ink.opacity(0.10), radius: 14, y: 6)
     }
@@ -91,7 +96,8 @@ struct NumberCardView: View {
     private var dotRow: some View {
         HStack(spacing: 10) {
             ForEach(0..<value, id: \.self) { _ in
-                Circle().fill(theme.deep).frame(width: 22, height: 22)
+                Circle().fill(theme.deep)
+                    .frame(width: isRegularWidth ? 32 : 22, height: isRegularWidth ? 32 : 22)
             }
         }
         .padding(.top, 6)
@@ -105,7 +111,7 @@ struct NumberCardView: View {
                         let n = row * 5 + col
                         Circle()
                             .fill(n < value ? theme.deep : Color.white.opacity(0.62))
-                            .frame(width: 26, height: 26)
+                            .frame(width: isRegularWidth ? 38 : 26, height: isRegularWidth ? 38 : 26)
                     }
                 }
             }
@@ -117,21 +123,22 @@ struct NumberCardView: View {
     private var wordCard: some View {
         HStack(spacing: 14) {
             VStack(alignment: .leading, spacing: 2) {
-                Text(english).font(.display(38))
+                Text(english).font(.display(isRegularWidth ? 52 : 38))
                 Text(vietnamese)
-                    .font(.body(19, weight: .semibold))
+                    .font(AppFont.reading(isRegularWidth))
                     .foregroundStyle(Palette.ink.opacity(0.62))
             }
             Spacer(minLength: 0)
             Button(action: onSpeak) {
-                Image(systemName: "speaker.wave.2.fill")
-                    .font(.system(size: 22, weight: .semibold))
-                    .frame(width: 56, height: 56)
-                    .background(Circle().fill(theme.base))
-                    .foregroundStyle(Palette.onAccent)
+                SpeakGlyph(size: isRegularWidth ? 34 : 26)
+                    .frame(width: isRegularWidth ? 76 : 56, height: isRegularWidth ? 76 : 56)
+                    .background {
+                        Circle().fill(theme.tint)
+                        Circle().strokeBorder(theme.base.opacity(0.5), lineWidth: 2.5)
+                    }
             }
         }
-        .padding(.horizontal, 20).padding(.vertical, 18)
+        .padding(.horizontal, isRegularWidth ? 30 : 20).padding(.vertical, isRegularWidth ? 26 : 18)
         .background(RoundedRectangle(cornerRadius: DesignTokens.radiusLg, style: .continuous).fill(Palette.surface))
         .shadow(color: Palette.ink.opacity(0.07), radius: 8, y: 3)
     }
@@ -139,20 +146,22 @@ struct NumberCardView: View {
     // MARK: Điều hướng
 
     private var navRow: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: isRegularWidth ? 18 : 12) {
             Button(action: onPrev) {
-                Image(systemName: "chevron.left").font(.system(size: 22, weight: .semibold))
-                    .frame(width: 60, height: 60)
+                Image(systemName: "chevron.left")
+                    .font(.system(size: isRegularWidth ? 26 : 22, weight: .semibold))
+                    .frame(width: Layout.navCircle(isRegularWidth), height: Layout.navCircle(isRegularWidth))
                     .background(Circle().fill(Palette.surface))
                     .foregroundStyle(Palette.ink.opacity(index > 1 ? 1 : 0.35))
             }
             .disabled(index <= 1)
             Text("vuốt để đổi thẻ")
-                .font(.body(12.5)).foregroundStyle(Palette.ink.opacity(0.45))
+                .font(AppFont.caption(isRegularWidth)).foregroundStyle(Palette.ink.opacity(0.45))
                 .frame(maxWidth: .infinity)
             Button(action: onNext) {
-                Image(systemName: "chevron.right").font(.system(size: 22, weight: .semibold))
-                    .frame(width: 60, height: 60)
+                Image(systemName: "chevron.right")
+                    .font(.system(size: isRegularWidth ? 26 : 22, weight: .semibold))
+                    .frame(width: Layout.navCircle(isRegularWidth), height: Layout.navCircle(isRegularWidth))
                     .background(Circle().fill(theme.deep))
                     .foregroundStyle(Palette.onAccent)
             }
