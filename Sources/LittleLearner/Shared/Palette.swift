@@ -156,6 +156,21 @@ struct CoverFill: View {
     }
 }
 
+
+// MARK: - Nút nghe: dùng đúng glyph 🔊 như design doc
+
+/// Design (`iPad Layouts.dc.html` / `iPhone Layout.dc.html`) vẽ nút nghe là
+/// glyph 🔊 trong vòng tròn accent, không phải SF Symbol `speaker.wave.*`.
+/// Mọi nút nghe trong app dùng view này để không lệch nhau nữa.
+struct SpeakGlyph: View {
+    var size: CGFloat
+    var body: some View {
+        Text("🔊")
+            .font(.system(size: size))
+            .accessibilityLabel("Nghe")
+    }
+}
+
 // MARK: - Thẻ Organic dùng chung
 
 extension View {

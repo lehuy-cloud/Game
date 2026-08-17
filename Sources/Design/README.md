@@ -9,6 +9,7 @@ Copy đè theo đúng đường dẫn dưới đây rồi build. Không cần s�
 | `ListenChooseGameView.swift` | `Sources/LittleLearner/GameModules/ListenChooseGame/ListenChooseGameView.swift` |
 | `CountingGameView.swift` | `Sources/LittleLearner/GameModules/CountingGame/CountingGameView.swift` |
 | `MatchingHomeView.swift` | `Sources/LittleLearner/GameModules/MatchingGame/MatchingHomeView.swift` |
+| `FlashcardView.swift` | `Sources/LittleLearner/VocabularyModule/FlashcardView.swift` |
 | `RootTabView.swift` | `Sources/LittleLearner/RootTabView.swift` |
 | `AppHeaderView.swift` | `Sources/LittleLearner/Profile/AppHeaderView.swift` |
 | `VocabularyHomeView.swift` | `Sources/LittleLearner/VocabularyModule/VocabularyHomeView.swift` |
@@ -107,6 +108,24 @@ không liên quan lần sửa này.)
    rộng khác nhau và kéo vài ô thành thanh; ô chưa sáng vẽ bằng emoji "⬛".
    Nay bảng đo bằng `GeometryReader`, ô vuông cố định chia đều; ô chưa sáng là
    chấm mờ, ô sáng là ảnh chương (`CoverFill`) hoặc biểu tượng đèn.
+
+24. **Màn Chơi: thẻ "Lật Hình" dính vào hàng "Ô cửa bí mật / Tìm bạn khác loài".**
+   Ngân sách chiều cao coi hàng cuối ("Ghép chữ với hình") là 96pt, nhưng thẻ đó
+   cao hơn (lề 20 + nội dung 58) nên tổng vượt chiều cao thật → VStack ép khoảng
+   cách về 0. Nay hàng cuối cố định 104pt, trừ đủ 3 khoảng cách rồi mới chia
+   phần còn lại cho thẻ Chơi tiếp (34%, kẹp 200–320pt) và 2 hàng game.
+
+25. **Thẻ xem trước bộ "Màu sắc" hiện chấm emoji 🔴🟢 (icon cũ).** `peekTile`
+   thiếu nhánh `colorHex` nên rơi xuống nhánh emoji. Nay ô màu tràn viền, số thì
+   vẽ chữ số — giống `MatchingHomeView` (mục 22).
+
+26. **Icon loa không theo design.** Design doc vẽ nút nghe là glyph 🔊 trong vòng
+   tròn accent; app dùng SF Symbol `speaker.wave.2/3.fill` và mỗi màn một cỡ.
+   Nay có `SpeakGlyph` trong `Palette.swift`, dùng ở: nút nghe lớn của "Nghe rồi
+   chọn", hai nút nghe màn đọc truyện, chip "Nghe lại" của "Đếm cùng bé", nút
+   nghe thẻ từ (`FlashcardView`).
+   (Giữ SF Symbol ở icon ô game trên màn Chơi và dòng cài đặt trong
+   `LevelPickerView` — chỗ đó là icon danh mục, không phải nút nghe.)
 
 ## Kiểm tra sau khi build
 

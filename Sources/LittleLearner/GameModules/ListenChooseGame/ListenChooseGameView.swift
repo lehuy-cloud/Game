@@ -192,9 +192,7 @@ struct ListenChooseGameView: View {
             ZStack {
                 Circle().fill(theme.deep)
                 Circle().strokeBorder(theme.tint, lineWidth: 3).padding(-6)
-                Image(systemName: "speaker.wave.3.fill")
-                    .font(.system(size: glyph))
-                    .foregroundStyle(Palette.onAccent)
+                SpeakGlyph(size: glyph)
             }
             .frame(width: size, height: size)
             .shadow(color: Palette.ink.opacity(0.15), radius: 8, y: 4)

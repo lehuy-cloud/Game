@@ -203,19 +203,28 @@ struct OddOneOutGameView: View {
 
     // "story" là ảnh minh hoạ riêng của từng chương (bão tuyết, phù thuỷ) —
     // không hợp bốc ngẫu nhiên vào mini-game vui, nên loại.
-    private static let eligibleCategoryIds = VocabularyContent.categories.map(\.id).filter { $0 != "story" }
+    private var eligibleCategoryIds: [String] {
+        VocabularyContent.categories.map(\.id).filter { $0 != "story" }
+    }
 
     /// Nhóm 3 thẻ luôn lấy từ category có ảnh thật, để bốn ô nhìn "cùng một bộ"
     /// như thiết kế; số/màu chỉ làm ô lạc.
-    private static let imageCategoryIds: [String] = eligibleCategoryIds.filter { id in
-        VocabularyContent.cards(for: id).contains { $0.imageName != nil }
+    /// Tính TẠI CHỖ, không dùng `static let`: static được khởi tạo lười và phụ
+    /// thuộc thứ tự nạp `VocabularyContent`, nếu lúc đó pool rỗng thì code rơi
+    /// về fallback có "numbers" → lại ra ba ô hiện số.
+    private var imageCategoryIds: [String] {
+        eligibleCategoryIds.filter { id in
+            VocabularyContent.cards(for: id).contains { $0.imageName != nil }
+        }
     }
 
     private func buildRound() {
-        let groupPool = Self.imageCategoryIds.isEmpty ? Self.eligibleCategoryIds : Self.imageCategoryIds
+        let eligibleCategoryIds = self.eligibleCategoryIds
+        let imageIds = imageCategoryIds
+        let groupPool = imageIds.isEmpty ? eligibleCategoryIds : imageIds
         questions = (0 ..< Self.totalQuestions).map { _ in
             let groupId = groupPool.randomElement()!
-            let oddId = Self.eligibleCategoryIds.filter { $0 != groupId }.randomElement() ?? groupId
+            let oddId = eligibleCategoryIds.filter { $0 != groupId }.randomElement() ?? groupId
             let groupCards = Array(VocabularyContent.cards(for: groupId).shuffled().prefix(3))
             let oddCard = VocabularyContent.cards(for: oddId).randomElement()!
             return Question(groupCategoryId: groupId, groupCards: groupCards, oddCard: oddCard,

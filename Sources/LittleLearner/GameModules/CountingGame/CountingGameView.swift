@@ -177,7 +177,7 @@ struct CountingGameView: View {
                 SpeechService.shared.speak(numberCard.word)
             } label: {
                 HStack(spacing: 8) {
-                    Image(systemName: "speaker.wave.3.fill").font(.system(size: isRegularWidth ? 18 : 15))
+                    SpeakGlyph(size: isRegularWidth ? 20 : 16)
                     Text("Nghe lại").font(.body(isRegularWidth ? 16 : 13, weight: .bold))
                     Image(systemName: "star.fill").foregroundStyle(.yellow).font(.system(size: isRegularWidth ? 19 : 16))
                 }

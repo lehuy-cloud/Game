@@ -265,8 +265,7 @@ struct StoryChapterView: View {
             Button {
                 SpeechService.shared.speak(currentPage.text, language: "vi-VN")
             } label: {
-                Image(systemName: "speaker.wave.3.fill")
-                    .font(.system(size: 28))
+                SpeakGlyph(size: 40)
                     .frame(width: 84, height: 84)
                     .background(Circle().fill(theme.base))
                     .foregroundStyle(Palette.onAccent)
@@ -311,9 +310,7 @@ struct StoryChapterView: View {
         Button {
             SpeechService.shared.speak(currentPage.text, language: "vi-VN")
         } label: {
-            Image(systemName: "speaker.wave.3.fill")
-                .font(.system(size: 18))
-                .foregroundStyle(Palette.onAccent)
+            SpeakGlyph(size: 24)
                 .frame(width: 48, height: 48)
                 .background(Circle().fill(theme.base))
         }

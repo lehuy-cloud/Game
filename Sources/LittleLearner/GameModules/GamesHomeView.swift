@@ -36,9 +36,16 @@ struct GamesHomeView: View {
                 .padding(.top, 6)
 
             GeometryReader { proxy in
-                let h = proxy.size.height
-                let continueH = max(h * 0.26, 220)
-                let rowH = max((h - continueH - gap * 3 - 96) / 2, 150)
+                // LỖI ĐÃ SỬA: chiều cao hàng cuối được đoán là 96pt nhưng thẻ
+                // "Ghép chữ với hình" cao hơn thế (lề 20 + nội dung 58), nên
+                // tổng vượt chiều cao thật → VStack ép khoảng cách về 0 và thẻ
+                // "Lật Hình" dính vào hàng "Ô cửa bí mật / Tìm bạn khác loài".
+                // Nay chia ngân sách theo đúng thứ tự: hàng cuối cố định navH,
+                // ba khoảng cách, phần còn lại mới chia cho thẻ chơi tiếp + 2 hàng.
+                let navH: CGFloat = 104
+                let available = proxy.size.height - navH - gap * 3
+                let continueH = min(max(available * 0.34, 200), 320)
+                let rowH = max((available - continueH) / 2, 150)
                 VStack(spacing: gap) {
                     continueCard.frame(height: continueH)
 
@@ -60,6 +67,7 @@ struct GamesHomeView: View {
                                 subtitle: "Kéo từ vào đúng ảnh", tint: theme.base)
                     }
                     .buttonStyle(.plain)
+                    .frame(height: navH)
                 }
             }
             .padding(.horizontal, side)
@@ -171,8 +179,16 @@ struct GamesHomeView: View {
                 Palette.surface
                 if let imageName = card?.imageName {
                     Image(imageName).resizable().scaledToFit().washed().padding(14)
+                } else if let colorHex = card?.colorHex {
+                    // Bộ "Màu sắc": ô màu tràn viền — trước đây rơi xuống nhánh
+                    // emoji nên hiện chấm 🔴🟢 kiểu icon cũ.
+                    Color(hex: colorHex)
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 26, style: .continuous)
+                                .strokeBorder(Palette.ink.opacity(0.18), lineWidth: 1.5)
+                        }
                 } else if let value = card?.value {
-                    Text("\(value)").font(.display(34)).foregroundStyle(theme.deep)
+                    Text("\(value)").font(.display(40)).foregroundStyle(theme.deep)
                 } else if let card {
                     Text(card.emoji).font(.system(size: 34))
                 }
