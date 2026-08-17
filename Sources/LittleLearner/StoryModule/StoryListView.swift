@@ -92,7 +92,7 @@ struct StoryListView: View {
                     .frame(width: isRegularWidth ? 11 : 9, height: isRegularWidth ? 11 : 9)
                     .alignmentGuide(.firstTextBaseline) { d in d.height * 0.9 }
                 Text(story.title)
-                    .font(.display(isRegularWidth ? 26 : 16))
+                    .font(AppFont.tileTitle(isRegularWidth))
                     .foregroundStyle(Palette.ink)
                     .lineLimit(2)
                 Spacer(minLength: 0)

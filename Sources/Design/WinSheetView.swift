@@ -11,6 +11,8 @@ struct WinSheetView: View {
     let goHome: () -> Void
 
     @Environment(\.theme) private var theme
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    private var isRegularWidth: Bool { horizontalSizeClass == .regular }
 
     private var accuracy: Int {
         let attempts = max(1, Int(ceil(Double(moves) / 2)))
@@ -21,12 +23,12 @@ struct WinSheetView: View {
         VStack(spacing: 0) {
             Spacer()
             VStack(spacing: 0) {
-                Text(buddyEmoji).font(.system(size: 56))
+                Text(buddyEmoji).font(.system(size: isRegularWidth ? 78 : 56))
                 Text("Giỏi lắm!")
-                    .font(.display(34))
+                    .font(AppFont.navTitle(isRegularWidth))
                     .padding(.top, 14)
                 Text("Bé đã tìm hết \(level.pairs) cặp \(categoryWord).")
-                    .font(.body(14.5))
+                    .font(AppFont.bodyText(isRegularWidth))
                     .foregroundStyle(Palette.ink.opacity(0.6))
                     .padding(.top, 6)
 
@@ -49,9 +51,9 @@ struct WinSheetView: View {
                     .buttonStyle(PillButtonStyle(theme: theme, filled: false))
                     .padding(.top, 10)
             }
-            .padding(24)
+            .padding(isRegularWidth ? 40 : 24)
             .padding(.top, 6)
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: isRegularWidth ? 560 : .infinity)
             .background(
                 RoundedRectangle(cornerRadius: 34, style: .continuous).fill(Palette.surface)
             )
@@ -62,8 +64,8 @@ struct WinSheetView: View {
 
     private func stat(_ value: String, _ label: String) -> some View {
         VStack(spacing: 2) {
-            Text(value).font(.display(24)).foregroundStyle(theme.deep)
-            Text(label).font(.body(11.5)).foregroundStyle(Palette.ink.opacity(0.55))
+            Text(value).font(AppFont.cardTitle(isRegularWidth)).foregroundStyle(theme.deep)
+            Text(label).font(AppFont.label(isRegularWidth)).foregroundStyle(Palette.ink.opacity(0.55))
         }
         .frame(maxWidth: .infinity)
     }

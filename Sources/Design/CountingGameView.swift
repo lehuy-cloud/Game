@@ -111,7 +111,7 @@ struct CountingGameView: View {
     private func countingCard(for question: Question) -> some View {
         VStack(spacing: isRegularWidth ? 22 : 14) {
             Text("Có mấy bạn ở đây?")
-                .font(.display(isRegularWidth ? 34 : 24))
+                .font(AppFont.question(isRegularWidth))
                 .foregroundStyle(Palette.ink)
 
             LazyVGrid(columns: Array(repeating: GridItem(.fixed(itemSize), spacing: itemGap),
@@ -125,7 +125,7 @@ struct CountingGameView: View {
 
             HStack(spacing: 8) {
                 Image(systemName: "hand.tap.fill").font(.system(size: isRegularWidth ? 17 : 14))
-                Text("Chạm để đếm").font(.body(isRegularWidth ? 16 : 12.5, weight: .bold))
+                Text("Chạm để đếm").font(AppFont.badge(isRegularWidth))
             }
             .foregroundStyle(Palette.ink.opacity(0.62))
             .padding(.horizontal, 16)
@@ -167,9 +167,9 @@ struct CountingGameView: View {
             HStack(alignment: .lastTextBaseline, spacing: isRegularWidth ? 20 : 14) {
                 Text("\(question.count)").font(.display(isRegularWidth ? 96 : 64))
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(numberCard.word).font(.display(isRegularWidth ? 40 : 26))
+                    Text(numberCard.word).font(AppFont.question(isRegularWidth))
                     Text("\(numberCard.translation) \(question.animal.translation.lowercased())")
-                        .font(.body(isRegularWidth ? 18 : 13))
+                        .font(AppFont.bodyText(isRegularWidth))
                         .foregroundStyle(Palette.ink.opacity(0.55))
                 }
             }
@@ -178,7 +178,7 @@ struct CountingGameView: View {
             } label: {
                 HStack(spacing: 8) {
                     SpeakGlyph(size: isRegularWidth ? 20 : 16)
-                    Text("Nghe lại").font(.body(isRegularWidth ? 16 : 13, weight: .bold))
+                    Text("Nghe lại").font(AppFont.badge(isRegularWidth))
                     Image(systemName: "star.fill").foregroundStyle(.yellow).font(.system(size: isRegularWidth ? 19 : 16))
                 }
                 .padding(.horizontal, isRegularWidth ? 22 : 16)
@@ -205,7 +205,7 @@ struct CountingGameView: View {
                 .font(.display(isRegularWidth ? 76 : 40))
                 .foregroundStyle(isSelected ? Palette.ink : theme.deep)
             Text(word)
-                .font(.body(isRegularWidth ? 16 : 12, weight: .semibold))
+                .font(AppFont.coach(isRegularWidth))
                 .foregroundStyle(Palette.ink.opacity(0.55))
         }
         .frame(maxWidth: .infinity)

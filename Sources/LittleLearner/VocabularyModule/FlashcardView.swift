@@ -69,11 +69,11 @@ struct FlashcardView: View {
                     .font(.display(isRegularWidth ? 48 : 34))
                     .foregroundStyle(card.colorHex.map { Color(hex: $0) } ?? Palette.ink)
                 Text(card.translation)
-                    .font(.body(isRegularWidth ? 18 : 14))
+                    .font(AppFont.bodyText(isRegularWidth))
                     .foregroundStyle(Palette.ink.opacity(0.55))
                 if let description = card.description {
                     Text(description)
-                        .font(.body(isRegularWidth ? 16 : 13))
+                        .font(AppFont.bodyText(isRegularWidth))
                         .foregroundStyle(Palette.ink.opacity(0.58))
                         .padding(.top, isRegularWidth ? 14 : 8)
                 }
@@ -86,7 +86,10 @@ struct FlashcardView: View {
                 // `speaker.wave.2.fill`, lệch với các màn khác).
                 SpeakGlyph(size: isRegularWidth ? 30 : 26)
                     .frame(width: isRegularWidth ? 64 : 52, height: isRegularWidth ? 64 : 52)
-                    .background(Circle().fill(theme.base))
+                    .background {
+                        Circle().fill(theme.tint)
+                        Circle().strokeBorder(theme.base.opacity(0.5), lineWidth: 2.5)
+                    }
             }
             .buttonStyle(.plain)
         }

@@ -30,7 +30,7 @@ struct MiniGameShell<Content: View>: View {
                 .padding(.top, isRegularWidth ? 18 : 8)
 
             Text(prompt)
-                .font(.body(isRegularWidth ? 24 : 17, weight: .semibold))
+                .font(AppFont.reading(isRegularWidth))
                 .foregroundStyle(Palette.ink)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: isRegularWidth ? 700 : .infinity)
@@ -55,19 +55,19 @@ struct MiniGameShell<Content: View>: View {
         HStack(spacing: isRegularWidth ? 18 : 12) {
             Button(action: onBack) {
                 Image(systemName: "chevron.left")
-                    .font(.system(size: isRegularWidth ? 22 : 17, weight: .bold))
-                    .frame(width: isRegularWidth ? 56 : 44, height: isRegularWidth ? 56 : 44)
+                    .font(.system(size: Layout.backGlyph(isRegularWidth), weight: .bold))
+                    .frame(width: Layout.backCircle(isRegularWidth), height: Layout.backCircle(isRegularWidth))
                     .background(Circle().fill(Palette.surface))
                     .foregroundStyle(Palette.ink)
             }
             Text(title)
-                .font(.display(isRegularWidth ? 34 : 17))
+                .font(AppFont.navTitle(isRegularWidth))
                 .foregroundStyle(Palette.ink)
                 .lineLimit(1)
             Spacer(minLength: 0)
             if let counter {
                 Text(counter)
-                    .font(.body(isRegularWidth ? 16 : 12, weight: .bold))
+                    .font(AppFont.badge(isRegularWidth))
                     .padding(.horizontal, isRegularWidth ? 18 : 12)
                     .padding(.vertical, isRegularWidth ? 10 : 6)
                     .background(Palette.surface, in: Capsule())

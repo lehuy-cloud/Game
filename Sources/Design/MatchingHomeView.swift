@@ -36,7 +36,7 @@ struct MatchingHomeView: View {
                 header
 
                 Text("Tìm hai thẻ giống nhau. Không có đồng hồ — cứ thong thả nhé.")
-                    .font(.body(isRegularWidth ? 17 : 14))
+                    .font(AppFont.bodyText(isRegularWidth))
                     .foregroundStyle(Palette.ink.opacity(0.6))
                     .padding(.horizontal, side)
 
@@ -97,13 +97,13 @@ struct MatchingHomeView: View {
                     .foregroundStyle(Palette.ink)
             }
             Text("Lật Hình")
-                .font(.display(isRegularWidth ? 40 : 26))
+                .font(AppFont.screenTitle(isRegularWidth))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             HStack(spacing: 6) {
                 Text("⭐")
                 Text("\(totalStars)")
-                    .font(.body(isRegularWidth ? 18 : 15, weight: .bold))
+                    .font(AppFont.badge(isRegularWidth))
             }
             .padding(.horizontal, isRegularWidth ? 18 : 14)
             .padding(.vertical, isRegularWidth ? 12 : 9)
@@ -116,11 +116,11 @@ struct MatchingHomeView: View {
     private var continueCard: some View {
         VStack(alignment: .leading, spacing: isRegularWidth ? 18 : 14) {
             Text("BỘ THẺ ĐANG CHỌN")
-                .font(.body(isRegularWidth ? 13 : 11, weight: .bold))
+                .font(AppFont.label(isRegularWidth))
                 .tracking(1.0)
                 .foregroundStyle(Palette.ink.opacity(0.5))
             Text(lastCategory.title)
-                .font(.display(isRegularWidth ? 38 : 28))
+                .font(AppFont.cardTitle(isRegularWidth))
                 .foregroundStyle(Palette.ink)
 
             HStack(spacing: isRegularWidth ? 12 : 8) {
@@ -130,7 +130,7 @@ struct MatchingHomeView: View {
             }
 
             Text("Chơi ngay ▸")
-                .font(.body(isRegularWidth ? 19 : 16, weight: .bold))
+                .font(AppFont.badge(isRegularWidth))
                 .foregroundStyle(Palette.onAccent)
                 .padding(.horizontal, isRegularWidth ? 28 : 20)
                 .frame(height: isRegularWidth ? 58 : 46)
@@ -167,7 +167,7 @@ struct MatchingHomeView: View {
 
     private func sectionLabel(_ text: String) -> some View {
         Text(text.uppercased())
-            .font(.body(isRegularWidth ? 13 : 11, weight: .bold))
+            .font(AppFont.label(isRegularWidth))
             .tracking(1.2)
             .foregroundStyle(Palette.ink.opacity(0.5))
             .padding(.horizontal, side)
@@ -185,12 +185,12 @@ struct MatchingHomeView: View {
                     .fill(Color(hex: category.colorHex))
                     .frame(width: isRegularWidth ? 11 : 9, height: isRegularWidth ? 11 : 9)
                 Text(category.title)
-                    .font(.display(isRegularWidth ? 26 : 17))
+                    .font(AppFont.tileTitle(isRegularWidth))
                     .foregroundStyle(Palette.ink)
                     .lineLimit(1)
                 Spacer(minLength: 0)
                 Text("⭐ \(progressStore.starsByCategory[category.id, default: 0])")
-                    .font(.body(isRegularWidth ? 16 : 12))
+                    .font(AppFont.badge(isRegularWidth))
                     .foregroundStyle(Palette.ink.opacity(0.5))
             }
             .padding(.horizontal, isRegularWidth ? 24 : 14)

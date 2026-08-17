@@ -88,7 +88,7 @@ struct VocabularyHomeView: View {
         VStack(alignment: .leading, spacing: 6) {
             AppHeaderView(title: "Học")
             Text("Chọn một chủ đề để đọc thẻ từ")
-                .font(.body(isRegularWidth ? 17 : 14))
+                .font(AppFont.bodyText(isRegularWidth))
                 .foregroundStyle(Palette.ink.opacity(0.58))
                 .padding(.horizontal, side)
         }
@@ -108,12 +108,12 @@ struct VocabularyHomeView: View {
                     .fill(Color(hex: category.colorHex))
                     .frame(width: isRegularWidth ? 11 : 9, height: isRegularWidth ? 11 : 9)
                 Text(category.title)
-                    .font(.display(isRegularWidth ? 26 : 17))
+                    .font(AppFont.tileTitle(isRegularWidth))
                     .foregroundStyle(Palette.ink)
                     .lineLimit(1)
                 Spacer(minLength: 0)
                 Text("\(VocabularyContent.cards(for: category.id).count) thẻ")
-                    .font(.body(isRegularWidth ? 16 : 12))
+                    .font(AppFont.badge(isRegularWidth))
                     .foregroundStyle(Palette.ink.opacity(0.5))
             }
             .padding(.horizontal, isRegularWidth ? 24 : 14)

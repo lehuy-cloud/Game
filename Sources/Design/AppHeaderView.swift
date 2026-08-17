@@ -26,13 +26,13 @@ struct AppHeaderView: View {
 
             // 44pt trên iPad theo thiết kế (bản cũ khoá cứng 26pt cho cả hai máy).
             Text(title)
-                .font(.display(Layout.titleSize(isRegularWidth)))
+                .font(AppFont.screenTitle(isRegularWidth))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
             HStack(spacing: isRegularWidth ? 9 : 6) {
                 Text("⭐")
                 Text("\(totalStars)")
-                    .font(.body(isRegularWidth ? 19 : 15, weight: .bold))
+                    .font(AppFont.badge(isRegularWidth))
             }
             .padding(.horizontal, isRegularWidth ? 20 : 14)
             .padding(.vertical, isRegularWidth ? 12 : 9)

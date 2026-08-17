@@ -74,6 +74,47 @@ enum Layout {
     static func titleSize(_ isRegular: Bool) -> CGFloat { isRegular ? 44 : 26 }
 }
 
+// MARK: - Thang chữ dùng chung (một nguồn duy nhất)
+
+/// TRƯỚC: mỗi màn tự chọn cỡ chữ — tiêu đề game 17/20/26/34, phụ đề
+/// 11/11.5/12/12.5/14/15/16, nhãn mục 11/13 — nên các màn lệch nhau và nhiều
+/// màn (Lật Hình, Số đếm, bảng thắng) khoá cứng cỡ iPhone nên bé xíu trên iPad.
+/// NAY: mọi màn gọi `AppFont.*(isRegularWidth)`. Chỉ sửa ở đây khi muốn đổi
+/// thang chữ toàn app.
+enum AppFont {
+    /// Tiêu đề màn gốc (Học / Chơi / Truyện) — 44 / 26
+    static func screenTitle(_ r: Bool) -> Font { .display(r ? 44 : 26) }
+    /// Tiêu đề màn con: game, thẻ từ, chương truyện — 34 / 20
+    static func navTitle(_ r: Bool) -> Font { .display(r ? 34 : 20) }
+    /// Câu hỏi trong game — 40 / 26
+    static func question(_ r: Bool) -> Font { .display(r ? 40 : 26) }
+    /// Tiêu đề thẻ lớn (thẻ "chơi tiếp", tên bộ thẻ) — 30 / 22
+    static func cardTitle(_ r: Bool) -> Font { .display(r ? 30 : 22) }
+    /// Tiêu đề ô trong lưới / hàng danh sách — 24 / 17
+    static func tileTitle(_ r: Bool) -> Font { .display(r ? 24 : 17) }
+    /// Chữ kể truyện, câu gợi ý dài — 27 / 17 semibold
+    static func reading(_ r: Bool) -> Font { .body(r ? 27 : 17, weight: .semibold) }
+    /// Chữ thường: mô tả, phụ đề một dòng — 18 / 14
+    static func bodyText(_ r: Bool) -> Font { .body(r ? 18 : 14) }
+    /// Chữ nhỏ: phụ đề trong ô, chú thích — 15 / 12
+    static func caption(_ r: Bool) -> Font { .body(r ? 15 : 12) }
+    /// Huy hiệu, đếm số, "3 / 8" — 16 / 12 bold
+    static func badge(_ r: Bool) -> Font { .body(r ? 16 : 12, weight: .bold) }
+    /// Nhãn mục CHỮ HOA (tracking 1.0–1.2) — 13 / 11 bold
+    static func label(_ r: Bool) -> Font { .body(r ? 13 : 11, weight: .bold) }
+    /// Gợi ý của bạn đồng hành — 16 / 14 semibold
+    static func coach(_ r: Bool) -> Font { .body(r ? 16 : 14, weight: .semibold) }
+}
+
+/// Cỡ nút tròn quay lại / điều hướng — cũng phải thống nhất, trước đây mỗi màn
+/// một số (17/18/22pt glyph, 44/56/60/72pt vòng tròn).
+extension Layout {
+    static func backCircle(_ r: Bool) -> CGFloat { r ? 56 : 44 }
+    static func backGlyph(_ r: Bool) -> CGFloat { r ? 22 : 17 }
+    static func navCircle(_ r: Bool) -> CGFloat { r ? 72 : 56 }
+    static func progressThickness(_ r: Bool) -> CGFloat { r ? 9 : 7 }
+}
+
 // MARK: - Nền ấm dùng chung
 
 struct OrganicBackground: ViewModifier {
@@ -105,12 +146,17 @@ struct PillButtonStyle: ButtonStyle {
     var filled = true
     var compact = false
 
+    // LỖI ĐÃ SỬA: nút chính khoá cứng 21pt / cao 58pt cho cả iPad.
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    private var isRegularWidth: Bool { horizontalSizeClass == .regular }
+
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .font(compact ? .body(13, weight: .bold) : .display(21))
+            .font(compact ? AppFont.label(isRegularWidth) : .display(isRegularWidth ? 28 : 21))
             .foregroundStyle(filled ? Palette.onAccent : Palette.ink)
-            .frame(maxWidth: compact ? nil : .infinity, minHeight: compact ? 38 : 58)
-            .padding(.horizontal, compact ? 16 : 0)
+            .frame(maxWidth: compact ? nil : .infinity,
+                   minHeight: compact ? (isRegularWidth ? 48 : 38) : (isRegularWidth ? 72 : 58))
+            .padding(.horizontal, compact ? (isRegularWidth ? 22 : 16) : 0)
             .background {
                 Capsule().fill(filled ? (configuration.isPressed ? theme.dark : theme.base) : .clear)
                 if !filled { Capsule().strokeBorder(Palette.ink.opacity(0.2), lineWidth: 1.5) }

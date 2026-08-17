@@ -10,6 +10,11 @@ Copy đè theo đúng đường dẫn dưới đây rồi build. Không cần s�
 | `CountingGameView.swift` | `Sources/LittleLearner/GameModules/CountingGame/CountingGameView.swift` |
 | `MatchingHomeView.swift` | `Sources/LittleLearner/GameModules/MatchingGame/MatchingHomeView.swift` |
 | `FlashcardView.swift` | `Sources/LittleLearner/VocabularyModule/FlashcardView.swift` |
+| `MatchWordGameView.swift` | `Sources/LittleLearner/GameModules/MatchWordGame/MatchWordGameView.swift` |
+| `MatchingGameView.swift` | `Sources/LittleLearner/GameModules/MatchingGame/MatchingGameView.swift` |
+| `MatchTileView.swift` | `Sources/LittleLearner/GameModules/MatchingGame/MatchTileView.swift` |
+| `WinSheetView.swift` | `Sources/LittleLearner/GameModules/MatchingGame/WinSheetView.swift` |
+| `NumberCardView.swift` | `Sources/LittleLearner/VocabularyModule/NumberCardView.swift` |
 | `RootTabView.swift` | `Sources/LittleLearner/RootTabView.swift` |
 | `AppHeaderView.swift` | `Sources/LittleLearner/Profile/AppHeaderView.swift` |
 | `VocabularyHomeView.swift` | `Sources/LittleLearner/VocabularyModule/VocabularyHomeView.swift` |
@@ -126,6 +131,37 @@ không liên quan lần sửa này.)
    nghe thẻ từ (`FlashcardView`).
    (Giữ SF Symbol ở icon ô game trên màn Chơi và dòng cài đặt trong
    `LevelPickerView` — chỗ đó là icon danh mục, không phải nút nghe.)
+
+27. **Ghép chữ với hình: mọi thứ bé xíu dồn lên đỉnh, dưới trống hơn nửa màn iPad.**
+   Ba nguyên nhân: `.gameContentWidth()` bọc CẢ MÀN nên game bị nhốt trong cột
+   420pt (đúng lỗi số 9, màn này bị sót); header/thanh tiến độ/ảnh 62pt/ô nhận
+   40pt/thẻ chữ 19pt khoá cứng cỡ iPhone; `Spacer(minLength: 0)` cuối VStack đẩy
+   hết lên đỉnh. Nay dùng `GameScreen` như các game khác, mọi cỡ theo
+   `isRegularWidth` (ảnh giãn hết ô, ô nhận 64pt, thẻ chữ 30pt / 168×88).
+
+28. **Nút nghe chìm trong nền đậm.** Glyph 🔊 là emoji màu xám; đặt trên vòng
+   tròn `theme.base`/`theme.deep` (xanh đậm) thì gần như không thấy. Nay vòng
+   tròn dùng `theme.tint` sáng + viền `theme.base`, giống nút mẫu trong design.
+   Sửa ở: màn đọc truyện (2 nút), "Nghe rồi chọn", thẻ từ.
+29. **Thẻ từ vựng màn đọc truyện chỉ có chữ tiếng Anh ("Fox").** Nay hiện từ
+   tiếng Anh + nghĩa tiếng Việt bên dưới, chạm vẫn đọc từ tiếng Anh.
+
+30. **Rà lại font & cỡ chữ toàn app — mỗi màn trước đây tự chọn số.** Tiêu đề
+   game 17/20/26/34, phụ đề 11/11.5/12/12.5/13/14/15/16/17, nhãn mục 11/13 —
+   nên các màn lệch nhau. Nay có `AppFont` trong `Palette.swift` là NGUỒN DUY
+   NHẤT (iPad/iPhone): `screenTitle` 44/26, `navTitle` 34/20, `question` 40/26,
+   `cardTitle` 30/22, `tileTitle` 24/17, `reading` 27/17, `bodyText` 18/14,
+   `caption` 15/12, `badge` 16/12, `label` 13/11, `coach` 16/14. Mọi màn gọi
+   `AppFont.*(isRegularWidth)`; cỡ nút tròn cũng gom vào `Layout.backCircle/
+   backGlyph/navCircle/progressThickness`.
+31. **Ba màn chưa hề đọc size class → bé xíu trên iPad:** `MatchingGameView`
+   (header 17pt, lề 18pt), `MatchTileView` (emoji 38pt, chữ 11pt),
+   `WinSheetView` (emoji 56pt, bảng tràn hết bề ngang), `NumberCardView`
+   (tiêu đề 20pt, số 210pt, nút 44/60pt). Nay cả bốn theo `isRegularWidth`;
+   `NumberCardView` cũng bỏ SF Symbol `speaker.wave.2.fill` cuối cùng còn sót
+   → dùng `SpeakGlyph` vòng tròn sáng.
+32. **`PillButtonStyle`** (nút chính mọi màn) khoá cứng 21pt / cao 58pt → iPad
+   28pt / cao 72pt.
 
 ## Kiểm tra sau khi build
 

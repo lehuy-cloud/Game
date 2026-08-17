@@ -59,7 +59,7 @@ struct OddOneOutGameView: View {
                 } else {
                     VStack(spacing: isRegularWidth ? 26 : 16) {
                         Text("Ai không cùng nhóm?")
-                            .font(.display(isRegularWidth ? 40 : 26))
+                            .font(AppFont.question(isRegularWidth))
                             .frame(maxWidth: .infinity)
                         optionGrid(question)
                     }
@@ -110,7 +110,7 @@ struct OddOneOutGameView: View {
             imageView(card)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             Text(card.word)
-                .font(.body(isRegularWidth ? 20 : 15, weight: .bold))
+                .font(AppFont.badge(isRegularWidth))
                 .foregroundStyle(Palette.ink)
                 .lineLimit(1)
         }
@@ -150,13 +150,13 @@ struct OddOneOutGameView: View {
                     .foregroundStyle(Palette.onAccent)
                     .frame(width: isRegularWidth ? 84 : 68, height: isRegularWidth ? 84 : 68)
                     .background(Circle().fill(Palette.sage))
-                Text("Đúng rồi!").font(.display(isRegularWidth ? 36 : 26))
+                Text("Đúng rồi!").font(AppFont.question(isRegularWidth))
             }
             .padding(.top, 6)
 
             VStack(alignment: .leading, spacing: isRegularWidth ? 16 : 12) {
                 Text(groupTitle(for: question).uppercased())
-                    .font(.body(isRegularWidth ? 14 : 11, weight: .bold))
+                    .font(AppFont.label(isRegularWidth))
                     .tracking(1.0)
                     .foregroundStyle(Palette.ink.opacity(0.6))
                 HStack(spacing: isRegularWidth ? 14 : 10) {
@@ -179,9 +179,9 @@ struct OddOneOutGameView: View {
                 imageView(question.oddCard)
                     .frame(width: isRegularWidth ? 88 : 56, height: isRegularWidth ? 88 : 56)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(question.oddCard.translation).font(.display(isRegularWidth ? 30 : 20))
+                    Text(question.oddCard.translation).font(AppFont.cardTitle(isRegularWidth))
                     Text(question.oddCard.word)
-                        .font(.body(isRegularWidth ? 17 : 12))
+                        .font(AppFont.caption(isRegularWidth))
                         .foregroundStyle(Palette.ink.opacity(0.55))
                 }
                 Spacer(minLength: 0)

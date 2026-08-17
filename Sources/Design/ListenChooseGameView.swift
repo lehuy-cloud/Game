@@ -86,16 +86,16 @@ struct ListenChooseGameView: View {
             VStack(spacing: 12) {
                 if selectedId == nil {
                     Text("Con nào là \(question.answer.word)?")
-                        .font(.display(30))
+                        .font(AppFont.question(isRegularWidth))
                         .multilineTextAlignment(.center)
                         .foregroundStyle(Palette.ink)
                     Text("Chạm loa để nghe lại")
-                        .font(.body(16))
+                        .font(AppFont.bodyText(isRegularWidth))
                         .foregroundStyle(Palette.ink.opacity(0.55))
                 } else {
-                    Text("Đúng rồi!").font(.display(34))
+                    Text("Đúng rồi!").font(AppFont.question(isRegularWidth))
                     Text(question.answer.translation)
-                        .font(.body(18))
+                        .font(AppFont.bodyText(isRegularWidth))
                         .foregroundStyle(Palette.ink.opacity(0.55))
                 }
             }
@@ -104,7 +104,7 @@ struct ListenChooseGameView: View {
 
             if selectedId == nil {
                 Label("Nghe kỹ nhé bé", systemImage: "lightbulb.fill")
-                    .font(.body(16, weight: .semibold))
+                    .font(AppFont.coach(isRegularWidth))
                     .padding(.horizontal, 20)
                     .padding(.vertical, 14)
                     .background(Capsule().fill(Palette.surfaceAlt))
@@ -150,7 +150,7 @@ struct ListenChooseGameView: View {
             imageView(option)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             if isSelected {
-                Text(option.word).font(.display(24)).foregroundStyle(Palette.ink)
+                Text(option.word).font(AppFont.tileTitle(isRegularWidth)).foregroundStyle(Palette.ink)
             }
         }
         .padding(26)
@@ -178,10 +178,10 @@ struct ListenChooseGameView: View {
             speakerButton(size: 112, glyph: 38)
             if selectedId == nil {
                 Text("Con nào là \(question.answer.word)?")
-                    .font(.body(15, weight: .semibold))
+                    .font(AppFont.coach(isRegularWidth))
                     .foregroundStyle(Palette.ink.opacity(0.62))
             } else {
-                Text("Đúng rồi!").font(.display(26))
+                Text("Đúng rồi!").font(AppFont.question(isRegularWidth))
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -190,8 +190,8 @@ struct ListenChooseGameView: View {
     private func speakerButton(size: CGFloat, glyph: CGFloat) -> some View {
         Button(action: speakCurrent) {
             ZStack {
-                Circle().fill(theme.deep)
-                Circle().strokeBorder(theme.tint, lineWidth: 3).padding(-6)
+                Circle().fill(theme.tint)
+                Circle().strokeBorder(theme.base, lineWidth: 3).padding(-6)
                 SpeakGlyph(size: glyph)
             }
             .frame(width: size, height: size)
@@ -216,8 +216,8 @@ struct ListenChooseGameView: View {
             if isSelected {
                 imageView(option).frame(width: 62, height: 62)
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(option.word).font(.display(20))
-                    Text(option.translation).font(.body(12)).foregroundStyle(Palette.ink.opacity(0.55))
+                    Text(option.word).font(AppFont.tileTitle(isRegularWidth))
+                    Text(option.translation).font(AppFont.caption(isRegularWidth)).foregroundStyle(Palette.ink.opacity(0.55))
                 }
                 Spacer(minLength: 0)
                 Image(systemName: "star.fill").foregroundStyle(.yellow).font(.system(size: 22))

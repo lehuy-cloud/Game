@@ -29,7 +29,7 @@ struct GamesHomeView: View {
         VStack(spacing: 0) {
             AppHeaderView(title: "Chơi").padding(.top, 18)
             Text("5 trò · mỗi ván 8 câu")
-                .font(.body(17))
+                .font(AppFont.bodyText(isRegularWidth))
                 .foregroundStyle(Palette.ink.opacity(0.6))
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, side)
@@ -140,17 +140,17 @@ struct GamesHomeView: View {
             HStack(spacing: 28) {
                 VStack(alignment: .leading, spacing: 10) {
                     Text("CHƠI TIẾP")
-                        .font(.body(13, weight: .bold))
+                        .font(AppFont.label(isRegularWidth))
                         .tracking(1.0)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 7)
                         .background(Palette.surface, in: Capsule())
                         .foregroundStyle(Palette.ink)
                     Text("Lật Hình")
-                        .font(.display(34))
+                        .font(AppFont.navTitle(isRegularWidth))
                         .foregroundStyle(Palette.ink)
                     Text("Tìm cặp thẻ giống nhau trong bộ \(lastCategory.title.lowercased()).")
-                        .font(.body(16))
+                        .font(AppFont.bodyText(isRegularWidth))
                         .foregroundStyle(Palette.ink.opacity(0.6))
                 }
                 Spacer(minLength: 0)
@@ -204,11 +204,11 @@ struct GamesHomeView: View {
                 .foregroundStyle(Palette.sageDeep)
                 .frame(width: 60, height: 60)
                 .background(Palette.sageTint, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-            Text(title).font(.display(26))
-            Text(subtitle).font(.body(15)).foregroundStyle(Palette.ink.opacity(0.55))
+            Text(title).font(AppFont.tileTitle(isRegularWidth))
+            Text(subtitle).font(AppFont.caption(isRegularWidth)).foregroundStyle(Palette.ink.opacity(0.55))
             Spacer(minLength: 0)
             Text("\(questionCount) câu · ⭐ \(stars)")
-                .font(.body(16, weight: .bold))
+                .font(AppFont.badge(isRegularWidth))
                 .foregroundStyle(theme.base)
         }
         .padding(24)
@@ -218,7 +218,7 @@ struct GamesHomeView: View {
 
     private func sectionLabel(_ text: String) -> some View {
         Text(text.uppercased())
-            .font(.body(11, weight: .bold))
+            .font(AppFont.label(isRegularWidth))
             .tracking(1.2)
             .foregroundStyle(Palette.ink.opacity(0.5))
             .padding(.horizontal, side)
@@ -232,8 +232,8 @@ struct GamesHomeView: View {
                 .frame(width: isRegularWidth ? 58 : 46, height: isRegularWidth ? 58 : 46)
                 .background(tint, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
             VStack(alignment: .leading, spacing: 2) {
-                Text(title).font(.display(isRegularWidth ? 24 : 18))
-                Text(subtitle).font(.body(isRegularWidth ? 15 : 12)).foregroundStyle(Palette.ink.opacity(0.55))
+                Text(title).font(AppFont.tileTitle(isRegularWidth))
+                Text(subtitle).font(AppFont.caption(isRegularWidth)).foregroundStyle(Palette.ink.opacity(0.55))
             }
             Spacer(minLength: 0)
             Image(systemName: "chevron.right")

@@ -103,7 +103,7 @@ struct StoryChapterView: View {
                     .foregroundStyle(Palette.ink)
             }
             Text("Chương \(chapter.index) · \(chapter.title)")
-                .font(.display(isRegularWidth ? 30 : 17))
+                .font(AppFont.navTitle(isRegularWidth))
                 .foregroundStyle(hasHeroImage ? .white : Palette.ink)
                 .shadow(color: .black.opacity(hasHeroImage ? 0.45 : 0), radius: 10, y: 2)
                 .lineLimit(1)
@@ -111,7 +111,7 @@ struct StoryChapterView: View {
             Text(isRegularWidth
                  ? "Trang \(min(pageIndex + 1, chapter.pages.count)) / \(chapter.pages.count)"
                  : "\(min(pageIndex + 1, chapter.pages.count)) / \(chapter.pages.count)")
-                .font(.body(isRegularWidth ? 16 : 12, weight: .bold))
+                .font(AppFont.badge(isRegularWidth))
                 .padding(.horizontal, isRegularWidth ? 18 : 12)
                 .padding(.vertical, isRegularWidth ? 10 : 6)
                 .background(hasHeroImage ? Color.white.opacity(0.92) : Palette.surface, in: Capsule())
@@ -140,7 +140,7 @@ struct StoryChapterView: View {
         VStack(alignment: .leading, spacing: 14) {
             if isChallengeStep {
                 Text("Sẵn sàng thử thách chưa?")
-                    .font(.display(20))
+                    .font(AppFont.cardTitle(isRegularWidth))
                     .foregroundStyle(Palette.ink)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
@@ -148,7 +148,7 @@ struct StoryChapterView: View {
             } else {
                 HStack(alignment: .top, spacing: 14) {
                     Text(narrationText(currentPage))
-                        .font(.body(17, weight: .semibold))
+                        .font(AppFont.reading(isRegularWidth))
                         .foregroundStyle(Palette.ink)
                     Spacer(minLength: 0)
                     speakerButton
@@ -160,12 +160,17 @@ struct StoryChapterView: View {
                             Button {
                                 SpeechService.shared.speak(card.word)
                             } label: {
-                                HStack(spacing: 6) {
+                                HStack(spacing: 7) {
                                     Text(card.emoji)
-                                    Text(card.word).font(.body(13, weight: .bold))
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        Text(card.word).font(AppFont.label(isRegularWidth))
+                                        Text(card.translation)
+                                            .font(.body(10.5))
+                                            .foregroundStyle(Palette.ink.opacity(0.55))
+                                    }
                                 }
-                                .padding(.horizontal, 14)
-                                .padding(.vertical, 8)
+                                .padding(.horizontal, 13)
+                                .padding(.vertical, 7)
                                 .background(Palette.bg, in: Capsule())
                                 .foregroundStyle(Palette.ink)
                             }
@@ -198,14 +203,14 @@ struct StoryChapterView: View {
         VStack(alignment: .leading, spacing: 20) {
             if isChallengeStep {
                 Text("Sẵn sàng thử thách chưa?")
-                    .font(.display(28))
+                    .font(AppFont.question(isRegularWidth))
                     .foregroundStyle(Palette.ink)
                     .multilineTextAlignment(.center)
                     .frame(maxWidth: .infinity)
                 continueButton
             } else {
                 Text(narrationText(currentPage))
-                    .font(.body(27, weight: .semibold))
+                    .font(AppFont.reading(isRegularWidth))
                     .foregroundStyle(Palette.ink)
                     .lineSpacing(10)
 
@@ -215,12 +220,17 @@ struct StoryChapterView: View {
                             Button {
                                 SpeechService.shared.speak(card.word)
                             } label: {
-                                HStack(spacing: 8) {
+                                HStack(spacing: 10) {
                                     Text(card.emoji)
-                                    Text(card.word).font(.body(16, weight: .bold))
+                                    VStack(alignment: .leading, spacing: 1) {
+                                        Text(card.word).font(AppFont.badge(isRegularWidth))
+                                        Text(card.translation)
+                                            .font(AppFont.label(isRegularWidth))
+                                            .foregroundStyle(Palette.ink.opacity(0.55))
+                                    }
                                 }
                                 .padding(.horizontal, 18)
-                                .padding(.vertical, 11)
+                                .padding(.vertical, 10)
                                 .background(Palette.bg, in: Capsule())
                                 .foregroundStyle(Palette.ink)
                             }
@@ -265,14 +275,17 @@ struct StoryChapterView: View {
             Button {
                 SpeechService.shared.speak(currentPage.text, language: "vi-VN")
             } label: {
+                // Vòng tròn SÁNG: glyph 🔊 là emoji xám, nền đậm làm nó chìm.
                 SpeakGlyph(size: 40)
                     .frame(width: 84, height: 84)
-                    .background(Circle().fill(theme.base))
-                    .foregroundStyle(Palette.onAccent)
+                    .background {
+                        Circle().fill(theme.tint)
+                        Circle().strokeBorder(theme.base.opacity(0.5), lineWidth: 3)
+                    }
             }
 
             Text("Chạm loa để nghe cả trang")
-                .font(.body(16))
+                .font(AppFont.bodyText(isRegularWidth))
                 .foregroundStyle(Palette.ink.opacity(0.5))
                 .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -312,7 +325,10 @@ struct StoryChapterView: View {
         } label: {
             SpeakGlyph(size: 24)
                 .frame(width: 48, height: 48)
-                .background(Circle().fill(theme.base))
+                .background {
+                    Circle().fill(theme.tint)
+                    Circle().strokeBorder(theme.base.opacity(0.5), lineWidth: 2.5)
+                }
         }
     }
 
