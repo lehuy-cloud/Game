@@ -48,6 +48,10 @@ struct FlashcardView: View {
             } else if card.categoryId == "colors", let colorHex = card.colorHex {
                 RoundedRectangle(cornerRadius: 32, style: .continuous)
                     .fill(Color(hex: colorHex))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 32, style: .continuous)
+                            .strokeBorder(Palette.ink.opacity(0.18), lineWidth: 2)
+                    }
                     .frame(width: artSize, height: artSize)
                     .shadow(color: Palette.ink.opacity(0.12), radius: 6, y: 3)
             } else {

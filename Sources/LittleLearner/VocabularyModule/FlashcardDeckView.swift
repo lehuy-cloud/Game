@@ -93,6 +93,7 @@ struct FlashcardDeckView: View {
                     .fill(color)
                     .frame(width: isSelected ? 32 : 24, height: isSelected ? 32 : 24)
                     .overlay {
+                        Circle().strokeBorder(Palette.ink.opacity(0.18), lineWidth: 1.5)
                         if isSelected {
                             Circle().strokeBorder(color, lineWidth: 2.5).padding(-4)
                         }
@@ -150,6 +151,10 @@ struct FlashcardDeckView: View {
         } else if let colorHex = card.colorHex {
             RoundedRectangle(cornerRadius: DesignTokens.radiusTile, style: .continuous)
                 .fill(Color(hex: colorHex))
+                .overlay {
+                    RoundedRectangle(cornerRadius: DesignTokens.radiusTile, style: .continuous)
+                        .strokeBorder(Palette.ink.opacity(0.18), lineWidth: 1.5)
+                }
                 .padding(18)
         } else {
             Text(card.emoji)

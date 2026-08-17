@@ -82,6 +82,10 @@ struct OddOneOutGameView: View {
             Text("\(value)").font(.display(34)).foregroundStyle(theme.deep)
         } else if let colorHex = card.colorHex {
             RoundedRectangle(cornerRadius: 14, style: .continuous).fill(Color(hex: colorHex))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .strokeBorder(Palette.ink.opacity(0.18), lineWidth: 1.5)
+                }
         } else {
             Text(card.emoji).font(.system(size: 40))
         }

@@ -85,6 +85,10 @@ struct MatchTileView: View {
         } else if let colorHex = tile.card.colorHex {
             RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .fill(Color(hex: colorHex))
+                .overlay {
+                    RoundedRectangle(cornerRadius: 12, style: .continuous)
+                        .strokeBorder(Palette.ink.opacity(0.18), lineWidth: 1.5)
+                }
         } else {
             Text(tile.card.emoji).font(.system(size: isRegularWidth ? 60 : 38))
         }

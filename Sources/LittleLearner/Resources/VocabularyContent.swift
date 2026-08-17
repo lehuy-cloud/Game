@@ -104,6 +104,9 @@ enum VocabularyContent {
         VocabularyCard(id: "color_purple", word: "Purple", translation: "Tím", emoji: "🟣", symbolName: "circle.fill", imageName: nil, categoryId: "colors", colorHex: "#A78FC9"),
         VocabularyCard(id: "color_pink", word: "Pink", translation: "Hồng", emoji: "🩷", symbolName: "circle.fill", imageName: nil, categoryId: "colors", colorHex: "#F0A8BE"),
         VocabularyCard(id: "color_black", word: "Black", translation: "Đen", emoji: "⚫", symbolName: "circle.fill", imageName: nil, categoryId: "colors", colorHex: "#6B6660"),
+        VocabularyCard(id: "color_white", word: "White", translation: "Trắng", emoji: "⚪", symbolName: "circle.fill", imageName: nil, categoryId: "colors", colorHex: "#FFFFFF"),
+        VocabularyCard(id: "color_brown", word: "Brown", translation: "Nâu", emoji: "🟤", symbolName: "circle.fill", imageName: nil, categoryId: "colors", colorHex: "#9C6B45"),
+        VocabularyCard(id: "color_gray", word: "Gray", translation: "Xám", emoji: "🩶", symbolName: "circle.fill", imageName: nil, categoryId: "colors", colorHex: "#A8A39A"),
 
         VocabularyCard(id: "story_fox", word: "Fox", translation: "Con cáo", emoji: "🦊", symbolName: nil, imageName: "ch1_ice_fox", categoryId: "story"),
         VocabularyCard(id: "story_penguin", word: "Penguin", translation: "Chim cánh cụt", emoji: "🐧", symbolName: nil, imageName: "chim_canh_cut_portrait", categoryId: "story"),
